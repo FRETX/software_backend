@@ -44,12 +44,13 @@ input, button, select { padding: 1%; cursor: pointer; }
 }
 
 .punchrow {
-  margin: 1%;
-  padding: 1%;
+  margin: 0.5%;
+  padding: 0.5%;
 }
 
-.punchrow select {
-  height: 48px;
+.punchrow input,
+.punchrow button {
+  padding: 0.5%;
 }
 
 .punchrow button,
@@ -64,4 +65,23 @@ input, button, select { padding: 1%; cursor: pointer; }
 
 .submit button {
   margin-left: 1%;
+}
+
+@media (min-width: 1200px) {
+  body { 
+    position: absolute;
+    left: 0; right: 0;
+    margin: auto;
+    width: 1200px; 
+  }
+
+  #player {
+    height: 350px;
+    width: 550px;
+  }
+
+  .vid .vidinfo {
+    width: 585px;
+    height: 350px;
+  }  
 }

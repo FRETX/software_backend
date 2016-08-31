@@ -8,6 +8,9 @@ ctrl = {
     var disp_time = secs_to_hms(time);
     data.punches.push({ "time": time, "disp_time": disp_time, "chord": "No Chord" });
     data.punches.sort(SortByTime);
+
+    var objDiv = document.getElementById("punchlist");
+    objDiv.scrollTop = objDiv.scrollHeight;
   },
   delete_punch: function(e,m) {
     var i = data.punches.indexOf(m.punch);

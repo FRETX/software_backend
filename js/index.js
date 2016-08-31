@@ -1,11 +1,11 @@
 data = {
-  punches: [0,1,2]
+  punches: [0]
 }
 
 $(document).ready(function() {
   setup_data_bindings();
   setup_event_triggers();
-  popcorn();
+  load_youtube();
 });
 
 function setup_data_bindings() {

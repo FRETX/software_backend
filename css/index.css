@@ -39,7 +39,7 @@ input, button, select { padding: 1%; cursor: pointer; }
 }
 
 .punchlist {
-  height: 200px;
+  height: 220px;
   overflow-y: scroll;
 }
 

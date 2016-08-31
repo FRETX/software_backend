@@ -8,8 +8,8 @@ div {
   box-shadow: 0px 0px 4px black;
 }
 
-.addvid, .vid, .submit { padding: 1%; }
-.addvid, .vid, .punchlist, .submit { margin: 1%; }
+.addvid, .vid, .submit, .punch { padding: 1%; }
+.addvid, .vid, .punchlist, .submit, .punch { margin: 1%; }
 
 body, input, select, button { font-size: 18pt; }
 
@@ -33,7 +33,7 @@ input, button, select { padding: 1%; cursor: pointer; }
 .vid .vidinfo {
   display: inline-block;
   vertical-align: middle;
-  width: 52vw;
+  width: 51vw;
   height: 30vw;
   margin-left:1%;
 }
@@ -55,6 +55,7 @@ input, button, select { padding: 1%; cursor: pointer; }
 .punchrow button,
 .punchrow input {
   margin-right: 1%;
+  text-align: center;
 }
 
 .chordpicker {

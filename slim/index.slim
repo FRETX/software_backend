@@ -6,23 +6,22 @@ html
   body
     .logo
     .addvid
-      INPUT value="Add the link to your YouTube video here..."
+      INPUT#link value="Add the link to your YouTube video here..."
       BUTTON Add
     .vid
       #player
       .vidinfo#footnotediv
         | Absolute Super Beginner Guitar Lesson
         | <BR> Details
+    .punch
+      BUTTON#gettime rv-on-click='ctrl.add_punch' Add Video Time
     .punchlist
       .punchrow rv-each-punch='data.punches'
-        BUTTON Add Video Time
-        INPUT
-        .chordpicker
-          SELECT 
-            OPTION Choose
-
+        BUTTON rv-on-click='ctrl.delete_punch' Delete  
+        INPUT rv-value='punch.disp_time'
+        INPUT rv-value='punch.chord'
 
     .submit
       INPUT type='checkbox'
-      | I read the General Conditions
+      | I Read the General Conditions<br><br>
       BUTTON Add Song Now

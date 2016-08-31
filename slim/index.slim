@@ -1,11 +1,28 @@
 html
   head
     title FRETX
+    == css ['index']
+    == js  ['jquery','rivets','popcorn','index']
   body
     .logo
     .addvid
-      INPUT Add the link to your YouTube video here...
+      INPUT value="Add the link to your YouTube video here..."
       BUTTON Add
-    .vidinfo
+    .vid
+      video.vidplayer#vid
+      .vidinfo#footnotediv
+        | Absolute Super Beginner Guitar Lesson
+        | <BR> Details
     .punchlist
+      .punchrow rv-each-punch='data.punches'
+        BUTTON Add Video Time
+        INPUT
+        .chordpicker
+          SELECT 
+            OPTION Choose
+
+
     .submit
+      INPUT type='checkbox'
+      | I read the General Conditions
+      BUTTON Add Song Now

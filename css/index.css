@@ -1,0 +1,49 @@
+body {
+  text-align: center;
+  font-size: 16pt;
+}
+
+div {
+  background-color: rgba(0,0,255,0.1);
+}
+
+.addvid, .vid, .punchlist, .submit { padding: 1%; }
+
+body, input, select, button { font-size: 18pt; }
+
+input, button, select { padding: 1%; }
+
+.addvid INPUT {
+  width: 80%;
+}
+
+.addvid BUTTON {
+  width: 20%;
+}
+
+.vid .vidplayer {
+  display: inline-block;
+  vertical-align: middle;
+  width: 40vw;
+  height: 30vw;
+}
+
+.vid .vidinfo {
+  display: inline-block;
+  vertical-align: middle;
+  width: 56vw;
+  height: 30vw;
+}
+
+.punchlist {
+  height: 20vw;
+  overflow-y: scroll;
+}
+
+.punchrow {
+  margin: 1%;
+}
+
+.chordpicker {
+  display: inline-block;
+}

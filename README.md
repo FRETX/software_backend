@@ -1,6 +1,4 @@
-# fretx
-
-FRETX YouTube Chord Tagger
+# FRETX YouTube Chord Tagger
 
 This is a prototype for a tool that will allow the user to build chord lists for the FretX guitar trainer.
 The user will be able to import videos from YouTube using their pasted URL.

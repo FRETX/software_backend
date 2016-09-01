@@ -1,3 +1,5 @@
+var picker;
+
 data = {
   punches: [{ "time": 0, "disp_time": '00:00:00', "chord": "No Chord" }]
 }
@@ -6,21 +8,33 @@ ctrl = {
   add_punch: function() {
     var time = player.getCurrentTime();
     var disp_time = secs_to_hms(time);
-    data.punches.push({ "time": time, "disp_time": disp_time, "chord": "No Chord" });
+    var this_punch = { "time": time, "disp_time": disp_time, "chord": "No Chord" };
+    data.punches.push(this_punch);
     data.punches.sort(SortByTime);
 
     var objDiv = document.getElementById("punchlist");
     objDiv.scrollTop = objDiv.scrollHeight;
+    if(id('ask_chord').checked == true) {
+      picker.get_chord(function(chord) {
+        this_punch.chord = chord;
+      });
+    }
   },
   delete_punch: function(e,m) {
     var i = data.punches.indexOf(m.punch);
   	data.punches.splice(i,1);
+  },
+  choose_chord: function(e,m) {
+    picker.get_chord(function(chord) {
+      m.punch.chord = chord;
+    });
   }
 }
 
 $(document).ready(function() {
   setup_data_bindings();
   setup_event_triggers();
+  picker = new chordpicker();
   load_youtube();
 });
 
@@ -50,10 +64,6 @@ function on_addvid_click(e) {
   player.loadVideoById(match[1], 0, "large")
 }
 
-function SortByTime(a, b){ 
-  return ((a.time < b.time) ? -1 : ((a.time > b.time) ? 1 : 0));
-}
-
 function secs_to_hms(secs) {
   hrs  = Math.floor(secs/3600);
   secs = secs - hrs*3600;
@@ -67,3 +77,8 @@ function secs_to_hms(secs) {
 
   return(hrs + ':' + mins + ':' + secs);
 }
+
+function SortByTime(a, b) { 
+  return ((a.time < b.time) ? -1 : ((a.time > b.time) ? 1 : 0));
+}
+

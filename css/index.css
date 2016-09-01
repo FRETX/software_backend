@@ -3,7 +3,7 @@ body {
   font-size: 16pt;
 }
 
-div {
+div, iframe {
   background-color: rgba(100,0,0,0.1);
   box-shadow: 0px 0px 4px black;
 }
@@ -59,8 +59,8 @@ input, button, select { padding: 1%; cursor: pointer; }
   text-align: center;
 }
 
-.chordpicker {
-  display: inline-block;
+.punchrow input {
+  width: 250px;
 }
 
 .submit button {

@@ -1,8 +1,8 @@
 html
   head
     title FRETX
-    == css ['index']
-    == js  ['jquery','rivets','youtube','index']
+    == css ['chordpicker','index']
+    == js  ['jquery','rivets','lib','chordpicker','youtube','index']
   body
     .logo
     .addvid
@@ -15,11 +15,13 @@ html
         | <BR> Details
     .punch
       BUTTON#gettime rv-on-click='ctrl.add_punch' Add Video Time
+      INPUT#ask_chord type='checkbox'
+      | Ask Chord
     .punchlist#punchlist
       .punchrow rv-each-punch='data.punches'
         BUTTON rv-on-click='ctrl.delete_punch' Delete  
         INPUT rv-value='punch.disp_time'
-        INPUT rv-value='punch.chord'
+        INPUT rv-on-click='ctrl.choose_chord' rv-value='punch.chord'
 
     .submit
       INPUT type='checkbox'

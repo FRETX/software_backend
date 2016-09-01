@@ -1,0 +1,44 @@
+.chordpicker {
+  position: absolute;
+  left: 0; right: 0;
+  top: 0; bottom: 0;
+  display: none;
+  background-color: rgba(0,0,0,0.6);
+}
+
+.chordpicker::before {
+  content: '';
+  height: 100%;
+  width: 5px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.chordpicker ul {
+  display: inline-block;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  vertical-align: middle;
+}
+
+.chordpicker li {
+  margin: 8px;
+  padding: 8px;
+  background-color: rgba(200,100,100,1);
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.chordpicker li.sel {
+  box-shadow: 0 0 10px white inset;
+  background-color: rgba(230,130,130,1);
+}
+
+.chordpicker li:hover {
+  background-color: rgba(250,150,150,1);
+}
+
+.chordpicker .qualities {
+	display: none;
+}

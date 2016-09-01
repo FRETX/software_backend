@@ -6,4 +6,4 @@ Dir.chdir File.expand_path(File.dirname(__FILE__))
 Dir["ruby/*.rb"].each { |file| require File.expand_path(file); }
 
 
-# 6hrs = $300
+# 8hrs

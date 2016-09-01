@@ -43,7 +43,6 @@ chordpicker.prototype = {
     this.rootitem.className = 'sel';
     if(this.rootitem.innerHTML == 'No Chord') {
       this.hide();
-      
     }
     else {
       this.qualitylist.style.display = 'inline-block';

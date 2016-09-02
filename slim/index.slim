@@ -4,26 +4,24 @@ html
     == css ['chordpicker','index']
     == js  ['jquery','rivets','lib','chordpicker','youtube','index']
   body
-    .logo
-    .addvid
-      INPUT#link value="Add the link to your YouTube video here..."
-      BUTTON Add
-    .vid
-      #player
-      .vidinfo#footnotediv
-        | Absolute Super Beginner Guitar Lesson
-        | <BR> Details
-    .punch
-      BUTTON#gettime rv-on-click='ctrl.add_punch' Add Video Time
-      INPUT#ask_chord type='checkbox'
-      | Ask Chord
-    .punchlist#punchlist
-      .punchrow rv-each-punch='data.punches'
-        BUTTON rv-on-click='ctrl.delete_punch' Delete  
-        INPUT rv-value='punch.disp_time'
-        INPUT rv-on-click='ctrl.choose_chord' rv-value='punch.chord'
-
-    .submit
-      INPUT type='checkbox'
-      | I Read the General Conditions<br><br>
-      BUTTON Add Song Now
+    .content
+      .header
+        img src='logo.png'
+  
+      .addvid
+        INPUT#link value="Add the link to your YouTube video here..."
+        BUTTON Add
+      .vid
+        #player
+        .vidinfo#footnotediv
+          | Absolute Super Beginner Guitar Lesson
+          | <BR> Details
+      .punch
+        BUTTON#gettime rv-on-click='ctrl.add_punch' Add Video Time
+        INPUT#ask_chord type='checkbox'
+        | Ask Chord
+      .punchlist#punchlist
+        .punchrow rv-each-punch='data.punches'
+          BUTTON rv-on-click='ctrl.delete_punch' Delete  
+          INPUT rv-value='punch.disp_time'
+          INPUT rv-on-click='ctrl.choose_chord' rv-value='punch.chord'

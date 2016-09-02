@@ -32,6 +32,8 @@ chordpicker.prototype = {
   constructor: chordpicker,
   show: function() { this.container.style.display = 'block'; },
   hide: function() { this.container.style.display = 'none'; },
+  set_chord: function(name) {
+  },
   get_chord: function(cb) {
   	this.show();
     this.callback = cb;

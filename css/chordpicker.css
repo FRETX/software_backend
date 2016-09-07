@@ -32,11 +32,6 @@
   background-color: rgba(230,130,130,1);
 }
 
-.chordpicker .qualities {
-	display: none;
-}
-
-
 
 
 .chordpicker .roots li:not([data-note]) {
@@ -44,22 +39,30 @@
   display: flex;
 }
 
-.chordpicker li[data-note] {
+.chordpicker .roots li[data-note],
+.chordpicker .qualities li {
   background-color: rgba(200,100,100,1);
   padding: 8px;
   margin: 8px;
 }
 
-.chordpicker li[data-note]:nth-child(2) {
+.chordpicker .roots li[data-note]:nth-child(2) {
   margin-left: 0;
 }
 
-.chordpicker li[data-note]:hover {
+.chordpicker .roots li[data-note]:hover,
+.chordpicker .qualities li:hover {
   background-color: rgba(250,150,150,1);
 }
 
-.chordpicker li li[data-note] {
+.chordpicker .roots li li[data-note] {
   flex: 1;
   display: inline-block;
   margin: 0 8px;
 }
+
+
+.chordpicker .qualities {
+  display: none;
+}
+

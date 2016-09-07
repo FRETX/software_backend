@@ -18,10 +18,10 @@ html
           | Absolute Super Beginner Guitar Lesson
           | <BR> Details
       .punch
-        BUTTON#gettime rv-on-click='ctrl.add_punch' Add Video Time
         INPUT#ask_chord type='checkbox'
         LABEL for='ask_chord' Ask Chord
-        button#upload onclick='upload();' Upload
+        BUTTON#gettime rv-on-click='ctrl.add_punch' Add Video Time
+        BUTTON#upload onclick='upload();' Upload
       .punchlist#punchlist
         .punchrow rv-each-punch='data.punches'
           BUTTON rv-on-click='ctrl.delete_punch' Delete  

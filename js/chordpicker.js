@@ -3,54 +3,44 @@ function chordpicker() {
   this.container = document.createElement('div');
   this.container.className = 'chordpicker';
   this.rootlist = new rootlist();
-  this.qualitylist = build_list('qualities',['Maj','min','5','7','maj7','m7','sus4','add9','sus2','7sus4','7#9','9']);
+  this.qualitylist = new qualitylist();
   
-  this.rootlist.onclick = this.on_root_click.bind(this);
-  this.qualitylist.onclick = this.on_quality_click.bind(this);
+  this.rootlist.on_root_change = this.on_root_change.bind(this);
+  this.qualitylist.on_quality_change = this.on_quality_change.bind(this);
   this.container.onclick = this.on_container_click.bind(this);
 
-  this.container.appendChild(this.rootlist);
-  this.container.appendChild(this.qualitylist);
-  this.rootlist.lastChild.className = 'sel';
-  this.rootitem = this.rootlist.lastChild;
+  this.container.appendChild(this.rootlist.dom);
+  this.container.appendChild(this.qualitylist.dom);
   document.body.appendChild(this.container);
 }
 
 chordpicker.prototype = {
   constructor: chordpicker,
+
   show: function() { this.container.style.display = 'block'; },
   hide: function() { this.container.style.display = 'none'; },
-  set_chord: function(name) {
-  	if(name == 'No Chord') {
 
+  set_chord: function(name) {
+  	if(name == 'No Chord') { 
+  	  this.rootlist.set_root(name); 
+      this.qualitylist.set_quality('Maj');
+  	  this.qualitylist.hide();
+  	  return;
   	}
   	var arr = name.split(' ');
-    
-    arr[0]
+    this.rootlist.set_root(arr[0]);
+    this.qualitylist.set_quality(arr[1]);
   },
+
   get_chord: function(cb) {
   	this.show();
     this.callback = cb;
   },
+
   chordname: function() {
-  	if(this.rootitem == undefined) return;
-  	if(this.rootitem.innerHTML == 'No Chord') return 'No Chord'
-  	if(this.qualitem == undefined) {
-  	  return this.rootitem.innerHTML + ' Maj'; 
-  	}
-  	return this.rootitem.innerHTML + ' ' + this.qualitem.innerHTML;
-  },
-
-  set_root: function(note) {
-
-
-  	this.root = note;
-  	this.rootitem = undefined;
-    for(var i=0; i<this.rootlist.children.length; i++) {
-      
-      //if( this.rootlist.children[i].innerHTML.split(' ')[0];
-    }
-  },
+  	if(this.rootlist.label == 'No Chord') return 'No Chord'
+  	return `${this.rootlist.label} ${this.qualitylist.label}`;
+  }
 }
 
 //////////////////////////// CLICK HANDLERS ////////////////////////////////////
@@ -58,31 +48,24 @@ chordpicker.prototype = {
 Object.assign(
   chordpicker.prototype, {
 
-    on_root_click: function(e) {
-      cancelEvent(e);
-  	  if(!e.target.hasAttribute('data-note')) return;
-      this.rootitem.className = '';
-      this.rootitem = e.target;
-      this.rootitem.className = 'sel';
-      if(this.rootitem.innerHTML == 'No Chord') {
-        this.hide();
-      }
-      else {
-        this.qualitylist.style.display = 'inline-block';
-      }
+    on_root_change: function(rootitem) {
+      this.rootitem = rootitem;
+      if ( this.rootitem.label == 'No Chord' ) { this.close(); }
+      else { this.qualitylist.dom.style.display = 'inline-block'; }
     },
 
-    on_quality_click: function(e) {
-      if(e.target.tagName != 'LI') return;
-      if(this.qualitem != undefined) this.qualitem.className = '';
-      this.qualitem = e.target;
-      this.qualitem.className = 'sel';
-      cancelEvent(e);
+    on_quality_change: function(qualitem) {
+      this.qualitem = qualitem;
+      this.close();
     },
   
-    on_container_click: function() {
-  	  if( this.callback != undefined) { this.callback(this.chordname()); }
-  	  this.hide();
+    on_container_click: function() { 	  
+  	  this.close();
+    },
+
+    close: function() {
+      if( this.callback != undefined) { this.callback(this.chordname()); }
+      this.hide();
     }	
   }
 )
@@ -92,7 +75,9 @@ Object.assign(
 //////////////////////////////// LISTS /////////////////////////////////////////
 
 function rootlist() {
-  return this.build_list();
+  this.value = 0;
+  this.label = 'No Chord'
+  this.dom   = this.build_list();
 }
 
 rootlist.prototype = {
@@ -116,7 +101,25 @@ rootlist.prototype = {
   },
 
   list_item: function(obj) {
-    return render(`<li data-note="${obj.val}">${obj.label}</li>`);
+  	var item = render(`<li data-note="${obj.val}">${obj.label}</li>`);
+  	this.elements.push(item);
+  	item.onclick = this.on_click.bind(this);
+    return item;
+  },
+
+  on_click: function(e) {
+  	cancelEvent(e);
+  	this.set_root.call(this,e.target.innerHTML);
+	this.on_root_change({ value: this.value, label: this.label });
+  },
+
+  set_root: function(label) {
+    for(var i=0; i<this.elements.length; i++) {
+      if( this.elements[i].innerHTML != label ) { this.elements[i].className = ''; continue; }
+      this.value = this.elements[i].getAttribute('data-note');
+      this.label = this.elements[i].innerHTML;
+      this.elements[i].className = 'sel';
+    }
   },
 
   roots: [
@@ -142,66 +145,62 @@ rootlist.prototype = {
 }
 
 function qualitylist() { 
-  return this.build_list();
+  this.label = 'Maj';
+  this.dom = this.build_list();
 }
 
 qualitylist.prototype = {
   constructor: qualitylist,
 
-  build_list: function() {
+  show: function() { this.dom.style.display = 'initial'; },
+  hide: function() { this.dom.style.display = 'none';    },
 
+  build_list: function() {
+  	this.elements = [];
+  	var list = make('ul', 'qualities', null);
+    for(var i=0; i<this.qualities.length; i++) {
+      list.appendChild( this.list_item( this.qualities[i] ) );
+    }
+    return list;
   },
 
   list_item: function(obj) {
-  	return render(`<li data-quality='${obj.val}'>${obj.label}</li>`);
+  	var item = render(`<li>${obj.label}</li>`);
+  	this.elements.push(item);
+  	item.onclick = this.on_click.bind(this);
+  	return item;
+  },
+
+  on_click: function(e) {
+    cancelEvent(e);
+    for(var i=0; i<this.elements.length; i++) this.elements[i].className = '';
+    this.label = e.target.innerHTML;
+    e.target.className = 'sel';
+    this.on_quality_change( { label: this.label } );
+  },
+
+  set_quality: function(label) {
+    for(var i=0; i<this.elements.length; i++) {
+      if( this.elements[i].innerHTML != label ) { this.elements[i].className = ''; continue; }
+      this.label = this.elements[i].innerHTML;
+      this.elements[i].className = 'sel';
+    }
   },
 
   qualities: [
-    { label: 'Maj', val: [1,3,5] },
-    { label: 'min', val: [1,'5','7','maj7','m7','sus4','add9','sus2','7sus4','7#9','9']
-
+    { label: 'Maj'   },
+    { label: 'min'   },
+    { label: '5'     },
+    { label: '7'     },
+    { label: 'Maj7'  },
+    { label: 'm7'    },
+    { label: 'sus4'  },
+    { label: 'add9'  },
+    { label: 'sus2'  },
+    { label: '7sus4' },
+    { label: '7#9'   },
+    { label: '9'     }
+  ]
 }
 
 //////////////////////////////// LISTS /////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function build_list(cls,arr) {
-  var list = document.createElement('ul');
-  for(var i=0; i<arr.length; i++) {
-  	var item = document.createElement('li');
-  	if( arr[i] instanceof Array ) {
-  	  var subitem1 = document.createElement('li');
-  	  var subitem2 = document.createElement('li');
-      subitem1.appendChild(document.createTextNode(arr[i][0]));
-      subitem2.appendChild(document.createTextNode(arr[i][1]));
-      subitem1.className = 'tip';
-      subitem2.className = 'tip';
-  	  item.appendChild(subitem1);
-  	  item.appendChild(subitem2);
-  	}
-  	else {
-  	  var subitem1 = document.createElement('li');
-
-  	  item.className = 'tip';	
-  	  item.appendChild(document.createTextNode(arr[i]));
-  	}
-  	list.appendChild(item);
-  }
-  list.className = cls;
-  return list;
-}

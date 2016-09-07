@@ -40,6 +40,10 @@ $(document).ready(function() {
   load_youtube();
 });
 
+function upload() {
+  
+}
+
 function setup_data_bindings() {
   rivets.bind($('body'), { data: data, ctrl: ctrl });
 }

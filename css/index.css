@@ -89,18 +89,26 @@ BUTTON, INPUT {
 }
 
 #ask_chord {
-  margin-left: 40px;
+  margin-left: 30px;
 }
 
-#gettime {
+#upload{
+  margin-left: 20px;
+}
 
+#filename {
+  border-radius: 10px;
+  margin: 0 20px;
+  width: 200px;
 }
 
 .punchrow {
-  margin: 5px;
+  margin: 4px;
   padding: 5px;
   box-shadow: 0px 0px 5px black inset;
   border-radius: 10px;
+  display: inline-block;
+  padding: 8px 10px 8px 20px;
 }
 
 .punchrow input,
@@ -161,6 +169,10 @@ BUTTON, INPUT {
 
   .punchrow button {
     width: 70px;
+  }
+
+  #logo {
+    max-width: 80%;
   }
 
 }

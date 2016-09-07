@@ -7,7 +7,7 @@ html
   body
     .content
       .header
-        img src='logo.png'
+        img#logo src='logo.png'
   
       .addvid
         INPUT#link value="Add the link to your YouTube video here..."
@@ -21,8 +21,9 @@ html
         BUTTON#gettime rv-on-click='ctrl.add_punch' Add Video Time
         INPUT#ask_chord type='checkbox'
         LABEL for='ask_chord' Ask Chord
+        button#upload onclick='upload();' Upload
       .punchlist#punchlist
         .punchrow rv-each-punch='data.punches'
           BUTTON rv-on-click='ctrl.delete_punch' Delete  
           INPUT rv-value='punch.disp_time'
-          INPUT rv-on-click='ctrl.choose_chord' rv-value='punch.chord'
+          INPUT.chord rv-on-click='ctrl.choose_chord' rv-value='punch.chord'

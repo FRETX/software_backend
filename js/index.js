@@ -15,6 +15,7 @@ ctrl = {
     var objDiv = document.getElementById("punchlist");
     objDiv.scrollTop = objDiv.scrollHeight;
     if(id('ask_chord').checked == true) {
+      picker.set_chord('No Chord');
       picker.get_chord(function(chord) {
         this_punch.chord = chord;
       });
@@ -25,6 +26,7 @@ ctrl = {
   	data.punches.splice(i,1);
   },
   choose_chord: function(e,m) {
+    picker.set_chord(m.punch.chord);
     picker.get_chord(function(chord) {
       m.punch.chord = chord;
     });
@@ -46,6 +48,7 @@ function setup_event_triggers() {
   $('.addvid input').on('focus', on_addvid_focus);
   $('.addvid input').on('blur', on_addvid_blur);
   $('.addvid button').on('click', on_addvid_click);
+  $('.chord').on('focus', on_chord_focus);
 }
 
 function on_addvid_focus(e) {
@@ -62,6 +65,10 @@ function on_addvid_click(e) {
   var match = regex.exec($('#link').val());
   if(!match) { alert('invalid syntax'); return; }
   player.loadVideoById(match[1], 0, "large")
+}
+
+function on_chord_focus(e) {
+  e.target.blur();
 }
 
 function secs_to_hms(secs) {

@@ -23,9 +23,6 @@
 }
 
 .chordpicker li {
-  margin: 8px;
-  padding: 8px;
-  background-color: rgba(200,100,100,1);
   cursor: pointer;
   box-sizing: border-box;
 }
@@ -35,10 +32,34 @@
   background-color: rgba(230,130,130,1);
 }
 
-.chordpicker li:hover {
+.chordpicker .qualities {
+	display: none;
+}
+
+
+
+
+.chordpicker .roots li:not([data-note]) {
+  position: relative;
+  display: flex;
+}
+
+.chordpicker li[data-note] {
+  background-color: rgba(200,100,100,1);
+  padding: 8px;
+  margin: 8px;
+}
+
+.chordpicker li[data-note]:nth-child(2) {
+  margin-left: 0;
+}
+
+.chordpicker li[data-note]:hover {
   background-color: rgba(250,150,150,1);
 }
 
-.chordpicker .qualities {
-	display: none;
+.chordpicker li li[data-note] {
+  flex: 1;
+  display: inline-block;
+  margin: 0 8px;
 }

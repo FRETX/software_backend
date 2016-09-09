@@ -5,6 +5,7 @@ get '/chords/:chordname' do
   halt 404 if chord.nil?
 
   p chord
+  p root_value(chord[:root])
 
   with_db do |conn|
     resp = conn.exec_params "SELECT * FROM chords WHERE root=$1 AND quality=$2;" [root_value(chord[:root]),chord[:quality]]

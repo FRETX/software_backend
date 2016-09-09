@@ -1,18 +1,21 @@
 $CHORD_VALIDATION_REGEX = /(?<root>([A,D,G][b|#]?)|([B,E]b?)|([C,F]#?)) (?<quality>Maj|min|5|7|Maj7|m7|sus4|add9|sus2|7sus4|7#9|9)/
 
 get '/chords/:chordname' do
+  content_type :json
   chord = $CHORD_VALIDATION_REGEX.match(params[:chordname])
   halt 404 if chord.nil?
 
-  p chord
-  p root_value(chord[:root])
-
   with_db do |conn|
-    resp = conn.exec_params "SELECT * FROM chords WHERE root=$1 AND quality=$2;", [root_value(chord[:root]),chord[:quality]]
-    
+    resp = conn.exec_params jsonrow("SELECT * FROM chords WHERE root=$1 AND quality=$2"), [root_value(chord[:root]),chord[:quality]]
+    get_val(resp, {})
   end
 end
 
+def chord_from_name(name)
+ chord = $CHORD_VALIDATION_REGEX.match(name)
+ return { :root => '', :quality => '', :root_value => 0 } if chord.nil?
+ { :root => chord[:root], :quality => chord[:quality], :root_value => root_value(chord[:root]) }
+end
 
 def root_value(note_name)
   case note_name

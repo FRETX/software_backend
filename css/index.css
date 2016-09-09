@@ -79,6 +79,16 @@ BUTTON, INPUT {
   width: 100%;
 }
 
+.vidinfo .title {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.vidinfo .description {
+  font-size: 14px;
+}
+
 .punchlist {
   height: 220px;
   overflow-y: scroll;

@@ -1,11 +1,13 @@
 source "https://rubygems.org"
 
+gem 'thin'
+gem 'json'
 gem 'sinatra'
 gem 'slim'
 gem 'pg'
+
 gem 'aws-sdk'
-gem 'json'
-gem 'thin'
+gem 'google-api-client'
 
 group :production do
    gem 'heroku-deflater'

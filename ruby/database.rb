@@ -11,8 +11,7 @@ end
 
 def get_heroku_pg_args
   uri = URI.parse(ENV['DATABASE_URL'])
-  args = {
-    :host     => uri.hostname,
+  { :host     => uri.hostname,
     :port     => uri.port,
     :options  => nil,
     :tty      => nil,
@@ -20,5 +19,10 @@ def get_heroku_pg_args
     :user     => uri.user,
     :password => uri.password
   }
-  p args
 end
+
+
+def jsonrow(sql);   "SELECT row_to_json(row) FROM (#{sql}) AS row"                             end
+def jsonarray(sql); "SELECT coalesce(array_to_json(array_agg(row)),'[]') FROM (#{sql}) AS row" end
+
+def get_val(resp, default); resp.ntuples==1 ? resp.getvalue(0,0) : default end

@@ -8,9 +8,9 @@ def with_s3
   yield(s3.bucket('hw003'))
 end
 
-def upload_song(name,youtubekey,body)
+def upload_song(fretx_song)
   with_s3 do |bucket|
-    bucket.object
+    bucket.object(fretx_song[:key]).put( body: fretx_song[:payload] )
   end  
 end
 

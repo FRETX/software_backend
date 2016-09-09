@@ -1,3 +1,5 @@
+require 'pg'
+
 def with_db
   with_catch do
     begin

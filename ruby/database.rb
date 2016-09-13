@@ -1,3 +1,4 @@
+require_relative 'environment'
 require 'pg'
 
 def with_db

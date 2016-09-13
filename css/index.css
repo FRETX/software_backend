@@ -98,8 +98,10 @@ BUTTON, INPUT {
   border-radius: 10px;
 }
 
-#ask_chord {
-  margin-left: 30px;
+#on_deck {
+  text-align: center;
+  margin-right: 30px;
+  width: 250px;
 }
 
 #upload{

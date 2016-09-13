@@ -1,12 +1,24 @@
 var picker;
 
 data = {
-  punches: [{ "time": 0, "disp_time": '00:00:00', "chord": "No Chord" }]
+  on_deck: 'No Chord',
+  punches: [{ "time": 0, "disp_time": '00:00:00', "chord": "No Chord" }],
+  current_punch_index: 0,
+  current_punch_range: function() {
+    if(data.current_punch_index == 0) {
+      
+    return { start: data.punches[data.current_punch_index-1]["time"], end: data.punches[data.current_punch_index]["time"] };
+  },
+  in_punch_range: function(time) {
+    var range = data.current_punch_range();
+    console.log(range);
+    return(time >= range.start && time < range.end); 
+  }
 }
 
 ctrl = {
   add_punch: function() {
-    var time = player.getCurrentTime();
+    var time = player.current_time;
     var disp_time = secs_to_hms(time);
     var this_punch = { "time": time, "disp_time": disp_time, "chord": "No Chord" };
     data.punches.push(this_punch);
@@ -14,12 +26,7 @@ ctrl = {
 
     var objDiv = document.getElementById("punchlist");
     objDiv.scrollTop = objDiv.scrollHeight;
-    if(id('ask_chord').checked == true) {
-      picker.set_chord('No Chord');
-      picker.get_chord(function(chord) {
-        this_punch.chord = chord;
-      });
-    }
+    this_punch.chord = data.on_deck;
   },
   delete_punch: function(e,m) {
     var i = data.punches.indexOf(m.punch);
@@ -37,8 +44,29 @@ $(document).ready(function() {
   setup_data_bindings();
   setup_event_triggers();
   picker = new chordpicker();
-  load_youtube();
+  load_youtube_api(on_youtube_ready);
 });
+
+function on_youtube_ready() {
+  player = new youtube_player();
+  player.on_time_change(on_time_change);
+  player.on_video_data(on_video_data);
+}
+
+function on_time_change(time) {
+  console.log(data.in_punch_range(time));
+
+ // var obj = $.grep(data.punches, function(o, i) {
+  //  return( o['time'] >= time && data.punches[i-1]['time'] < time )  
+ // })[0];
+ // if(obj!= undefined)
+ //   obj['selected'] = 'selected';
+}
+
+function on_video_data(data) {
+  $('.vidinfo .title')[0].innerHTML = data['title'];
+  $('.vidinfo .description')[0].innerHTML = data['description'];
+}
 
 function upload() {
   var title = window.prompt("Enter The Name Of Your Song", videodata.title);
@@ -78,6 +106,13 @@ function on_addvid_click(e) {
   get_video_data(match[1]);
 }
 
+function on_ondeck_click(e) {
+  picker.set_chord(e.target.value);
+  picker.get_chord(function(chord) {
+    data.on_deck = chord;
+  });
+}
+
 function on_chord_focus(e) {
   e.target.blur();
 }
@@ -89,9 +124,9 @@ function secs_to_hms(secs) {
   secs = secs - mins*60;
   secs = Math.round(secs);
 
-  hrs  = hrs.toLocaleString('en-US',  {minimumIntegerDigits: 2, useGrouping:false});
-  mins = mins.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
-  secs = secs.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
+  hrs  =  hrs.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false });
+  mins = mins.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false });
+  secs = secs.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false });
 
   return(hrs + ':' + mins + ':' + secs);
 }

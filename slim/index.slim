@@ -18,10 +18,9 @@ html
           .title
           .description
       .punch
-        INPUT#ask_chord type='checkbox'
-        LABEL for='ask_chord' Ask Chord
-        BUTTON#gettime rv-on-click='ctrl.add_punch' Add Video Time
-        BUTTON#upload onclick='upload();' Upload
+        INPUT#on_deck.chord rv-value='data.on_deck' onclick='on_ondeck_click(event);'
+        BUTTON#gettime rv-on-click='ctrl.add_punch' Add Chord
+        BUTTON#upload onclick='upload();' Upload Song
       .punchlist#punchlist
         .punchrow rv-each-punch='data.punches'
           BUTTON rv-on-click='ctrl.delete_punch' Delete  

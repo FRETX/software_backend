@@ -9,6 +9,11 @@ function id(tag) { return document.getElementById(tag); }
 
 function cancelEvent(e) { e.stopPropagation(); e.cancelBubble = true; }
 
+function isFunction(functionToCheck) {
+ var getType = {};
+ return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+}
+
 function render(html) {
   var elem = document.createElement('div');
   elem.innerHTML = html;

@@ -1,7 +1,9 @@
+require_relative 'environment'
 require 'yt'
 
 Yt.configure do |config|
   config.api_key = ENV['YOUTUBE_API_KEY']
+  p config.api_key
 end
 
 get '/youtube/videodata/:id' do

@@ -7,7 +7,7 @@ $(document).ready(function() {
   setup_data_bindings();
   setup_ui_event_handlers();
   picker = new chordpicker();
-  load_youtube_api(on_youtube_ready);
+  load_youtube_api();
 });
 
 function setup_data_bindings() {
@@ -31,17 +31,13 @@ function setup_ui_event_handlers() {
 function on_video_data(data) {
   $('.vidinfo .title')[0].innerHTML = data['title'];
   $('.vidinfo .description')[0].innerHTML = data['description'];
+  punches.set(player.current_time);
 }
 
-function on_youtube_ready() {
-  player = new youtube_player();
-  player.on_time_change(on_time_change);
-  player.on_video_data(on_video_data);
-}
 
 function on_time_change(time) {
-  console.log(time);
-  console.log(punches.in_range(time));
+  if(punches.in_range(time)) return;
+  punches.set(time);
 }
 
 punches = {
@@ -55,11 +51,34 @@ punches = {
   },
   in_range: function(time) {
     var range = punches.range();
-    console.log(range);
+    //console.log(time >= range.start && time < range.end);
     return(time >= range.start && time < range.end); 
   },
   set: function(time) {
-    
+    //console.log("setting: " + time);
+    data.current_punch_index 
+    for(var i=0; i<data.punches.length; i++) {
+      if( punches.in_punch(i,time) ) {
+        data.punches[i]['selected'] = true;
+        data.current_punch_index = i;
+        if(i < 3 && id('punchlist').scrollTop < 40) return;
+        $('.punchrow')[i].scrollIntoView(false);
+        id('punchlist').scrollTop += 85; 
+      } 
+      else {
+        data.punches[i]['selected'] = false;
+      }
+    }
+  },
+  in_punch: function(index,time) { 
+    var last_node  = ( index == data.punches.length - 1 );
+    var this_punch = data.punches[index];
+    var next_punch = last_node ? null : data.punches[index+1];
+
+    if( time < this_punch['time'] ) return false;  // TOO LOW
+    if( last_node ) return true                    // LAST NODE
+    if( time >= next_punch['time'] ) return false; // TOO HIGH
+    return true;                                   // JUST RIGHT
   }
 }
 
@@ -136,8 +155,7 @@ ctrl = {
   },
   load_song: function(e,m) {
     cancelEvent(e);
-    player.load(m.song['youtube_id']);
-    data.punches = m.song['punches'];
+    load_song(m.song);
     id('songlist').style.display = 'none';
   }
 }
@@ -164,8 +182,24 @@ function upload() {
 /////////////////////////////////////// API CALLBACKS ////////////////////////////////////////////////////////
 
 function on_song_list(list) {
-  data['songs'] = list;
-  console.log(list);
+  data['songs'] = list;  
+  build_player();
 }
 
 /////////////////////////////////////// API CALLBACKS ////////////////////////////////////////////////////////
+
+
+function build_player() {
+  song = data['songs'][Math.floor(Math.random()*data['songs'].length)];
+  player = new youtube_player(song['youtube_id']);
+  player.on_time_change(on_time_change);
+  player.on_video_data(on_video_data);  
+  data.punches = song['punches'];
+}
+
+function load_song(song) {
+  player.load(song['youtube_id']);
+  data.current_punch_index = 0;
+  id('punchlist').scrollTop = 0;
+  data.punches = song['punches'];
+}

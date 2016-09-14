@@ -1,4 +1,4 @@
-var youtube_api_ready;
+var youtube_api_ready = false;
 
 function load_youtube_api(callback) {
   youtube_api_ready = callback;
@@ -9,31 +9,42 @@ function load_youtube_api(callback) {
 }
 
 function onYouTubeIframeAPIReady() {
+  youtube_api_ready = true;
   if(isFunction(youtube_api_ready)) { youtube_api_ready(); }
 }
 
+function wait_for_youtube_api(callback) {
+  var timer = setInterval( function() {
+    if(youtube_api_ready) {
+      callback();
+      clearInterval(timer);
+    }
+  }, 100);
+}
 
-function youtube_player() {
+
+function youtube_player(video_id) {
   this.timer = false;
   this.video_id = false;
   this.current_time = 0;
   this.videodata = {};
-  this.player = this.build_player('player',null);
+  wait_for_youtube_api( function(video_id) {
+    this.player = this.build_player('player',video_id);
+  }.bind(this,video_id));
+  
 }
 
 
 youtube_player.prototype = {
   constructor: youtube_player,
-  default_video_id: 'gbW55CTqf_U',
   url_regex: /https:\/\/www.youtube.com\/watch\?v=(.{11})/,
   
   build_player: function(parent_id,vid_id) {
-    console.log(this);
-    this.video_id = vid_id || this.default_video_id;
+    this.video_id = vid_id;
     return new YT.Player(parent_id, {
       height: '390', 
       width: '640',
-      videoId: this.video_id,
+      videoId: vid_id,
       events: {
         'onReady': this.onPlayerReady.bind(this),
         'onStateChange': this.onPlayerStateChange.bind(this)

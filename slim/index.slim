@@ -23,7 +23,7 @@ html
         BUTTON#gettime rv-on-click='ctrl.add_punch' Add Chord
         BUTTON#upload onclick='upload();' Upload Song
       .punchlist#punchlist
-        .punchrow rv-each-punch='data.punches'
+        .punchrow rv-each-punch='data.punches' rv-data-selected='punch.selected'
           BUTTON rv-on-click='ctrl.delete_punch' Delete  
           INPUT rv-value='punch.disp_time'
           INPUT.chord rv-on-click='ctrl.choose_chord' rv-value='punch.chord'

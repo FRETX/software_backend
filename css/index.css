@@ -150,6 +150,10 @@ BUTTON, INPUT {
   width: 250px;
 }
 
+.punchrow[data-selected=true] {
+  background-color: rgba(0,255,0,0.4);
+}
+
 .submit button {
   margin-left: 1%;
 }

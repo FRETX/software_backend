@@ -1,22 +1,39 @@
-post '/song' do
+get '/songs/list' do
+  content_type :json
+  with_db do |conn|
+    resp = conn.exec jsonarray("SELECT * FROM songs")
+    get_val(resp,[])
+  end
+end
+
+post '/songs/add' do
   data = JSON.parse request.body.read
 
   with_db do |conn|
-    conn.exec_params "INSERT INTO songs (youtube_id,title,punches) VALUES ($1,$2,$3);", [data['id'],data['title'],JSON.generate(data['chords'])]    
+    query = %{
+      WITH update AS (
+        UPDATE songs 
+        SET punches = $3, title = $2
+        WHERE youtube_id = $1
+        RETURNING id
+      )
+      INSERT INTO songs (youtube_id,title,punches)
+      SELECT $1, $2, $3
+      WHERE NOT EXISTS (SELECT * FROM UPDATE)
+      RETURNING id;
+    } 
+    conn.exec_params( query, [data['id'],data['title'],JSON.generate(data['chords'])] )    
   end
 
   upload_song( song_to_fretx(data) )
-
 end
 
 def song_to_fretx(data) 
-  
   with_db do |conn|
   	payload = ""
   	key = "#{data['title']}.#{data['id']}.txt"
     data['chords'].each do |chord|
       time_ms = (chord['time']*1000).round()
-
       if(chord['chord'] == 'No Chord') then
         fingering = '{0}'
       else

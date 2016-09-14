@@ -17,6 +17,7 @@ function youtube_player() {
   this.timer = false;
   this.video_id = false;
   this.current_time = 0;
+  this.videodata = {};
   this.player = this.build_player('player',null);
 }
 
@@ -42,7 +43,7 @@ youtube_player.prototype = {
 
   onPlayerReady: function(event) {
     event.target.playVideo();
-    this.get_video_data(this.video_id || this.default_video_id);
+    this.get_video_data();
   },
 
   onPlayerStateChange: function(event) {
@@ -58,6 +59,7 @@ youtube_player.prototype = {
   },
 
   onVideoData: function(data) {
+    this.videodata = data;
     if(isFunction(this.videodata_callback)) {
       this.videodata_callback(data);
     }
@@ -73,9 +75,10 @@ youtube_player.prototype = {
 
   load: function(url) {
     var match = this.url_regex.exec(url);
-    if(!match) { alert('invalid syntax'); return; }
-    this.video_id = match[1];
-    this.player.loadVideoById(this.video_id, 0, "large")
+    if(!match && url.length != 11) { alert('invalid syntax'); return; }
+    this.video_id = url.length == 11 ? url : match[1];
+    this.player.loadVideoById(this.video_id, 0, "large");
+    this.get_video_data();
   },
 
   stop: function() {
@@ -84,6 +87,10 @@ youtube_player.prototype = {
 
   get_video_data: function() {
     $.get('/youtube/videodata/' + this.video_id, this.onVideoData.bind(this));
+  },
+
+  duration: function() {
+    return this.player.getDuration();
   }
 
 }

@@ -98,6 +98,7 @@ function on_addvid_blur(e) {
 
 function on_addvid_click(e) {
   player.load($('#link').val())
+  data.punches = [{ "time": 0, "disp_time": '00:00:00', "chord": "No Chord" }]
 }
 
 function on_ondeck_click(e) {

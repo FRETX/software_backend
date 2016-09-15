@@ -97,11 +97,7 @@ function on_addvid_blur(e) {
 }
 
 function on_addvid_click(e) {
-  var regex = /https:\/\/www.youtube.com\/watch\?v=(.{11})/;
-  var match = regex.exec($('#link').val());
-  if(!match) { alert('invalid syntax'); return; }
-  player.loadVideoById(match[1], 0, "large")
-  get_video_data(match[1]);
+  player.load($('#link').val())
 }
 
 function on_ondeck_click(e) {

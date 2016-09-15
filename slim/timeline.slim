@@ -1,0 +1,10 @@
+html
+  head
+    == css ['timeline']
+    == js  ['rivets','jquery','lib','timeline']
+  body
+    #timeline
+      .chord rv-each-punch='data.punches' rv-data-selected='punch.selected'
+        .chordname { punch.chord }
+        .chordtime { punch.disp_time }
+      .scale

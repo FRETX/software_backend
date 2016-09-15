@@ -22,11 +22,18 @@ html
         INPUT#on_deck.chord rv-value='data.on_deck' onclick='on_ondeck_click(event);'
         BUTTON#gettime rv-on-click='ctrl.add_punch' Add Chord
         BUTTON#upload onclick='upload();' Upload Song
+        
       .punchlist#punchlist
         .punchrow rv-each-punch='data.punches' rv-data-selected='punch.selected'
           BUTTON rv-on-click='ctrl.delete_punch' Delete  
           INPUT rv-value='punch.disp_time'
           INPUT.chord rv-on-click='ctrl.choose_chord' rv-value='punch.chord'
+
+      #timeline
+        .chord rv-each-punch='data.punches' rv-data-selected='punch.selected'
+          .chordname { punch.chord }
+          .chordtime { punch.disp_time }
+        .scale
 
     #songlist
       .list

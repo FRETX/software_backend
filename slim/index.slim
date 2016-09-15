@@ -29,12 +29,6 @@ html
           INPUT rv-value='punch.disp_time'
           INPUT.chord rv-on-click='ctrl.choose_chord' rv-value='punch.chord'
 
-      #timeline
-        .chord rv-each-punch='data.punches' rv-data-selected='punch.selected'
-          .chordname { punch.chord }
-          .chordtime { punch.disp_time }
-        .scale
-
     #songlist
       .list
         .song rv-each-song='data.songs' rv-on-click='ctrl.load_song' { song.title }

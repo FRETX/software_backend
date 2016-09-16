@@ -8,6 +8,7 @@ end
 
 post '/songs/add' do
   data = JSON.parse request.body.read
+  p data
 
   with_db do |conn|
     query = %{

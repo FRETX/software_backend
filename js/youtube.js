@@ -62,7 +62,8 @@ youtube_player.prototype = {
     if( event.data == YT.PlayerState.PLAYING ) {
       this.timer = setInterval( function() {
         if(isFunction(this.timechange_callback)) {
-          this.current_time = this.player.getCurrentTime();
+          var time_s = this.player.getCurrentTime();
+          this.current_time = typeof(time_s) == 'undefined' ? 0 : time_s.toFixed(3);
           this.timechange_callback(this.current_time);
         }
       }.bind(this), 300 );

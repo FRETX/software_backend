@@ -9,3 +9,5 @@ Dir["ruby/*.rb"].each { |file| require File.expand_path(file); }
 # Thu 09/08 10pm - 3am 5hrs
 # Mon 09/12 9pm - 2am 5hrs
 # Tue 09/13 7pm - 1am 6hrs
+
+# Thu 09/15 8pm - 2am 6hrs

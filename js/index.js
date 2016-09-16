@@ -120,25 +120,22 @@ function on_songlist_click(e) {
 
 ///////////////////////////////////////////// UI EVENTS //////////////////////////////////////////////////////
 
+
 /////////////////////////////////////////// RIVETS ///////////////////////////////////////////////////////////
 
 data = {
-  on_deck: 'No Chord',
-  punches: [{ "time": 0, "disp_time": '00:00:00', "chord": "No Chord" }],
+  next_chord: 'No Chord',
+  punches: [ new Punch(0,'No Chord') ],
   current_punch_index: 0
 }
 
 ctrl = {
-  add_punch: function() {
-    var time = player.current_time;
-    var disp_time = secs_to_hms(time);
-    var this_punch = { "time": time, "disp_time": disp_time, "chord": "No Chord" };
-    data.punches.push(this_punch);
+  add_punch: function() {  
+    data.punches.push( new Punch( player.current_time, data.next_chord ) );
     data.punches.sort(SortByTime);
 
     var objDiv = document.getElementById("punchlist");
-    objDiv.scrollTop = objDiv.scrollHeight;
-    this_punch.chord = data.on_deck;
+    objDiv.scrollTop = objDiv.scrollHeight;   /// ????
   },
   delete_punch: function(e,m) {
     var i = data.punches.indexOf(m.punch);
@@ -166,15 +163,20 @@ function get_song_list() { $.get('/songs/list', on_song_list ); }
 
 function upload() {
   var title = window.prompt("Enter The Name Of Your Song", player.videodata.title);
+  var punches = [];
+  for(var i=0; i<data.punches.length; i++) {
+    punches.push(data.punches[i].to_model());
+  }
   var songdata = {
     id: player.videodata.id,
     title: title,
-    chords: data.punches
+    chords: punches
   }
   $.post('/songs/add', JSON.stringify(songdata));
 }
 
 ///////////////////////////////////////// API CALLS //////////////////////////////////////////////////////////
+
 
 /////////////////////////////////////// API CALLBACKS ////////////////////////////////////////////////////////
 
@@ -186,17 +188,31 @@ function on_song_list(list) {
 /////////////////////////////////////// API CALLBACKS ////////////////////////////////////////////////////////
 
 
+////////////////////////////////////////// ORPHANS ///////////////////////////////////////////////////////////
+
 function build_player() {
   song = data['songs'][Math.floor(Math.random()*data['songs'].length)];
   player = new youtube_player(song['youtube_id']);
   player.on_time_change(on_time_change);
   player.on_video_data(on_video_data);  
-  data.punches = song['punches'];
+  load_punches(song['punches']);
 }
 
 function load_song(song) {
   player.load(song['youtube_id']);
   data.current_punch_index = 0;
   id('punchlist').scrollTop = 0;
-  data.punches = song['punches'];
+  load_punches(song['punches']);
+}
+
+function load_punches(punches) {
+  data.punches = [];
+  for(var i=0; i<punches.length; i++) {
+    console.log(punches[i].chord);
+    data.punches.push( new Punch(punches[i].time, punches[i].chord) );
+  }
+}
+
+function jog_song(offset_ms) {
+  for(var i=0; i<data.punches.length; i++) data.punches[i].jog(offset_ms); 
 }

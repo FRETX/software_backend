@@ -22,20 +22,18 @@ function render(html) {
   return elem.children[0]  
 }
 
-function secs_to_hms(secs) {
-  hrs  = Math.floor(secs/3600);
-  secs = secs - hrs*3600;
-  mins = Math.floor(secs/60);
-  secs = secs - mins*60;
-  secs = Math.round(secs);
-
-  hrs  =  hrs.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false });
-  mins = mins.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false });
-  secs = secs.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false });
-
-  return(hrs + ':' + mins + ':' + secs);
-}
-
 function SortByTime(a, b) { 
   return ((a.time < b.time) ? -1 : ((a.time > b.time) ? 1 : 0));
+}
+
+function empty(obj) {
+  return( typeof(obj) == 'undefined' || obj == null );
+}
+
+function val_or_default(obj,def) {
+  return( empty(obj) ? def : obj);  
+}
+
+function val_or_null(obj) {
+  return val_or_default(obj,null);
 }

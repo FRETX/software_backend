@@ -3,7 +3,7 @@ html
     title FRETX
     == no_scaling
     == css ['chordpicker','index']
-    == js  ['jquery','rivets','lib','chordpicker','youtube','index']
+    == js  ['jquery','rivets','lib','chordpicker','youtube','punch','index']
   body
     .content
       .header
@@ -19,7 +19,7 @@ html
           .title
           .description
       .punch
-        INPUT#on_deck.chord rv-value='data.on_deck' onclick='on_ondeck_click(event);'
+        INPUT#on_deck.chord rv-value='data.next_chord' onclick='on_ondeck_click(event);'
         BUTTON#gettime rv-on-click='ctrl.add_punch' Add Chord
         BUTTON#upload onclick='upload();' Upload Song
         

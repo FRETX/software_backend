@@ -1,26 +1,32 @@
 html
+
   head
     title FRETX
     == no_scaling
     == css ['chordpicker','index']
-    == js  ['jquery','rivets','lib','chordpicker','youtube','punch','index']
+    == js  ['jquery','rivets','lib','chordpicker','changespicker','youtube','punch','index']
+
   body
     .content
       .header
         img#logo src='logo.png'
         BUTTON#open Open Song
-  
+
       .addvid
         INPUT#link value="Add the link to your YouTube video here..."
         BUTTON Add
+
       .vid
         #player
         .vidinfo#footnotediv
           .title
           .description
+
       .punch
         INPUT#on_deck.chord rv-value='data.next_chord' onclick='on_ondeck_click(event);'
-        BUTTON#gettime rv-on-click='ctrl.add_punch' Add Chord
+        BUTTON#pickchanges Changes
+        BUTTON#addchord rv-on-click='ctrl.add_punch' Add Chord
+
         BUTTON#upload onclick='upload();' Upload Song
         
       .punchlist#punchlist

@@ -96,13 +96,17 @@ BUTTON, INPUT {
   overflow-y: scroll;
 }
 
-.punch BUTTON {
+.punch #addchord {
+  border-radius: 0 10px 10px 0;
+}
+
+.punch #upload {
   border-radius: 10px;
 }
 
 #on_deck {
+  border-radius: 10px 0 0 10px;
   text-align: center;
-  margin-right: 30px;
   width: 250px;
 }
 
@@ -194,6 +198,10 @@ BUTTON, INPUT {
 
 #songlist .song:hover {
   background-color: rgba(200,150,150,0.6);
+}
+
+#gettime {
+
 }
 
 @media (min-width: 1200px) {

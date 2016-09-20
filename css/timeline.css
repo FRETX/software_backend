@@ -31,4 +31,5 @@
 #timeline .scale {
   background-color: white;
   height: 2em;
+  border-radius: 2em;
 }

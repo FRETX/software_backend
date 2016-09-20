@@ -21,7 +21,7 @@ Timeline.prototype = {
     return render([ 
       `<div id='timeline'>`,    
         `<div class='chords'>`,
-          `<div class='chord' rv-each-punch='data.punches' rv-data-selected='punch.selected' rv-style-flex='punch.duration_s'>`,
+          `<div class='chord' rv-each-punch='data.punches' rv-data-selected='punch.selected' rv-style-flex='punch.duration_s' >`,
             `<div class='chordname'> { punch.chord } </div>`,
             `<div class='chordtime'> { punch.disp_time } </div>`,
           `</div>`,

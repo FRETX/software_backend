@@ -22,6 +22,13 @@ function render(html) {
   return elem.children[0]  
 }
 
+function load_css(id,css) {
+  var elem = document.createElement('style');
+  elem.id = name;
+  elem.innerHTML = css;
+  document.getElementsByTagName("head")[0].appendChild(elem);  
+}
+
 function SortByTime(a, b) { 
   return ((a.time < b.time) ? -1 : ((a.time > b.time) ? 1 : 0));
 }

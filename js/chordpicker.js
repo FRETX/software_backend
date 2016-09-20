@@ -30,6 +30,7 @@ chordpicker.prototype = {
   	var arr = name.split(' ');
     this.rootlist.set_root(arr[0]);
     this.qualitylist.set_quality(arr[1]);
+    this.qualitylist.show();
   },
 
   get_chord: function(cb) {
@@ -152,7 +153,7 @@ function qualitylist() {
 qualitylist.prototype = {
   constructor: qualitylist,
 
-  show: function() { this.dom.style.display = 'initial'; },
+  show: function() { this.dom.style.display = 'inline-block'; },
   hide: function() { this.dom.style.display = 'none';    },
 
   build_list: function() {

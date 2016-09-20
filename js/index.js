@@ -1,12 +1,14 @@
 /////////////////////////////////////////////// SETUP /////////////////////////////////////////////////////////
 
-var picker;
+var chord_picker;
+var changes_picker;
 
 $(document).ready(function() {
   get_song_list();
   setup_data_bindings();
   setup_ui_event_handlers();
-  picker = new chordpicker();
+  chord_picker = new chordpicker();
+  changes_picker = new changespicker(document.body, chord_picker);
   load_youtube_api();
 });
 
@@ -21,6 +23,7 @@ function setup_ui_event_handlers() {
   $('#songlist').on('click', on_songlist_click);
   $('#open').on('click', on_open_click);
   $('.chord').on('focus', on_chord_focus);
+  $('#pickchanges').on('click', on_pick_changes );
 }
 
 /////////////////////////////////////////////// SETUP /////////////////////////////////////////////////////////
@@ -102,8 +105,8 @@ function on_addvid_click(e) {
 }
 
 function on_ondeck_click(e) {
-  picker.set_chord( e.target.value );
-  picker.get_chord( function(chord) { data.on_deck = chord; } );
+  chord_picker.set_chord( e.target.value );
+  chord_picker.get_chord( function(chord) { data.next_chord = chord; } );
 }
 
 function on_chord_focus(e) {
@@ -118,15 +121,37 @@ function on_songlist_click(e) {
   id('songlist').style.display = 'none';
 }
 
+function on_pick_changes(e) {
+  if(empty(changes_picker)) return;
+  changes_picker.get_changes( function(changes) { 
+    data.changes = changes;
+    data.changes_index = 0;
+    update_change();
+  } );
+}
+
 ///////////////////////////////////////////// UI EVENTS //////////////////////////////////////////////////////
 
+function update_change() {
+  if(data.changes.length==0) return;
+  data.next_chord = data.changes[data.changes_index];
+}
+
+function next_change() {
+  if(data.changes.length==0) return;
+  if( data.changes_index == data.changes.length - 1 ) { data.changes_index = 0; }
+  else { data.changes_index++; }
+  update_change();
+}
 
 /////////////////////////////////////////// RIVETS ///////////////////////////////////////////////////////////
 
 data = {
   next_chord: 'No Chord',
   punches: [ new Punch(0,'No Chord') ],
-  current_punch_index: 0
+  current_punch_index: 0,
+  changes: [],
+  changes_index: 0
 }
 
 ctrl = {
@@ -136,6 +161,7 @@ ctrl = {
 
     var objDiv = document.getElementById("punchlist");
     objDiv.scrollTop = objDiv.scrollHeight;   /// ????
+    next_change();
   },
   delete_punch: function(e,m) {
     var i = data.punches.indexOf(m.punch);
@@ -208,7 +234,6 @@ function load_song(song) {
 function load_punches(punches) {
   data.punches = [];
   for(var i=0; i<punches.length; i++) {
-    console.log(punches[i].chord);
     data.punches.push( new Punch(punches[i].time, punches[i].chord) );
   }
 }

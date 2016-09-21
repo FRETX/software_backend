@@ -26,7 +26,7 @@ function wait_for_youtube_api(callback) {
 function youtube_player(video_id) {
   this.timer = false;
   this.video_id = false;
-  this.current_time = 0;
+  this._current_time = 0;
   this.videodata = {};
   wait_for_youtube_api( function(video_id) {
     this.player = this.build_player('player',video_id);
@@ -52,6 +52,8 @@ youtube_player.prototype = {
     });
   },
 
+  get current_time() { return this.player.getCurrentTime().toFixed(3); },
+
   onPlayerReady: function(event) {
     event.target.playVideo();
     this.get_video_data();
@@ -63,8 +65,8 @@ youtube_player.prototype = {
       this.timer = setInterval( function() {
         if(isFunction(this.timechange_callback)) {
           var time_s = this.player.getCurrentTime();
-          this.current_time = typeof(time_s) == 'undefined' ? 0 : time_s.toFixed(3);
-          this.timechange_callback(this.current_time);
+          this._current_time = typeof(time_s) == 'undefined' ? 0 : time_s.toFixed(3);
+          this.timechange_callback(this._current_time);
         }
       }.bind(this), 300 );
     }

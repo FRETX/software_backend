@@ -30,7 +30,7 @@ function load_css(id,css) {
 }
 
 function SortByTime(a, b) { 
-  return ((a.time < b.time) ? -1 : ((a.time > b.time) ? 1 : 0));
+  return ((Float.parseFloat(a.time) < Float.parseFloat(b.time)) ? -1 : ((Float.parseFloat(a.time) > Float.parseFloat(b.time)) ? 1 : 0));
 }
 
 function empty(obj) {

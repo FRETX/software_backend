@@ -1,13 +1,13 @@
 
 function changespicker(parent, picker) {
   this.state = {
-  	chords: []
+  	chords: [],
+    current_index: 0
   }
-  this.dom = this.build_dom();
-  if(!empty(parent)) { parent.appendChild(this.dom); }
+  this.bind_handlers();
+  this.build_dom(parent);
   this.bind_dom();
   this.load_styles();
-  this.bind_handlers();
   this.picker = picker;
 }
 
@@ -22,30 +22,9 @@ changespicker.prototype = {
   	this.callback = cb;
   },
 
-  build_dom: function() { 
-    return render([
-      `<div id='changespicker' rv-on-click='obj.close'>`,
-      `  <div class='changelist' rv-on-click='obj.cancelEvent'>`,
-      `    <div class='description'>`,
-      `      Enter a Chord Progresion`,
-      `    </div>`,
-      `    <div class='chord' rv-each-chord='data.chords'>`,
-      `      <button rv-on-click='obj.rem_chord'> X </button>`,
-      `      <input rv-value='chord' rv-on-focus='obj.edit_chord'>`,
-      `    </div>`,
-      `    <button class='add' rv-on-click='obj.add_chord'>+</button>`,
-      `  </div>`,
-      `</div>`
-    ].join(''));
-  },
-
-  bind_dom: function() {
-  	rivets.bind(this.dom, { data: this.state, obj: this });
-  },
-
-  load_styles: function() {
-  	load_css('changespicker_styles', CHANGESPICKER_STYLES);
-  },
+  build_dom:   function() { this.dom = render(this.HTML); if(!empty(parent)) parent.appendChild(this.dom); },
+  bind_dom:    function() { rivets.bind(this.dom, { data: this.state, obj: this }); },
+  load_styles: function() { load_css('changespicker_styles', this.CSS); },
 
   bind_handlers: function() {
   	this.cancelEvent = function(e) { cancelEvent(e); } ;
@@ -71,11 +50,32 @@ changespicker.prototype = {
     }.bind(this);
   }
 }
+
+//////////////////////////////////////// HTML TEMPLATE ////////////////////////////////////////////////////
+
+changespicker.prototype.HTML = `
+
+<div id='changespicker' rv-on-click='obj.close'>
+  <div class='changelist' rv-on-click='obj.cancelEvent'>
+    <div class='description'>
+      Enter a Chord Progresion
+    </div>
+    <div class='chord' rv-each-chord='data.chords'>
+      <button rv-on-click='obj.rem_chord'> X </button>
+      <input rv-value='chord' rv-on-focus='obj.edit_chord'>
+    </div>
+    <button class='add' rv-on-click='obj.add_chord'>+</button>
+  </div>
+</div>
+
+`;
+
+//////////////////////////////////////// HTML TEMPLATE ////////////////////////////////////////////////////
 	
 
 ///////////////////////////////////////// CSS STYLES //////////////////////////////////////////////////////
 
-var CHANGESPICKER_STYLES = `
+changespicker.prototype.CSS = `
 
 #changespicker {
   position: absolute;

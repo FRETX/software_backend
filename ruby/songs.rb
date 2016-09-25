@@ -1,3 +1,11 @@
+get '/songs/applist' do
+  content_type :json
+  with_db do |conn|
+    resp = conn.exec jsonarray("SELECT id AS key, title, youtube_id FROM songs")
+    get_val(resp,[])
+  end
+end
+
 get '/songs/list' do
   content_type :json
   with_db do |conn|

@@ -22,9 +22,9 @@ changespicker.prototype = {
   	this.callback = cb;
   },
 
-  build_dom:   function() { this.dom = render(this.HTML); if(!empty(parent)) parent.appendChild(this.dom); },
-  bind_dom:    function() { rivets.bind(this.dom, { data: this.state, obj: this }); },
-  load_styles: function() { load_css('changespicker_styles', this.CSS); },
+  build_dom:   function(parent) { this.dom = render(this.HTML);  if(!empty(parent)) parent.appendChild(this.dom); },
+  bind_dom:    function()       { rivets.bind(this.dom, { data: this.state, obj: this }); },
+  load_styles: function()       { load_css('changespicker_styles', this.CSS); },
 
   bind_handlers: function() {
   	this.cancelEvent = function(e) { cancelEvent(e); } ;

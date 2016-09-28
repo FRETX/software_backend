@@ -15,10 +15,9 @@ get '/songs/list' do
 end
 
 post '/songs/add' do
-  data = JSON.parse request.body.read
-  p data
-
   with_db do |conn|
+    data = JSON.parse request.body.read
+
     query = %{
       WITH update AS (
         UPDATE songs 
@@ -32,9 +31,8 @@ post '/songs/add' do
       RETURNING id;
     } 
     conn.exec_params( query, [data['id'],data['title'],JSON.generate(data['chords'])] )    
-  end
-
-  upload_song( song_to_fretx(data) )
+    upload_song( song_to_fretx(data) )
+  end 
 end
 
 def song_to_fretx(data) 
@@ -42,7 +40,7 @@ def song_to_fretx(data)
   	payload = ""
   	key = "#{data['title']}.#{data['id']}.txt"
     data['chords'].each do |chord|
-      time_ms = (chord['time']*1000).round()
+      time_ms = ( chord['time'].to_f * 1000 ).round()
       if(chord['chord'] == 'No Chord') then
         fingering = '{0}'
       else

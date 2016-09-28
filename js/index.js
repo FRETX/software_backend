@@ -198,8 +198,10 @@ function upload() {
     title: title,
     chords: punches
   }
-  $.post('/songs/add', JSON.stringify(songdata));
-}
+  $.post('/songs/add', JSON.stringify(songdata) )
+    .done( function() { alert("Upload Successful!"); } )
+    .fail( function() { alert("Upload Failed!");     } );
+} 
 
 ///////////////////////////////////////// API CALLS //////////////////////////////////////////////////////////
 

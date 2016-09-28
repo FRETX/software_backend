@@ -62,6 +62,7 @@ punches = {
     data.current_punch_index 
     for(var i=0; i<data.punches.length; i++) {
       if( punches.in_punch(i,time) ) {
+        //console.log("in punch: " + i);
         data.punches[i]['selected'] = true;
         data.current_punch_index = i;
         if(i < 3 && id('punchlist').scrollTop < 40) return;
@@ -74,13 +75,14 @@ punches = {
     }
   },
   in_punch: function(index,time) { 
+    time = parseFloat(time);
     var last_node  = ( index == data.punches.length - 1 );
     var this_punch = data.punches[index];
     var next_punch = last_node ? null : data.punches[index+1];
 
-    if( time < this_punch['time'] ) return false;  // TOO LOW
+    if( time < parseFloat(this_punch['time']) ) return false;  // TOO LOW
     if( last_node ) return true                    // LAST NODE
-    if( time >= next_punch['time'] ) return false; // TOO HIGH
+    if( time >= parseFloat(next_punch['time']) ) return false; // TOO HIGH
     return true;                                   // JUST RIGHT
   }
 }

@@ -200,7 +200,9 @@ function upload() {
   }
   $.post('/songs/add', JSON.stringify(songdata) )
     .done( function() { alert("Upload Successful!"); } )
-    .fail( function() { alert("Upload Failed!");     } );
+    .fail( function(resp) { 
+      alert("Upload Failed! \n" + resp.responseText);     
+    } );
 } 
 
 ///////////////////////////////////////// API CALLS //////////////////////////////////////////////////////////

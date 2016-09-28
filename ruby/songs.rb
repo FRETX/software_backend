@@ -30,8 +30,11 @@ post '/songs/add' do
       WHERE NOT EXISTS (SELECT * FROM UPDATE)
       RETURNING id;
     } 
-    conn.exec_params( query, [data['id'],data['title'],JSON.generate(data['chords'])] )    
-    upload_song( song_to_fretx(data) )
+    conn.exec_params( query, [data['id'],data['title'],JSON.generate(data['chords'])] )
+    song = song_to_fretx(data)
+    puts song
+    halt 500, JSON.pretty_generate(song) unless song[:error].nil?
+    upload_song( song )
   end 
 end
 
@@ -46,10 +49,12 @@ def song_to_fretx(data)
       else
         chord_obj = chord_from_name(chord['chord'])
         resp = conn.exec_params "SELECT * FROM chords WHERE root=$1 AND quality=$2", [chord_obj[:root_value], chord_obj[:quality]]
+         return { :error => 'Unknown Chord', :chord => chord['chord'] } if resp.ntuples==0
         fingering = resp[0]['fingering']
       end
       payload << "#{time_ms} #{fingering}\r\n"
     end
+    data['chords'].first(4) 
     { :key => key, :payload => payload }
   end
 end

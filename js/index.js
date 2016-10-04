@@ -54,9 +54,8 @@ punches = {
     return { start: data.punches[data.current_punch_index-1]["time"], end: data.punches[data.current_punch_index]["time"] };
   },
   in_range: function(time) {
-    var range = punches.range();
-    //console.log(time >= range.start && time < range.end);
     if(data.punches.length == 0) return true;
+    var range = punches.range();
     return(time >= range.start && time < range.end); 
   },
   set: function(time) {

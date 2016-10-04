@@ -56,6 +56,7 @@ punches = {
   in_range: function(time) {
     var range = punches.range();
     //console.log(time >= range.start && time < range.end);
+    if(data.punches.length == 0) return true;
     return(time >= range.start && time < range.end); 
   },
   set: function(time) {

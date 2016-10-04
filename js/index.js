@@ -50,7 +50,7 @@ punches = {
       if(data.punches.length==1) return { start: 0, end: player.duration(), index: 0 };
       return { start: 0, end: data.punches[1]['time'], index: 0 };
     }
-    if(data.current_punch_index > data.punches.length) return { start: 0, end: 0, index: -1 };
+    if(data.current_punch_index >= data.punches.length) return { start: data.punches[data.punches.length-1]["time"], end: player.duration(), index: data.punches.length-1 };
     return { start: data.punches[data.current_punch_index-1]["time"], end: data.punches[data.current_punch_index]["time"] };
   },
   in_range: function(time) {

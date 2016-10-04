@@ -170,8 +170,8 @@ ctrl = {
     data.punches.splice(i,1);
   },
   choose_chord: function(e,m) {
-    picker.set_chord(m.punch.chord);
-    picker.get_chord(function(chord) {
+    chord_picker.set_chord(m.punch.chord);
+    chord_picker.get_chord(function(chord) {
       m.punch.chord = chord;
     });
   },

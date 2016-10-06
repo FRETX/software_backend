@@ -171,6 +171,7 @@ BUTTON, INPUT {
   bottom: 0;
   background-color: rgba(0,0,0,0.5);
   cursor: pointer;
+  z-index: 10;
 }
 
 #songlist .list {

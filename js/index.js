@@ -10,6 +10,9 @@ $(document).ready(function() {
   chord_picker = new chordpicker();
   changes_picker = new changespicker(document.body, chord_picker);
   load_youtube_api();
+
+  chordlib = new Chordlib();
+  fretboard = new Fretboard(id('fretboard_container'));
 });
 
 function setup_data_bindings() {
@@ -33,7 +36,7 @@ function setup_ui_event_handlers() {
 
 function on_video_data(data) {
   $('.vidinfo .title')[0].innerHTML = data['title'];
-  $('.vidinfo .description')[0].innerHTML = data['description'];
+  //$('.vidinfo .description')[0].innerHTML = data['description'];
   punches.set(player.current_time);
 }
 
@@ -69,6 +72,7 @@ punches = {
         if(i < 3 && id('punchlist').scrollTop < 40) return;
         $('.punchrow')[i].scrollIntoView(false);
         id('punchlist').scrollTop += 85; 
+        fretboard.load_chord(chordlib.get_chord(data.punches[i].chord));
       } 
       else {
         data.punches[i]['selected'] = false;
@@ -82,9 +86,9 @@ punches = {
     var next_punch = last_node ? null : data.punches[index+1];
 
     if( time < parseFloat(this_punch['time']) ) return false;  // TOO LOW
-    if( last_node ) return true                    // LAST NODE
+    if( last_node ) return true                                // LAST NODE
     if( time >= parseFloat(next_punch['time']) ) return false; // TOO HIGH
-    return true;                                   // JUST RIGHT
+    return true;                                               // JUST RIGHT
   }
 }
 

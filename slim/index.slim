@@ -4,7 +4,8 @@ html
     title FRETX
     == no_scaling
     == css ['chordpicker','index']
-    == js  ['jquery','rivets','lib','chordpicker','changespicker','youtube','punch','index']
+    == js  ['jquery','rivets','lib','chordlib']
+    == js  ['chordpicker','changespicker','fretboard','youtube','punch','index']
 
   body
     .content
@@ -20,7 +21,7 @@ html
         #player
         .vidinfo#footnotediv
           .title
-          .description
+          .description#fretboard_container
 
       .punch
         INPUT#on_deck.chord rv-value='data.next_chord' onclick='on_ondeck_click(event);'

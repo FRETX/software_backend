@@ -2,4 +2,10 @@ html
   head
     == css ['fretboard']
     == js  ['jquery', 'lib', 'rivets', 'fretboard']
+
+    javascript:
+      $(document).ready(function() {
+        fretboard = new Fretboard(document.body);
+      });
+      
     body

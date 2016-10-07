@@ -110,8 +110,8 @@ function on_addvid_blur(e) {
 }
 
 function on_addvid_click(e) {
-  player.load($('#link').val())
-  data.punches = [{ "time": 0, "disp_time": '00:00:00', "chord": "No Chord" }]
+  player.load($('#link').val());
+  data.punches = [new Punch(0,'No Chord')];
 }
 
 function on_ondeck_click(e) {
@@ -120,7 +120,7 @@ function on_ondeck_click(e) {
 }
 
 function on_chord_focus(e) {
-  e.target.blur();
+  e.target.blur();  
 }
 
 function on_open_click(e) {

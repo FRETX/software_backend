@@ -38,6 +38,7 @@ function on_video_data(data) {
   $('.vidinfo .title')[0].innerHTML = data['title'];
   //$('.vidinfo .description')[0].innerHTML = data['description'];
   punches.set(player.current_time);
+  punches.set(0);
 }
 
 
@@ -69,10 +70,11 @@ punches = {
         //console.log("in punch: " + i);
         data.punches[i]['selected'] = true;
         data.current_punch_index = i;
+        fretboard.load_chord(chordlib.get_chord(data.punches[i].chord));
         if(i < 3 && id('punchlist').scrollTop < 40) return;
         $('.punchrow')[i].scrollIntoView(false);
         id('punchlist').scrollTop += 85; 
-        fretboard.load_chord(chordlib.get_chord(data.punches[i].chord));
+        
       } 
       else {
         data.punches[i]['selected'] = false;

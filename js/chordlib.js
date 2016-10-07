@@ -11,7 +11,7 @@ Chordlib.prototype = {
 
   get_chord: function(name) {
     var chord = this.CHORD_REGEX.exec(name);
-    if(empty(chord)) {  return({ name: '', root: '', quality: '', root_value: 0 }); } 
+    if(empty(chord)) {  return({ name: 'No Chord', root: '', quality: '', root_value: 0, fingering: [0] }); } 
     root_val = this.root_value(chord[1]);
     fingering = this.get_fingering(root_val,chord[5]);
     return({ name: chord[1] + ' ' + chord[5], root: chord[1], quality: chord[5], root_value: root_val, fingering: fingering });

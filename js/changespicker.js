@@ -83,7 +83,7 @@ changespicker.prototype.CSS = `
   top: 0; bottom: 0;
   display: none;
   background-color: rgba(0,0,0,0.6);
-  z-index: 1;
+  z-index: 4;
 }
 
 #changespicker::before {

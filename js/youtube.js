@@ -59,17 +59,18 @@ youtube_player.prototype = {
     this.get_video_data();
   },
 
+  update_time: function() {
+    var time_s = this.player.getCurrentTime();
+    this._current_time = typeof(time_s) == 'undefined' ? 0 : time_s.toFixed(3);
+    if(isFunction(this.timechange_callback)) {
+      this.timechange_callback(this._current_time);
+    }
+  },
+
   onPlayerStateChange: function(event) {
     if(this.timer)  { clearInterval(this.timer); this.timer = false; }
-    if( event.data == YT.PlayerState.PLAYING ) {
-      this.timer = setInterval( function() {
-        if(isFunction(this.timechange_callback)) {
-          var time_s = this.player.getCurrentTime();
-          this._current_time = typeof(time_s) == 'undefined' ? 0 : time_s.toFixed(3);
-          this.timechange_callback(this._current_time);
-        }
-      }.bind(this), 300 );
-    }
+    if( event.data == YT.PlayerState.PLAYING ) { this.timer = setInterval( this.update_time.bind(this), 100 ); }
+    //else                                       { this.timer = setInterval( this.update_time.bind(this), 500 ); }
   },
 
   onVideoData: function(data) {

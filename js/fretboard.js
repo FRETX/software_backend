@@ -1,8 +1,8 @@
 
 function Fretboard(parent) {
   this.state = {
-    name: '',
-    fingering: [],
+    name: 'No Chord',
+    fingering: [0],
   	strings: [
   	  { frets: [ {val:0}, {val:0}, {val:0}, {val:0}, {val:0} ] },
       { frets: [ {val:0}, {val:0}, {val:0}, {val:0}, {val:0} ] },
@@ -23,8 +23,14 @@ Fretboard.prototype = {
   bind_dom:      function()       { rivets.bind(this.dom, { data: this.state, obj: this }); },
   load_styles:   function()       { load_css('fretboard_styles', this.CSS); },
 
+  reset: function() {
+    this.state.name = 'No Chord';
+    this.state.fingering = [0];
+    this.clear_display();
+  },
+
   load_chord: function(chord) {
-    console.log(chord.name);
+    //console.log(chord.name);
     if(chord.root_value == 0 ) { this.clear_display(); return; }
     if(this.state.fingering == chord.fingering) return;
     this.state.name = chord.name;
@@ -57,14 +63,35 @@ Fretboard.prototype = {
 Fretboard.prototype.HTML = `
 
 <div id='fretboard'>
-  <div class='string' rv-each-string='data.strings'>
-    <div class='fret' rv-each-fret='string.frets' >
-      <div class='str'></div>
-      <div class='light' rv-data-state='fret.val'></div>
-      <div class='wire'></div>
+
+  <div class='fret_display'>
+
+    <div class='strings'>
+      <div class='row' rv-each-string='data.strings'> 
+        <div class='string'> </div>
+      </div>
     </div>
+
+    <div class='lights' >
+      <div class='row' rv-each-string='data.strings'>
+        <div class='fret' rv-each-fret='string.frets' >
+          <div class='light' rv-data-state='fret.val'></div>
+        </div>
+      </div>
+    </div>
+
+    <div class='frets'> 
+      <div class='row' rv-each-string='data.strings'>
+        <div class='fret' rv-each-fret='string.frets' >
+          <div class='wire' > </div>
+        </div>
+      </div>
+    </div>
+
   </div>
+
   <div class='chordname' rv-text='data.name'></div>
+
 </div>
 
 `;
@@ -76,14 +103,31 @@ Fretboard.prototype.HTML = `
 Fretboard.prototype.CSS = `
 
 #fretboard {
-  width: 300px;
-  height: 200px;
-  background-color: rgba(70,70,70,1);
   display: inline-block;
-  box-shadow: 0 0 5px black;
+  position: relative;
 }
 
-#fretboard .string {
+#fretboard .fret_display {
+  box-shadow: 0 0 5px black;
+  background-color: rgba(70,70,70,1);
+  position: relative;
+  width: 300px;
+  height: 200px
+}
+
+#fretboard .strings,
+#fretboard .lights,
+#fretboard .frets {
+  position: absolute;
+  left: 0; right: 0;
+  top: 0; bottom: 0;
+}
+
+#fretboard .frets   { z-index: 1; }
+#fretboard .strings { z-index: 2; }
+#fretboard .lights  { z-index: 3; }
+
+#fretboard .row {
   position: relative;
   height: 16.66%;
   width: 100%;
@@ -93,37 +137,36 @@ Fretboard.prototype.CSS = `
   position: relative;
   display: inline-block;
   width: 24%; 
-  height: 100%
+  height: 100%;
 }
 
-
-
-#fretboard .fret .light[data-state='0'] {
-  background-color: transparent;
+#fretboard .strings .string {
+  position: absolute;
+  margin: auto;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+  display: inline-block;
+  height: 4px;
+  box-shadow: 0 0 5px black;
 }
 
-
-#fretboard .fret .wire {
+#fretboard .frets .wire {
   position: absolute;
   right: 0;
   top: 0;
   bottom: 0;
   width: 5px;
   background-color: rgba(255,255,0,0.5);
-  z-index: 4;
 }
 
-#fretboard .fret .str {
-  position: absolute;
-  top: 0; bottom: 0;
-  left: 0; right: 0;
-  margin: auto;
-  height: 3px;
-  background-color: rgba(255,0,0,1);
-  z-index: 5;
+#fretboard .frets .fret:first-child .wire {
+  background-color: rgba(255,255,255,0.5);
+  width: 12px;
+  left: 0;
+  right: auto;
 }
 
-#fretboard .fret .light {
+#fretboard .lights .light {
   position: absolute;
   top: 0; bottom: 0;
   right: 15%;
@@ -131,23 +174,19 @@ Fretboard.prototype.CSS = `
   height: 20px;
   width: 20px;
   background-color: rgba(255,0,0,1);
-  z-index: 6;
   border-radius: 10px;
 }
 
-#fretboard .fret:first-child .wire {
-	background-color: rgba(255,255,255,0.5);
-	width: 12px;
-	left: 0;
-	right: auto;
+#fretboard .chordname {
+  font-size: 18pt;
+  font-weight: bold;
+  margin: 10px;
 }
-
 
 #fretboard .fret:nth-child(1),
 #fretboard .fret:nth-child(2) { width: 14%; }
 
-
-#fretboard .fret .str {
+#fretboard .strings .string {
   background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAK0lEQVQIW2N8fdrzPwMUiJpuZ2CECYA4IAAWgHFen/ZkYGRgYABrAXFAAABygxD/zAO+2gAAAABJRU5ErkJggg==) repeat;
 }
 
@@ -159,6 +198,8 @@ Fretboard.prototype.CSS = `
   background: linear-gradient(to right,  rgba(226,226,226,1) 0%,rgba(219,219,219,1) 31%,rgba(209,209,209,1) 33%,rgba(209,209,209,1) 33%,rgba(254,254,254,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe',GradientType=1 ); /* IE6-9 */
 }
+
+#fretboard .fret .light[data-state='0'] { background-color: transparent; }
 
 #fretboard .fret .light[data-state='1'] {
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f94154+0,ff97a1+19,ff2339+38&1+0,0.5+48,0+76 */

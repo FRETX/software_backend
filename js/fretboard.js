@@ -80,12 +80,12 @@ Fretboard.prototype.HTML = `
       </div>
     </div>
 
-    <div class='frets'> 
-      <div class='row' rv-each-string='data.strings'>
-        <div class='fret' rv-each-fret='string.frets' >
-          <div class='wire' > </div>
-        </div>
-      </div>
+    <div class='frets'>
+      <div class='fret'><div class='wire'></div></div>
+      <div class='fret'><div class='wire'></div></div>
+      <div class='fret'><div class='wire'></div></div>
+      <div class='fret'><div class='wire'></div></div>
+      <div class='fret'><div class='wire'></div></div>
     </div>
 
   </div>
@@ -112,7 +112,8 @@ Fretboard.prototype.CSS = `
   background-color: rgba(70,70,70,1);
   position: relative;
   width: 300px;
-  height: 200px
+  height: 200px;
+  border-radius: 2px;
 }
 
 #fretboard .strings,
@@ -138,6 +139,9 @@ Fretboard.prototype.CSS = `
   display: inline-block;
   width: 24%; 
   height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 #fretboard .strings .string {
@@ -150,6 +154,11 @@ Fretboard.prototype.CSS = `
   box-shadow: 0 0 5px black;
 }
 
+#fretboard .frets {
+  width: 100%;
+  font-size: 0;
+}
+
 #fretboard .frets .wire {
   position: absolute;
   right: 0;
@@ -157,6 +166,9 @@ Fretboard.prototype.CSS = `
   bottom: 0;
   width: 5px;
   background-color: rgba(255,255,0,0.5);
+  border-radius: 2.5px;
+  box-shadow: 0 0 4px black;
+  margin: 1px 0;
 }
 
 #fretboard .frets .fret:first-child .wire {
@@ -164,6 +176,9 @@ Fretboard.prototype.CSS = `
   width: 12px;
   left: 0;
   right: auto;
+  box-shadow: 5px 0 4px -4px black;
+  border-radius: 2px;
+  margin: 0;
 }
 
 #fretboard .lights .light {

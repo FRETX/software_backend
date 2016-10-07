@@ -1,8 +1,12 @@
 function Punch(time_s,chord) {
+  this._time         = null;
+  this._chord        = null;
   this._display_time = null;
-  this._time = val_or_null(time_s);
-  this._chord = val_or_null(chord);
-  this._next_node = null;
+  this._prev_node    = null;
+  this._next_node    = null;
+  this.linked        = false;
+  this.time  = val_or_null(time_s);
+  this.chord = val_or_null(chord);
 }
 
 Punch.prototype = {
@@ -48,8 +52,9 @@ Punch.prototype = {
   },
 
   jog: function(offset_ms) {
-    let t = this.time + ( offset_ms / 1000 );
-    this.time = t < 0 ? 0 : t;
+    let t = parseFloat(this.time) + parseFloat( offset_ms / 1000 );
+    this.time = (t < 0 ? 0 : t);
+    this.generate_display_time();
     return this;
   },
 
@@ -62,3 +67,26 @@ Punch.prototype = {
   }
 
 }
+
+Object.assign( 
+  Punch.prototype, {
+    
+    occupies: function(time_s) {
+      if( ! this.linked ) return false;
+      time_s = parseFloat(time_s);
+      var is_last_punch = ( this._next_punch == null );
+
+      if( time <  parseFloat(this.time) )             return false; // TOO LOW
+      if( empty(this._next_node)        )             return true;  // LAST NODE
+      if( time >= parseFloat(this._next_punch.time) ) return false; // TOO HIGH
+      return true;      
+    },
+
+    link: function(prev_node, next_node) {
+      this._prev_node = prev_node;
+      this._next_node = next_node;
+      this.linked = true;
+    }
+
+  }
+);

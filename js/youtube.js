@@ -52,7 +52,10 @@ youtube_player.prototype = {
     });
   },
 
-  get current_time() { return this.player.getCurrentTime().toFixed(3); },
+  get current_time() { 
+    var t = this.player.getCurrentTime();
+    return typeof(t) == 'undefined' ? 0 : t.toFixed(3); 
+  },
 
   onPlayerReady: function(event) {
     event.target.playVideo();

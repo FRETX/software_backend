@@ -37,6 +37,7 @@ function setup_ui_event_handlers() {
 function on_video_data(data) {
   $('.vidinfo .title')[0].innerHTML = data['title'];
   //$('.vidinfo .description')[0].innerHTML = data['description'];
+  fretboard.reset();
   punches.set(player.current_time);
   punches.set(0);
 }
@@ -186,7 +187,11 @@ ctrl = {
     cancelEvent(e);
     load_song(m.song);
     id('songlist').style.display = 'none';
-  }
+  },
+  jog_fw: function(e,m) { 
+    m.punch.jog(100);  },
+  jog_bw: function(e,m) { 
+    m.punch.jog(-100); }
 }
 
 /////////////////////////////////////////// RIVETS ///////////////////////////////////////////////////////////

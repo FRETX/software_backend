@@ -31,7 +31,7 @@ Fretboard.prototype = {
 
   load_chord: function(chord) {
     //console.log(chord.name);
-    if(chord.root_value == 0 ) { this.clear_display(); return; }
+    if(chord.root_value == 0 ) { this.reset(); return; }
     if(this.state.fingering == chord.fingering) return;
     this.state.name = chord.name;
     this.state.fingering = chord.fingering;

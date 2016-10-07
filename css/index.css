@@ -213,8 +213,28 @@ BUTTON, INPUT {
   background-color: rgba(200,150,150,0.6);
 }
 
-#gettime {
+.picker {
+  width: 250px;
+  height: 1.5em;
+  display: inline-flex;
+  margin: 0;
+}
 
+.picker INPUT {
+  width: 100px;
+  flex: 1;
+  margin-right: 0;
+}
+
+.picker .ctrl {
+  position: relative;
+}
+
+.picker .ctrl button {
+  height: 50%;
+  display: block;  
+  font-size: 0.5em;
+  width: 2em;
 }
 
 @media (min-width: 1200px) {

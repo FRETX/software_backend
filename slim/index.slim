@@ -33,8 +33,12 @@ html
         
       .punchlist#punchlist
         .punchrow rv-each-punch='data.punches' rv-data-selected='punch.selected'
-          BUTTON rv-on-click='ctrl.delete_punch' Delete  
-          INPUT rv-value='punch.disp_time'
+          BUTTON rv-on-click='ctrl.delete_punch' Delete 
+          .picker
+            INPUT rv-value='punch._display_time'
+            .ctrl
+              button rv-on-click='ctrl.jog_fw' +
+              button rv-on-click='ctrl.jog_bw' -
           INPUT.chord rv-on-click='ctrl.choose_chord' rv-value='punch.chord'
           
 

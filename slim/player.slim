@@ -25,11 +25,7 @@ html
             #fretboard_container
 
       .punch
-        .picker
-          INPUT#on_deck.chord rv-value='data.next_chord' onclick='on_ondeck_click(event);'
-          .ctrl
-            button rv-on-click='ctrl.prev_chord' ^
-            button rv-on-click='ctrl.next_chord' v
+        INPUT#on_deck.chord rv-value='data.next_chord' onclick='on_ondeck_click(event);'
         BUTTON#pickchanges Changes
         BUTTON#addchord rv-on-click='ctrl.add_punch' Add Chord
 

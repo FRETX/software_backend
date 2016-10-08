@@ -116,10 +116,10 @@ BUTTON, INPUT {
   border-radius: 10px;
 }
 
-
 #on_deck {
   border-radius: 10px 0 0 10px;
   text-align: center;
+  width: 250px;
 }
 
 #open {
@@ -214,7 +214,7 @@ BUTTON, INPUT {
 }
 
 .picker {
-  width: 230px;
+  width: 250px;
   height: 1.5em;
   display: inline-flex;
   margin: 0;
@@ -235,11 +235,6 @@ BUTTON, INPUT {
   display: block;  
   font-size: 0.5em;
   width: 2em;
-}
-
-.punch > * {
-  height: 2em;
-  vertical-align: middle;
 }
 
 @media (min-width: 1200px) {

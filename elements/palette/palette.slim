@@ -1,0 +1,7 @@
+html
+  head
+    == js ['rivets','lib','palette']
+    javascript:
+      window.onload = function() { new Palette( id('palette_container') ); }
+  body
+    #palette_container

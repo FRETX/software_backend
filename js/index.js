@@ -4,15 +4,18 @@ var chord_picker;
 var changes_picker;
 
 $(document).ready(function() {
+  
   get_song_list();
   setup_data_bindings();
   setup_ui_event_handlers();
-  chord_picker = new chordpicker();
+
+  chordlib       = new Chordlib();
+  chord_picker   = new chordpicker();
   changes_picker = new changespicker(document.body, chord_picker);
+  fretboard      = new Fretboard(id('fretboard_container'));
+
   load_youtube_api();
 
-  chordlib = new Chordlib();
-  fretboard = new Fretboard(id('fretboard_container'));
 });
 
 function setup_data_bindings() {
@@ -154,6 +157,13 @@ function next_change() {
   update_change();
 }
 
+function prev_change() {
+  if(data.changes.length==0) return;
+  if( data.changes_index == 0 ) { data.changes_index = data.changes.length -1; }
+  else { data.changes_index--; }
+  update_change();
+}
+
 /////////////////////////////////////////// RIVETS ///////////////////////////////////////////////////////////
 
 data = {
@@ -188,10 +198,11 @@ ctrl = {
     load_song(m.song);
     id('songlist').style.display = 'none';
   },
-  jog_fw: function(e,m) { 
-    m.punch.jog(100);  },
-  jog_bw: function(e,m) { 
-    m.punch.jog(-100); }
+  jog_fw: function(e,m) { m.punch.jog(100);  },
+  jog_bw: function(e,m) { m.punch.jog(-100); },
+  prev_chord: function(e,m) { prev_change(); },
+  next_chord: function(e,m) { next_change(); }
+
 }
 
 /////////////////////////////////////////// RIVETS ///////////////////////////////////////////////////////////

@@ -46,7 +46,10 @@ changespicker.prototype = {
     this.edit_chord = function(e,m) {
       e.target.blur();
       this.picker.set_chord(e.target.value);
-      this.picker.get_chord( function(chord) { e.target.value = chord; } );
+      this.picker.get_chord( function(chord) {
+        this.state.chords[m.index] = chord;
+        m.chord = chord; 
+      }.bind(this) );
     }.bind(this);
   }
 }

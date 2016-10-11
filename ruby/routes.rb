@@ -8,6 +8,7 @@ get '/elements/:name.js' do
 end
 
 get '/elements/:name.css' do
+  pass unless File.file? "elements/#{params[:name]}/#{params[:name]}.css"
   send_file "/elements/#{params[:name]}/#{params[:name]}.css"
 end
 
@@ -17,7 +18,7 @@ get('*/:file.css' )         { send_file "css/#{params[:file]}.css" }
 get('*/:file.js'  )         { send_file "js/#{params[:file]}.js"   }
 
 get /.*\.(jpeg|jpg|png|gif|ico|svg)/ do
-  path = request.path.sub('/css/', '/');
+  path = request.path.sub('/css/', '/');  
   return 404 unless File.exist? "img#{path}"
   response['Cache-Control'] = 'public, max-age=86400'
   send_file "img#{path}"

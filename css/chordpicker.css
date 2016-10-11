@@ -5,6 +5,7 @@
   display: none;
   background-color: rgba(0,0,0,0.6);
   z-index: 6;
+  text-align: center;
 }
 
 .chordpicker::before {

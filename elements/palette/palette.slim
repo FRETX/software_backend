@@ -1,7 +1,46 @@
 html
   head
-    == js ['rivets','lib','palette']
+    == js ['jquery','rivets','lib','chordpicker','palette']
+    == css ['chordpicker']
+
     javascript:
-      window.onload = function() { new Palette( id('palette_container') ); }
+      window.onload = function() { 
+        chordpicker = new chordpicker();
+        palette     = new Palette( id('palette_container'), chordpicker );
+        palette.on_chord = function(chord) { 
+          let elem = id('selected_chord');
+          elem.children[1].innerHTML = chord.label;
+          elem.style.backgroundColor = chord.color;         
+        };
+      }
+
+    css:
+      body { 
+        text-align: center;
+      }
+
+      #selected_chord {
+        margin: 2em;
+        padding: 2em;
+        display: inline-block;
+        border: 0.1em solid black;
+        box-shadow: 0 0 0.1em black;
+        position: relative;
+        font-weight: bold;
+      }
+
+      #selected_chord .gloss {
+        position: absolute;
+        left: 0; right: 0;
+        top: 0; bottom: 0;
+        background: -moz-linear-gradient(top,  rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top,  rgba(255,255,255,0.6) 0%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom,  rgba(255,255,255,0.6) 0%,rgba(255,255,255,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#99ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
+      } 
+
   body
     #palette_container
+    #selected_chord 
+      .gloss
+      .label No Chord

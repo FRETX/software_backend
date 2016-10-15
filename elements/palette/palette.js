@@ -1,4 +1,4 @@
-function Palette(parent,chordpicker) {
+  function Palette(parent,chordpicker) {
     
   this.state = {
   	chords: []
@@ -38,6 +38,10 @@ Palette.prototype = {
 
   setup_rivets: function() {
     rivets.binders['style-*'] = function(el, value) { el.style.setProperty(this.args[0], value); };
+  },
+
+  load_chords: function(punches) {
+
   },
 
   bind_handlers: function() {
@@ -91,10 +95,10 @@ Palette.prototype.HTML = `
 Palette.prototype.CSS = `
 
   #palette {
-    font-size: 15px;
     padding: 1em;
     overflow-x: scroll;
     white-space: nowrap;
+    box-shadow: 0 0 0.1em black;
   }
 
   #palette .addbtn .label{

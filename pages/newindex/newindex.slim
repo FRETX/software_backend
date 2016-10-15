@@ -1,0 +1,30 @@
+html
+
+  head
+    title FRETX
+    == no_scaling
+    == css ['chordpicker','newindex']
+    == js  ['jquery','rivets','lib','chordlib','elements/palette','elements/timeline']
+    == js  ['chordpicker','changespicker','fretboard','youtube','punch','newindex']
+
+  body
+    .content
+      .header
+        img#logo src='logo.png'
+        BUTTON#open Open Song
+        BUTTON#upload onclick='upload();' Upload Song
+
+      .vid
+        #player
+        .vidinfo#footnotediv
+          .description
+            .title
+            #fretboard_container
+
+      #timeline_container
+
+      #palette_container          
+
+    #songlist
+      .list
+        .song rv-each-song='data.songs' rv-on-click='ctrl.load_song' { song.title }

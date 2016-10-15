@@ -1,0 +1,32 @@
+html
+  head
+    == js ['lib','timeline-min']
+    == css ['timeline']
+    javascript:
+      var data = [];
+      data.push({
+        'start': new Date(2016,7,15,0,0,0),
+        'end':   new Date(2016,7,15,0,0,4,970),
+        'content': 'E m7'
+      });
+
+      data.push({
+        'start': new Date(2016,7,15,0,0,5),
+        'end':   new Date(2016,7,15,0,0,7),
+        'content': 'A m7'
+      });
+
+      var options = {
+        "width":  "100%",
+        "height": "auto",
+        "style": "box",
+        "editable": false
+      };
+
+      window.onload = function() { 
+        console.log(id('timeline_container'));
+        var timeline = new links.Timeline(id('timeline_container'));
+        timeline.draw(data);
+      }
+  body
+    #timeline_container

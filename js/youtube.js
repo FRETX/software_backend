@@ -107,7 +107,7 @@ youtube_player.prototype = {
     $.get('/youtube/videodata/' + this.video_id, this.onVideoData.bind(this));
   },
 
-  duration: function() {
+  get duration() {
     return this.player.getDuration();
   }
 

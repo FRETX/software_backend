@@ -239,9 +239,12 @@ BUTTON, INPUT {
   width: 2em;
 }
 
-#palette,
-#timeline {
+#palette {
   font-size: 12px;
+}
+
+#timeline {
+  font-size: 14px;
 }
 
 

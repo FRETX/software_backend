@@ -1,4 +1,4 @@
-/////////////////////////////////////////////// SETUP /////////////////////////////////////////////////////////
+  /////////////////////////////////////////////// SETUP /////////////////////////////////////////////////////////
 
 var chord_picker;
 var changes_picker;
@@ -14,7 +14,10 @@ $(document).ready(function() {
   changes_picker = new changespicker(document.body, chord_picker);
   fretboard      = new Fretboard( id('fretboard_container') );
   palette        = new Palette( id('palette_container'), chord_picker );
-  timeline       = new Timeline( id('timeline_container'));
+  timeline       = new Timeline( id('timeline_container') );
+
+  timeline.get_color = function(chord_label) { return palette.get_color(chord_label); } 
+  timeline.on_scrub  = function(time_s)      { player.current_time = time_s; }
 
   load_youtube_api();
 
@@ -50,39 +53,42 @@ function on_video_data(data) {
 
 
 function on_time_change(time) {
+  //console.log(time);
   timeline.update_time(time);
   if(punches.in_range(time)) return;
   punches.set(time);
 }
 
+////////////////////////////////////////////// EVENTS /////////////////////////////////////////////////////////
+
 punches = {
   range: function() {
-    if(data.current_punch_index == 0) {
-      if(data.punches[0]['time'] > 0) return { start: 0, end: data.punches[0]['time'], index: -1 };
-      if(data.punches.length==1) return { start: 0, end: player.duration(), index: 0 };
-      return { start: 0, end: data.punches[1]['time'], index: 0 };
+    if(data.current_punch_index == -1 ) {
+      return { start: 0, end: data.punches[0]['time'], index: -1 };
     }
-    if(data.current_punch_index >= data.punches.length) return { start: data.punches[data.punches.length-1]["time"], end: player.duration(), index: data.punches.length-1 };
-    return { start: data.punches[data.current_punch_index-1]["time"], end: data.punches[data.current_punch_index]["time"] };
+    if(data.current_punch_index == 0) {
+      if(data.punches.length==1) return { start: data.punches[0]['time'], end: player.duration(), index: 0 };
+      return { start: data.punches[0]['time'], end: data.punches[1]['time'], index: 0 };
+    }
+    if(data.current_punch_index >= data.punches.length-1) return { start: data.punches[data.punches.length-1]["time"], end: player.duration, index: data.punches.length-1 };
+    return { start: data.punches[data.current_punch_index]["time"], end: data.punches[data.current_punch_index+1]["time"] };
   },
   in_range: function(time) {
     if(data.punches.length == 0) return true;
     var range = punches.range();
-    return(time >= range.start && time < range.end); 
+    //console.log(range);
+    return(time >= parseFloat(range.start) && time < parseFloat(range.end)); 
   },
   set: function(time) {
     //console.log("setting: " + time);
-    data.current_punch_index 
+    //data.current_punch_index
+    if(data.punches[0].time > time) data.current_punch_index = -1;
     for(var i=0; i<data.punches.length; i++) {
       if( punches.in_punch(i,time) ) {
         //console.log("in punch: " + i);
         data.punches[i]['selected'] = true;
         data.current_punch_index = i;
         fretboard.load_chord(chordlib.get_chord(data.punches[i].chord));
-        //if(i < 3 && id('punchlist').scrollTop < 40) return;
-        //$('.punchrow')[i].scrollIntoView(false);
-        //id('punchlist').scrollTop += 85; 
-        
       } 
       else {
         data.punches[i]['selected'] = false;
@@ -173,7 +179,7 @@ function prev_change() {
 data = {
   next_chord: 'No Chord',
   punches: [ new Punch(0,'No Chord') ],
-  current_punch_index: 0,
+  current_punch_index: -1,
   changes: [],
   changes_index: 0
 }
@@ -258,10 +264,10 @@ function build_player() {
 }
 
 function load_song(song) {
-  player.load(song['youtube_id']);
   data.current_punch_index = 0;
-  //id('punchlist').scrollTop = 0;
   load_punches(song['punches']);
+  player.load(song['youtube_id']);
+  //id('punchlist').scrollTop = 0;
 }
 
 function load_punches(punches) {
@@ -269,6 +275,7 @@ function load_punches(punches) {
   for(var i=0; i<punches.length; i++) {
     data.punches.push( new Punch(punches[i].time, punches[i].chord) );
   }
+  palette.load(data.punches);
   timeline.load(data.punches);
   timeline.duration
 }

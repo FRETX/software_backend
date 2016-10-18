@@ -1,8 +1,11 @@
-function Timeline(parent) {
+function Timeline(parent,palette) {
   this.state = {
   	punches: [ ],
   	duration: 12,
+    scale_factor: 15,
+    elapsed_time: 0
   };
+  this.palette = palette;
   this.link_punches();
   this.setup_rivets();
   this.build_dom(parent);
@@ -44,6 +47,35 @@ Timeline.prototype = {
     this.draw_scale();
   },
 
+  update_time(time_s) {
+    if(this._scrubbing) return;
+    this._update_time(time_s);
+  },
+
+  _update_time(time_s) {
+    this.indicator = this.dom.getElementsByClassName('indicator')[0];
+    let width_ems = this.s_to_ems(time_s);
+    let width_px  = this.ems_to_px( width_ems );
+
+    this.indicator.style.width = width_ems + 'em';
+    this.dom.scrollLeft = width_px - (this.dom.clientWidth/2);
+  },
+
+  s_to_ems(time_s) { return time_s * this.state.scale_factor; },
+  ems_to_s(ems)    { return ems    / this.state.scale_factor; },
+  ems_to_px(ems)   { return ems * this.font_size_px; },
+  px_to_ems(px)    { return px  / this.font_size_px; },
+  px_to_s(px)      { return this.ems_to_s( this.px_to_ems( px ) ); },
+  
+  get font_size_px()    { return this._font_size_px || this.update_font_size_px(); },
+  update_font_size_px() { this._font_size_px = parseFloat( getComputedStyle(this.dom).fontSize ); return this._font_size_px; }
+
+}
+
+//////////////////////////////////// RENDERING ////////////////////////////////////
+
+Object.assign( Timeline.prototype, {
+
   draw_scale() {
     this.scale = this.dom.getElementsByClassName('scale')[0];
     this.scale.innerHTML = '';
@@ -65,29 +97,22 @@ Timeline.prototype = {
     }
   },
 
-  update_time(time_s) {
-    this.indicator = this.dom.getElementsByClassName('indicator')[0];
-    let width_ems = this.s_to_ems(time_s);
-    let width_px  = parseFloat(getComputedStyle(this.dom).fontSize) * width_ems;
-
-    this.indicator.style.width = width_ems + 'em';
-    this.dom.scrollLeft = width_px - (this.dom.clientWidth/2);
-  },
-
-  s_to_ems(time_s) {
-    return 15 * time_s;
+  generateChordElement(punch,offset) { 
+    var width = `width:${ this.s_to_ems(punch.duration_s) + 'em'}; `;
+    var color = isFunction(this.get_color) ? `background: ${this.get_color(punch.chord)}; ` : '';
+    console.log(color);
+    return render(`
+      <div class='chord' style='${width}${color}' >
+        <div class='gloss'></div>
+        <div class='chordname'>${punch.chord}</div>
+        <div class='chordtime'>${punch.disp_time}</div>
+      </div>
+    `.untab(6));
   }
 
-}
+});
 
-Timeline.prototype.generateChordElement = function(punch,offset) {
-  return render(`
-<div class='chord' style='width:${ this.s_to_ems(punch.duration_s) + 'em'};' >
-  <div class='chordname'>${punch.chord}</div>
-  <div class='chordtime'>${punch.disp_time}</div>
-</div>
-`)};
-
+//////////////////////////////////// RENDERING ////////////////////////////////////
 
 
 ////////////////////////// MANUAL SCROLLING //////////////////////////////////////
@@ -95,7 +120,7 @@ Timeline.prototype.generateChordElement = function(punch,offset) {
 Object.assign( Timeline.prototype, {
   
   set_drag_handlers() {
-    this._attachment = false;
+    this._scrubbing = false;
     this._lastPosition = null;
     this._delta = null;
     this.dom.addEventListener('mousedown',  this.on_mouse_down.bind(this)  );
@@ -105,29 +130,41 @@ Object.assign( Timeline.prototype, {
   },
 
   on_mouse_down(e) {
-    this._attachment = true;
+    this._scrubbing = true;
     this._lastPosition = e.clientX;
   },
 
   on_mouse_move(e) {
-    if( ! this._attachment ) return;
+    if( ! this._scrubbing ) return;
     let delta = e.clientX - this._lastPosition;
+    if( Math.abs(delta) < 50 ) return;
+    //console.log(delta);
     this.dom.scrollLeft = this.dom.scrollLeft - delta;
     this._lastPosition = e.clientX;
+    this._on_scrub(this.dom.scrollLeft);  
   },
 
   on_mouse_up() {
-    this._attachment = false;
+    this._scrubbing = false;
   },
 
   on_mouse_enter(e) {
-    if(e.buttons==0) this._attachment = false;
+    if(e.buttons==0) this._scrubbing = false;
+  },
+
+  _on_scrub(px) {
+    if( ! isFunction(this.on_scrub) ) return;
+    let elapsed_px = px + (this.dom.clientWidth/2);
+    let elapsed_s  = this.px_to_s(elapsed_px);
+    //console.log(elapsed_px);
+    //console.log(elapsed_s);
+    this._update_time(elapsed_s);
+    this.on_scrub(elapsed_s);
   }
 
 });
 
 ////////////////////////// MANUAL SCROLLING //////////////////////////////////////
-
 
 
 
@@ -151,6 +188,7 @@ Timeline.prototype.CSS = `
   background-color: rgb(0,0,0,0.1);
   box-shadow: 0 0 0.1em black;
   padding: 0.4em;
+  font-size: 16pt;
 }
 
 #timeline {
@@ -158,6 +196,12 @@ Timeline.prototype.CSS = `
   cursor: grab;
   cursor: -moz-grab;
   cursor: -webkit-grab;
+}
+
+#timeline:active {
+  cursor: grabbing;
+  cursor: -moz-grabbing
+  cursor: -webkit-grabbing;
 }
 
 #timeline {
@@ -175,10 +219,10 @@ Timeline.prototype.CSS = `
 }
 
 #timeline .chord {
+  position: relative;
   display: inline-block;
   background-color: rgb(250,100,150);
   padding: 0.5em 2em;
-  margin: 0.2em;
   text-align: center;
   border-radius: 2em;
   box-shadow: 0 0 0.1em black;
@@ -187,11 +231,15 @@ Timeline.prototype.CSS = `
 }
 
 #timeline .chord .chordname {
+  position: relative;
   padding: 0.2em;
+  z-index: 1;
 }
 
 #timeline .chordtime {  
+  position: relative;
   font-size: 0.8em;
+  z-index: 1;
 }
 
 #timeline .scale {
@@ -212,7 +260,7 @@ Timeline.prototype.CSS = `
 }
 
 #timeline .indicator {
-  background: rgba(0,255,0,0.3);
+  background: rgba(0,0,0,0.3);
   z-index: 0;
   position: absolute;
   display: inline-block;
@@ -220,6 +268,22 @@ Timeline.prototype.CSS = `
   top: 0;
   bottom: 0;
   border-right: 1px solid white;
+}
+
+#timeline .chord .gloss {
+  diplay: inline-block;
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+  border-radius: 2em;
+}
+
+#timeline .gloss {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&0.6+0,0+100;White+to+Transparent */
+  background: -moz-linear-gradient(top,  rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  rgba(255,255,255,0.6) 0%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  rgba(255,255,255,0.6) 0%,rgba(255,255,255,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#99ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
 }
 
 `;

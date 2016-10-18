@@ -22,6 +22,15 @@ function render(html) {
   return elem.children[0]  
 }
 
+String.prototype.untab = function(spacing) {
+  var lines = this.split("\n");
+  lines = lines.filter(function(el) { return el.length > spacing; } )
+  lines = lines.map(function(el) { 
+    return el.split('').splice(spacing,lines[0].length-spacing).join('')
+  });
+  return lines.join('\n');  
+}
+
 function load_css(id,css) {
   var elem = document.createElement('style');
   elem.id = name;

@@ -21,11 +21,10 @@ Palette.prototype = {
   bind_dom:    function()       { rivets.bind(this.dom, { data: this.state, obj: this }); },
   load_styles: function()       { load_css('changespicker_styles', this.CSS); },
 
-  get_color:   function() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++ ) { color += letters[Math.floor(Math.random() * 16)]; }
-    return color;
+  get_color:   function(label)  {
+    var ary = this.state.chords.filter(function(el) { return el.label == label; });
+    if(ary.length==0) return(new Chord('No Chord').color);
+    return ary[0]._color;
   },
 
   already_exists: function(chord) {
@@ -40,8 +39,18 @@ Palette.prototype = {
     rivets.binders['style-*'] = function(el, value) { el.style.setProperty(this.args[0], value); };
   },
 
-  load_chords: function(punches) {
-
+  load: function(punches) {
+    this.state.chords = [];
+    for(var i=0; i<punches.length; i++) {                                 // For each punch
+      if(this.state.chords.length==0) {                                   
+        this.state.chords.push(new Chord(punches[i].chord)); continue;    // Add a new chord if the list is empty
+      }
+      for(var j=0; j<this.state.chords.length; j++) {                     // For each list item
+        if(this.state.chords[j].matches(punches[i].chord))   break;       // Break if a match is found
+        if(j != this.state.chords.length-1)                  continue;    // Keep checking until the end of the list
+        this.state.chords.push(new Chord(punches[i].chord)); break;       // Add a new chord if no match has been found
+      }
+    }
   },
 
   bind_handlers: function() {
@@ -50,7 +59,7 @@ Palette.prototype = {
       this.chordpicker.set_chord('No Chord');
       this.chordpicker.get_chord( function(chord) {
         if( this.already_exists(chord) ) return;
-        this.state.chords.push( { label: chord, color: this.get_color() } );
+        this.state.chords.push( new Chord(chord) );
       }.bind(this));
     }.bind(this);
 

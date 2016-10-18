@@ -28,6 +28,7 @@ function youtube_player(video_id) {
   this.video_id = false;
   this._current_time = 0;
   this.videodata = {};
+  this.timechange_callbacks = [];
   wait_for_youtube_api( function(video_id) {
     this.player = this.build_player('player',video_id);
   }.bind(this,video_id));
@@ -52,6 +53,12 @@ youtube_player.prototype = {
     });
   },
 
+  set current_time(time_s) {
+    //console.log(time_s);
+    this.player.seekTo(time_s,true);
+    this.update_time(time_s);
+  },
+
   get current_time() { 
     var t = this.player.getCurrentTime();
     return typeof(t) == 'undefined' ? 0 : t.toFixed(3); 
@@ -62,11 +69,12 @@ youtube_player.prototype = {
     this.get_video_data();
   },
 
-  update_time: function() {
-    var time_s = this.player.getCurrentTime();
+  update_time: function(time_s) {
+    time_s = time_s || this.player.getCurrentTime();
     this._current_time = typeof(time_s) == 'undefined' ? 0 : time_s.toFixed(3);
-    if(isFunction(this.timechange_callback)) {
-      this.timechange_callback(this._current_time);
+    for(var i=0; i < this.timechange_callbacks.length; i++) {
+      if( ! isFunction(this.timechange_callbacks[i]) ) continue;
+      this.timechange_callbacks[i](this._current_time);
     }
   },
 
@@ -84,7 +92,7 @@ youtube_player.prototype = {
   },
 
   on_time_change: function(callback) {
-    this.timechange_callback = callback;
+    this.timechange_callbacks.push(callback);
   },
 
   on_video_data: function(callback) {

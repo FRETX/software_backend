@@ -15,6 +15,8 @@ $(document).ready(function() {
   fretboard      = new Fretboard( id('fretboard_container') );
   palette        = new Palette( id('palette_container'), chord_picker );
   timeline       = new Timeline( id('timeline_container') );
+  
+  palette.on_chord   = function(chord)       { punches.add(chord.label); }
 
   timeline.get_color = function(chord_label) { return palette.get_color(chord_label); } 
   timeline.on_scrub  = function(time_s)      { player.current_time = time_s; }
@@ -48,7 +50,7 @@ function on_video_data(data) {
   fretboard.reset();
   punches.set(player.current_time);
   punches.set(0);
-  timeline.set_duration(player.duration);
+  setTimeout(function() { console.log(player.duration); timeline.set_duration(player.duration); }, 1000)
 }
 
 
@@ -105,6 +107,11 @@ punches = {
     if( last_node ) return true                                // LAST NODE
     if( time >= parseFloat(next_punch['time']) ) return false; // TOO HIGH
     return true;                                               // JUST RIGHT
+  },
+  add: function(chord) {  
+    data.punches.push( new Punch( player.current_time, chord ) );
+    data.punches.sort(SortByTime);
+    timeline.load(data.punches);
   }
 }
 
@@ -185,14 +192,7 @@ data = {
 }
 
 ctrl = {
-  add_punch: function() {  
-    data.punches.push( new Punch( player.current_time, data.next_chord ) );
-    data.punches.sort(SortByTime);
 
-    var objDiv = document.getElementById("punchlist");
-    objDiv.scrollTop = objDiv.scrollHeight;   /// ????
-    next_change();
-  },
   delete_punch: function(e,m) {
     var i = data.punches.indexOf(m.punch);
     data.punches.splice(i,1);

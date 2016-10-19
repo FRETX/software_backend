@@ -1,0 +1,17 @@
+@font-face {
+    font-family: 'the_display_st';
+    src: url('the_display_st-webfont.woff2') format('woff2'),
+         url('the_display_st-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face { 
+	font-family: "Ionicons"; 
+	src: url('ionicons.eot')  format("embedded-opentype"),
+	     url('ionicons.ttf')  format("truetype"),
+	     url('ionicons.woff') format("woff"),
+         url('ionicons.svg')  format("svg");
+	font-weight: normal; 
+	font-style: normal; 
+}

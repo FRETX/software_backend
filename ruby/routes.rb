@@ -48,6 +48,7 @@ end
 get /.*\.(ttf|woff|eot|svg|woff2)/ do
   path = request.path.sub('/css/', '/')
   path = request.path.sub('/pages/', '/')
+  path = request.path.sub('/elements/', '/')
   return 404 unless File.exist? "fonts#{path}"
   response['Cache-Control'] = 'public, max-age=86400'
   send_file "fonts#{path}"

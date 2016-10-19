@@ -26,7 +26,7 @@ String.prototype.untab = function(spacing) {
   var lines = this.split("\n");
   lines = lines.filter(function(el) { return el.length > spacing; } )
   lines = lines.map(function(el) { 
-    return el.split('').splice(spacing,lines[0].length-spacing).join('')
+    return el.split('').splice(spacing,el.length-spacing).join('')
   });
   return lines.join('\n');  
 }

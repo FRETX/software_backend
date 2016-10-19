@@ -1,7 +1,7 @@
 function Timeline(parent,palette) {
   this.state = {
   	punches: [ ],
-  	duration: 12,
+  	duration: 10,
     scale_factor: 15,
     elapsed_time: 0
   };
@@ -21,6 +21,7 @@ Timeline.prototype = {
     this.state.punches = punches;
     this.link_punches();
     this.draw_chords();
+    this.draw_scale();
   },
 
   link_punches: function() {
@@ -44,7 +45,9 @@ Timeline.prototype = {
 
   set_duration(value) {
     this.state.duration = value;
+    this.link_punches();
     this.draw_scale();
+    this.draw_chords();
   },
 
   update_time(time_s) {
@@ -62,10 +65,12 @@ Timeline.prototype = {
   },
 
   s_to_ems(time_s) { return time_s * this.state.scale_factor; },
+  s_to_px(time_s)  { return this.ems_to_px(this.s_to_ems(time_s)); },
   ems_to_s(ems)    { return ems    / this.state.scale_factor; },
   ems_to_px(ems)   { return ems * this.font_size_px; },
   px_to_ems(px)    { return px  / this.font_size_px; },
   px_to_s(px)      { return this.ems_to_s( this.px_to_ems( px ) ); },
+
   
   get font_size_px()    { return this._font_size_px || this.update_font_size_px(); },
   update_font_size_px() { this._font_size_px = parseFloat( getComputedStyle(this.dom).fontSize ); return this._font_size_px; }
@@ -79,12 +84,16 @@ Object.assign( Timeline.prototype, {
   draw_scale() {
     this.scale = this.dom.getElementsByClassName('scale')[0];
     this.scale.innerHTML = '';
-    for(var i=0; i<this.state.duration; i++) {
-      let tick = document.createElement('div');
-      tick.className = 'tick';
-      tick.style.marginLeft = this.s_to_ems(1) + 'em'; 
+    var i=1;
+    for(; i<this.state.duration; i++) {
+      //console.log(`i:${i} dur: ${this.state.duration}`);
+      let tick = this.generateTick(i,1);
       this.scale.appendChild(tick);
     }
+    //console.log(this.state.duration);
+    //console.log(`extra: ${this.state.duration-i+1}`);
+    let tick = this.generateTick('',this.state.duration-i+1);
+    this.scale.appendChild(tick);
   },
 
   draw_chords() {
@@ -97,10 +106,14 @@ Object.assign( Timeline.prototype, {
     }
   },
 
+  generateTick(time,duration) {
+    let width = `width: ${this.s_to_ems(duration) + 'em'};`; 
+    return render(`<div class='tick' style='${width}'>${time}</div>`);
+  },
+
   generateChordElement(punch,offset) { 
-    var width = `width:${ this.s_to_ems(punch.duration_s) + 'em'}; `;
+    var width = `width:${ this.s_to_px(punch.duration_s) + 'px'}; `;
     var color = isFunction(this.get_color) ? `background: ${this.get_color(punch.chord)}; ` : '';
-    console.log(color);
     return render(`
       <div class='chord' style='${width}${color}' >
         <div class='gloss'></div>
@@ -168,17 +181,13 @@ Object.assign( Timeline.prototype, {
 
 
 
-
-
 Timeline.prototype.HTML = `
-
-<div id='timeline'>   
-  <div class='chords'></div>
-  <div class='scale'></div>
-  <div class='indicator'></div>
-</div>
-
-`;
+  <div id='timeline'>
+    <div class='chords'></div>
+    <div class='scale'></div>
+    <div class='indicator'></div>
+  </div>
+`.untab(2);
 
 Timeline.prototype.CSS = `
 
@@ -221,9 +230,8 @@ Timeline.prototype.CSS = `
 #timeline .chord {
   position: relative;
   display: inline-block;
-  background-color: rgb(250,100,150);
   padding: 0.5em 2em;
-  text-align: center;
+  text-align: left;
   border-radius: 2em;
   box-shadow: 0 0 0.1em black;
   box-sizing: border-box;
@@ -253,10 +261,14 @@ Timeline.prototype.CSS = `
 }
 
 #timeline .scale .tick {
+  vertical-align: top;
   display: inline-block;
-  background-color: black;
   width: 1px;
   height: 100%;
+  border-right: 1px solid black;
+  box-sizing: border-box;
+  text-align: right;
+  padding-right: 0.1em;
 }
 
 #timeline .indicator {

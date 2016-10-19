@@ -20,6 +20,7 @@ Punch.prototype = {
 
   get disp_time()    { return val_or_default( this._display_time, this.generate_display_time() ); },
   get display_time() { return val_or_default( this._display_time, this.generate_display_time() ); },
+  get short_disp()   { return this.disp_time.splice(3,this.disp_time.length-7); },
 
   get chord()        { return val_or_default( this._chord, 'No Chord' ); },
   set chord(c)       { this._chord = c; },
@@ -30,6 +31,10 @@ Punch.prototype = {
   },
 
   //////////////////////// PROPERTIES //////////////////////////////////
+
+  short_disp_time: function() {
+  
+  },
 
   generate_display_time: function() {
   	if( empty(this._time) ) return '';

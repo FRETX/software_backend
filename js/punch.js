@@ -79,11 +79,11 @@ Object.assign(
     occupies: function(time_s) {
       if( ! this.linked ) return false;
       time_s = parseFloat(time_s);
-      var is_last_punch = ( this._next_punch == null );
+      //var is_last_node = ( this._next_node == null );
 
-      if( time <  parseFloat(this.time) )             return false; // TOO LOW
-      if( empty(this._next_node)        )             return true;  // LAST NODE
-      if( time >= parseFloat(this._next_punch.time) ) return false; // TOO HIGH
+      if( time_s <  parseFloat(this.time) )            { return false; }  // TOO LOW
+      if( empty(this._next_node)          )            { return true;  }  // LAST NODE
+      if( time_s >= parseFloat(this._next_node.time) ) { return false; }  // TOO HIGH
       return true;      
     },
 

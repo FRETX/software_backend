@@ -53,3 +53,28 @@ function val_or_default(obj,def) {
 function val_or_null(obj) {
   return val_or_default(obj,null);
 }
+  
+function display_time(time_s, options = {}) {
+  if( empty(time_s) ) return '';
+
+  var hrs,mins,secs,ms;
+
+  ms   = ( time_s * 1000 ).toFixed();
+  hrs  = Math.floor( ms / 3600000 );
+  ms   = ms - hrs * 3600000;
+  mins = Math.floor( ms / 60000 );
+  ms   = ms - mins * 60000;
+  secs = Math.floor( ms / 1000 );
+  ms   = ms - secs * 1000;
+
+  hrs  =  hrs.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false });
+  mins = mins.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false });
+  secs = secs.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false });
+  ms   =   ms.toLocaleString('en-US', { minimumIntegerDigits: 3, useGrouping: false });
+  
+  if(val_or_default(options.tenths,   false)) { ms = ms.slice(0,1); }
+  if(val_or_default(options.no_hours, false)) { hrs = null; }
+  if(val_or_default(options.no_ms,    false)) { ms = null; }
+
+  return ( hrs ? hrs + ':' : '' ) + mins + ':' + secs + ( ms ? '.' + ms : '' );
+}

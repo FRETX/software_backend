@@ -11,15 +11,20 @@ $(document).ready(function() {
 
   chordlib       = new Chordlib();
   chord_picker   = new chordpicker();
+  punchlist      = new Punchlist();
   changes_picker = new changespicker(document.body, chord_picker);
   fretboard      = new Fretboard( id('fretboard_container') );
   palette        = new Palette( id('palette_container'), chord_picker );
   timeline       = new Timeline( id('timeline_container') );
-  
-  palette.on_chord   = function(chord)       { punches.add(chord.label); }
+  ctrlbar        = new Controlbar( id('ctrlbar_container') );
 
+  palette.on_chord   = function(chord)       { punches.add(chord.label); }
   timeline.get_color = function(chord_label) { return palette.get_color(chord_label); } 
-  timeline.on_scrub  = function(time_s)      { player.current_time = time_s; }
+  timeline.on_scrub  = function(time_s)      { player.current_time = time_s; } 
+  
+  punchlist.on_punch_change( function(punch) {
+    fretboard.load_chord(chordlib.get_chord(punch.chord));
+  });
 
   load_youtube_api();
 
@@ -42,26 +47,26 @@ function setup_ui_event_handlers() {
 /////////////////////////////////////////////// SETUP /////////////////////////////////////////////////////////
 
 
-////////////////////////////////////////////// EVENTS /////////////////////////////////////////////////////////
+////////////////////////////////////////////// DATA EVENTS ////////////////////////////////////////////////////
 
 function on_video_data(data) {
   $('.vidinfo .title')[0].innerHTML = data['title'];
-  //$('.vidinfo .description')[0].innerHTML = data['description'];
   fretboard.reset();
-  punches.set(player.current_time);
-  punches.set(0);
-  setTimeout(function() { console.log(player.duration); timeline.set_duration(player.duration); }, 1000)
+  punchlist.update_time(0);
+  setTimeout(function() { timeline.set_duration(player.duration); }, 1200)
 }
-
 
 function on_time_change(time) {
-  //console.log(time);
   timeline.update_time(time);
-  if(punches.in_range(time)) return;
-  punches.set(time);
+  punchlist.update_time(time);
 }
 
-////////////////////////////////////////////// EVENTS /////////////////////////////////////////////////////////
+function on_song_list(list) {
+  data['songs'] = list;  
+  build_player();
+}
+
+////////////////////////////////////////////// DATA EVENTS /////////////////////////////////////////////////////
 
 punches = {
   range: function() {
@@ -81,6 +86,7 @@ punches = {
     //console.log(range);
     return(time >= parseFloat(range.start) && time < parseFloat(range.end)); 
   },
+  /*
   set: function(time) {
     //console.log("setting: " + time);
     //data.current_punch_index
@@ -96,7 +102,7 @@ punches = {
         data.punches[i]['selected'] = false;
       }
     }
-  },
+  },*/
   in_punch: function(index,time) { 
     time = parseFloat(time);
     var last_node  = ( index == data.punches.length - 1 );
@@ -162,24 +168,6 @@ function on_pick_changes(e) {
 
 ///////////////////////////////////////////// UI EVENTS //////////////////////////////////////////////////////
 
-function update_change() {
-  if(data.changes.length==0) return;
-  data.next_chord = data.changes[data.changes_index];
-}
-
-function next_change() {
-  if(data.changes.length==0) return;
-  if( data.changes_index == data.changes.length - 1 ) { data.changes_index = 0; }
-  else { data.changes_index++; }
-  update_change();
-}
-
-function prev_change() {
-  if(data.changes.length==0) return;
-  if( data.changes_index == 0 ) { data.changes_index = data.changes.length -1; }
-  else { data.changes_index--; }
-  update_change();
-}
 
 /////////////////////////////////////////// RIVETS ///////////////////////////////////////////////////////////
 
@@ -243,22 +231,13 @@ function upload() {
 ///////////////////////////////////////// API CALLS //////////////////////////////////////////////////////////
 
 
-/////////////////////////////////////// API CALLBACKS ////////////////////////////////////////////////////////
-
-function on_song_list(list) {
-  data['songs'] = list;  
-  build_player();
-}
-
-/////////////////////////////////////// API CALLBACKS ////////////////////////////////////////////////////////
-
-
 ////////////////////////////////////////// ORPHANS ///////////////////////////////////////////////////////////
 
 function build_player() {
   song = data['songs'][Math.floor(Math.random()*data['songs'].length)];
   player = new youtube_player(song['youtube_id']);
   player.on_time_change(on_time_change);
+  player.on_time_change(ctrlbar.on_time_change);
   player.on_video_data(on_video_data);  
   load_punches(song['punches']);
 }
@@ -271,6 +250,7 @@ function load_song(song) {
 }
 
 function load_punches(punches) {
+  punchlist.load(punches);
   data.punches = [];
   for(var i=0; i<punches.length; i++) {
     data.punches.push( new Punch(punches[i].time, punches[i].chord) );

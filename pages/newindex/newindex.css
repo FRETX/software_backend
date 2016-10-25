@@ -26,11 +26,11 @@ body::before {
   background-color: rgba(255,255,255,0.8);
 }
 
-.header, .addvid, .vid, .vid .vidinfo, .punchlist, .submit, #palette_container, #timeline_container, iframe {
+.header, .addvid, .vid, .vid .vidinfo, .punchlist, .submit, #palette_container, #timeline_container, #ctrlbar_container, iframe {
   box-shadow: 0px 0px 4px black;
 }
 
-.header, .addvid, .vid, .submit, .punchlist, #palette_container, #timeline_container {
+.header, .addvid, .vid, .submit, .punchlist, #palette_container, #timeline_container, #ctrlbar_container {
   background-color: rgba(90,0,0,0.3);
 } 
 
@@ -42,8 +42,8 @@ body::before {
 
 .content { padding: 0.5%; }
 
-.header, .addvid, .vid, .submit, #palette_container, #timeline_container { padding: 10px; }
-.header, .addvid, .vid, .punchlist, .submit, #palette_container, #timeline_container { margin: 10px; }
+.header, .addvid, .vid, .submit, #palette_container, #timeline_container, #ctrlbar_container { padding: 10px; }
+.header, .addvid, .vid, .punchlist, .submit, #palette_container, #timeline_container, #ctrlbar_container { margin: 10px; }
 
 body, input, select, button { font-size: 18pt; }
 

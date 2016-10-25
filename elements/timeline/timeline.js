@@ -108,7 +108,7 @@ Object.assign( Timeline.prototype, {
 
   generateTick(time,duration) {
     let width = `width: ${this.s_to_ems(duration) + 'em'};`; 
-    return render(`<div class='tick' style='${width}'>${time}</div>`);
+    return render(`<div class='tick' style='${width}'>${display_time(time,{ no_hours: true, no_ms: true })}</div>`);
   },
 
   generateChordElement(punch,offset) { 

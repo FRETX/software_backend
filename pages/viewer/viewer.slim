@@ -1,0 +1,21 @@
+html
+  head
+    == css ['fonts', 'viewer']
+    == js  ['jquery', 'rivets', 'lib', 'chord', 'chordlib', 'punch', 'punchlist']
+    == js  ['elements/ytplayer', 'elements/fretboard', 'elements/timeline']
+    == js  ['elements/palette', 'elements/songlist', 'viewer']
+  body
+
+    .header
+      img#logo src='newlogo.svg'
+
+    .content_wrapper
+      #content
+
+        #viewer
+          .row
+            #ytplayer_container
+            #fretboard_container
+          #timeline_container
+
+        #songlist_container

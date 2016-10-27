@@ -1,0 +1,19 @@
+html
+  head
+    == js  ['jquery','rivets','lib','songlist']
+    == css ['fonts']
+
+    javascript:
+      window.onload = function() { 
+        songlist = new Songlist( id('songlist_container') );
+      }
+
+    css: 
+      #songlist_container { 
+        display: inline-block; 
+        font-size: 14pt;
+        height: 500px;
+      }
+
+  body
+    #songlist_container

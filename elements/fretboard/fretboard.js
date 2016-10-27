@@ -45,6 +45,7 @@ Fretboard.prototype = {
       var cmd = this.state.fingering[i].toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }).split('');
       this.state.strings[cmd[1]-1].frets[cmd[0]].val = 1; 
     }
+    
   },
 
   clear_display: function() {
@@ -195,6 +196,7 @@ Fretboard.prototype.CSS = `
   font-size: 18pt;
   font-weight: bold;
   margin: 10px;
+  text-align: center;
 }
 
 #fretboard .fret:nth-child(1),

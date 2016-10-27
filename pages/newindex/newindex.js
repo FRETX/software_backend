@@ -1,4 +1,4 @@
-  /////////////////////////////////////////////// SETUP /////////////////////////////////////////////////////////
+/////////////////////////////////////////////// SETUP /////////////////////////////////////////////////////////
 
 var chord_picker;
 var changes_picker;
@@ -236,9 +236,9 @@ function upload() {
 function build_player() {
   song = data['songs'][Math.floor(Math.random()*data['songs'].length)];
   player = new youtube_player(song['youtube_id']);
-  player.on_time_change(on_time_change);
-  player.on_time_change(ctrlbar.on_time_change);
-  player.on_video_data(on_video_data);  
+    player.on_time_change(on_time_change);
+    player.on_time_change(ctrlbar.on_time_change);
+    player.on_video_data(on_video_data);  
   load_punches(song['punches']);
 }
 

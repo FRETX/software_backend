@@ -8,6 +8,7 @@ function Timeline(parent,palette) {
   this.palette = palette;
   this.link_punches();
   this.setup_rivets();
+  this.bind_handlers();
   this.build_dom(parent);
   this.bind_dom();
   this.load_styles();
@@ -50,9 +51,11 @@ Timeline.prototype = {
     this.draw_chords();
   },
 
-  update_time(time_s) {
-    if(this._scrubbing) return;
-    this._update_time(time_s);
+  bind_handlers() {
+    this.update_time = function(time_s) {
+      if(this._scrubbing) return;
+      this._update_time(time_s);
+    }.bind(this);
   },
 
   _update_time(time_s) {
@@ -118,7 +121,6 @@ Object.assign( Timeline.prototype, {
       <div class='chord' style='${width}${color}' >
         <div class='gloss'></div>
         <div class='chordname'>${punch.chord}</div>
-        <div class='chordtime'>${punch.disp_time}</div>
       </div>
     `.untab(6));
   }
@@ -225,23 +227,40 @@ Timeline.prototype.CSS = `
   white-space: nowrap;
   position: relative;
   z-index: 1;
+  height: 3em;
+  vertical-align: middle;
 }
+
+
 
 #timeline .chord {
   position: relative;
   display: inline-block;
-  padding: 0.5em 2em;
+  padding: 0.5em 1em;
   text-align: left;
-  border-radius: 2em;
+  border-radius: 1em;
+  border: 0.1em solid black;
   box-shadow: 0 0 0.1em black;
   box-sizing: border-box;
   overflow: hidden;
+  font-family: sans-serif;
+  font-weight: bold;
+  height: 3em;
+}
+
+#timeline .chord::before {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
 }
 
 #timeline .chord .chordname {
   position: relative;
   padding: 0.2em;
   z-index: 1;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 #timeline .chordtime {  
@@ -252,23 +271,26 @@ Timeline.prototype.CSS = `
 
 #timeline .scale {
   display: inline-block;
-  background-color: white;
+  background-color: rgba(100,100,100,0.8);
   height: 1em;
   white-space: nowrap;
   position: relative;
   box-shadow: 0 0 0.1em black;
   z-index: 1;
+  border: 1px solid black;
 }
 
 #timeline .scale .tick {
   vertical-align: top;
   display: inline-block;
   width: 1px;
-  height: 100%;
-  border-right: 1px solid black;
+  height: 1em;
+  line-height: 1em;
+  border-right: 1px solid green;
   box-sizing: border-box;
   text-align: right;
   padding-right: 0.1em;
+  color: white;
 }
 
 #timeline .indicator {
@@ -287,7 +309,7 @@ Timeline.prototype.CSS = `
   position: absolute;
   top: 0; bottom: 0;
   left: 0; right: 0;
-  border-radius: 2em;
+  border-radius: 1em;
 }
 
 #timeline .gloss {

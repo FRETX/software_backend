@@ -1,0 +1,72 @@
+* {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none; 
+}
+
+#logo {
+  margin: 2em;
+  height: 6em;
+}
+
+.row {
+  white-space: nowrap;
+  display: flex;
+  justify-content: space-around;
+}
+
+.row * {
+  vertical-align: middle;
+}
+
+#ytplayer_container {
+}
+
+#fretboard_container {
+  text-align: center;
+}
+
+#timeline_container {
+  padding-top: 1vw;
+}
+
+#content {
+  text-align: center;
+}
+
+#content * {
+  vertical-align: middle;
+}
+
+#viewer, 
+#ytplayer_container,
+#fretboard_container,
+#songlist_container {
+  display: inline-block;
+}
+
+#ytplayer_container {
+  width: 333px;
+  height: 250px;
+}
+
+
+#viewer { 
+  position: relative; 
+  max-width: 70vw;
+  min-width: 640px;
+}
+
+
+#timeline_container {
+  max-width: 100%;
+}
+
+#songlist_container {
+  padding-left: 1vw;
+  height: 372.83px;
+  width: 20vw;
+}

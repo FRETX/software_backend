@@ -1,0 +1,21 @@
+html
+  head
+    == js  ['rivets','lib','fretboard']
+    == css ['fonts']
+
+    javascript:
+      window.onload = function() { 
+        ctrlbar = new Controlbar( id('ctrlbar_container') );
+      }
+
+    css:
+      body {
+        background: rgb(180,180,180);
+      }
+      #ctrlbar_container {
+        font-size: 30px;
+        background: rgb(50,50,50);
+      }
+
+  body
+    #ctrlbar_container

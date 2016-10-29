@@ -33,7 +33,7 @@ Songlist.prototype = {
   	this.on_search    = function(e)  { 
       if(e.target.value == '') this.state.filtered_songs = this.state.songs;
       else {
-        this.state.filtered_songs = this.state.songs.filter( function(song) { return song.title.indexOf(e.target.value)!=-1; } );
+        this.state.filtered_songs = this.state.songs.filter( function(song) { return song.title.toLowerCase().indexOf(e.target.value.toLowerCase())!=-1; } );
       }
     }.bind(this);
   	this.on_click     = function(e,m)  { this.select(m.index); }.bind(this);  
@@ -110,6 +110,8 @@ Songlist.prototype.CSS = `
   	padding: 0.5em;
   	margin: 0.5em 0;
     box-shadow: 0 0 0.2em black;
+    text-align: left;
+    white-space: nowrap;
   }
 
   .songitem:hover  { background-color: rgba(0,0,0,0.2); }
@@ -117,6 +119,13 @@ Songlist.prototype.CSS = `
 
   .songitem * {
     vertical-align: middle;
+  }
+
+  .songitem span {
+    font-size: 0.8em;
+    max-width: 13em;
+    display: inline-block;
+    white-space: normal;
   }
 
 

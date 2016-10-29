@@ -195,7 +195,7 @@ Timeline.prototype.CSS = `
 
 #timeline {
   overflow: hidden;
-  position: relative;
+  position: absolute;
   background-color: rgb(0,0,0,0.1);
   box-shadow: 0 0 0.1em black;
   padding: 0.4em;

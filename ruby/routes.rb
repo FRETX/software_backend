@@ -32,7 +32,7 @@ get '/pages/:name.css' do
 end
 
 
-get('/')                    { slim :index                          }
+get('/')                    { redirect '/pages/viewer.html'        }
 get('*/:file.html')         { slim params[:file].to_sym            }
 get('*/:file.css' )         { send_file "css/#{params[:file]}.css" }
 get('*/:file.js'  )         { send_file "js/#{params[:file]}.js"   }

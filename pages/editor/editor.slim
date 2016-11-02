@@ -2,7 +2,7 @@ html
   head
     == css ['fonts', 'editor']
     == js  ['jquery', 'rivets', 'lib', 'chord', 'chordlib', 'event_channel', 'punch', 'punchlist']
-    == js  ['elements/ytplayer', 'elements/fretboard', 'elements/timeline']
+    == js  ['elements/ytplayer', 'elements/fretboard', 'elements/controlbar', 'elements/timeline']
     == js  ['elements/palette', 'elements/songlist', 'editor']
   body
 
@@ -16,6 +16,8 @@ html
           .row
             #ytplayer_container
             #fretboard_container
+          #ctrlbar_container
           #timeline_container
+          #palette_container
 
         #songlist_container

@@ -45,6 +45,7 @@ Timeline.prototype = {
   },
 
   set_duration(value) {
+    console.log(`timeline duration set: ${value}`)
     this.state.duration = value;
     this.link_punches();
     this.draw_scale();
@@ -89,13 +90,10 @@ Object.assign( Timeline.prototype, {
     this.scale.innerHTML = '';
     var i=1;
     for(; i<this.state.duration; i++) {
-      //console.log(`i:${i} dur: ${this.state.duration}`);
       let tick = this.generateTick(i,1);
       this.scale.appendChild(tick);
     }
-    //console.log(this.state.duration);
-    //console.log(`extra: ${this.state.duration-i+1}`);
-    let tick = this.generateTick('',this.state.duration-i+1);
+    let tick = this.generateTick(null,this.state.duration-i+1);
     this.scale.appendChild(tick);
   },
 

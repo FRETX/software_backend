@@ -128,10 +128,6 @@
 }
 
 @media (max-width: 1350px) {
-
-  #viewer {
-    max-width: none;
-  }
   
   #songlist_container {
     display: block;
@@ -139,64 +135,7 @@
     padding-left: 0;
     padding-top: 1vw;
   }
-  
-  #timeline {
-    height: auto;
-  }
 
-  #timeline_container {
-    margin-top: 1vw;
-    height: 7em;
-  }
-
-  #ytplayer_container {
-    width: 45vw;
-    height: 28vw;
-  }
-
-  #fretboard_container {
-    width: 35vw;
-    padding: 1vw;
-    box-sizing: border-box;
-  }
-
-}
-
-@media (max-width: 950px) {
-
-  #logo {
-    height: 10vw;
-    padding: 1vw;
-    margin: 1vw;
-  }
-
-  .row {
-    display: block;
-    white-space: normal;
-  }
-  
-  #ytplayer_container {
-    display: block;
-    width: 90vw;
-    height: 50vw;
-  }
-
-  #fretboard_container {
-    display: block;
-    width: 90vw;
-  }
-
-  #timeline_container {
-    width: 90vw;
-  }
-
-  #songlist_container {
-    width: 90vw;
-  }
-
-  #viewer {
-    min-width: inherit;
-  }
 
 
 }

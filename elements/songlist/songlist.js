@@ -31,13 +31,23 @@ Songlist.prototype = {
 
   bind_handlers() {
   	this.on_search    = function(e)  { 
-      if(e.target.value == '') this.state.filtered_songs = this.state.songs;
+      if( e.target.value == '' || e.target.value == 'Search' ) this.state.filtered_songs = this.state.songs;
       else {
         this.state.filtered_songs = this.state.songs.filter( function(song) { return song.title.toLowerCase().indexOf(e.target.value.toLowerCase())!=-1; } );
       }
     }.bind(this);
   	this.on_click     = function(e,m)  { this.select(m.index); }.bind(this);  
   	this.on_song_list = function(list) { this.state.songs = list; this.list_loaded(); }.bind(this);
+    this.on_input_focus = function(e,m) {
+      e.target.style.color = 'black';
+      if(e.target.value == "Search" ) { e.target.value = ''; }
+      else { e.target.select(); }
+    }.bind(this);
+    this.on_input_blur = function(e,m) { 
+      console.log(e.target.value);
+      e.target.value = ( e.target.value == '' ? "Search" : e.target.value ); 
+      if(e.target.value == 'Search' ) { e.target.style.color = 'grey'; }
+    }.bind(this);
   },
 
   get length() { return this.state.songs.length; },
@@ -74,7 +84,7 @@ Object.assign(Songlist.prototype, {
 Songlist.prototype.HTML = `
   <div id="songlist">
     <div class="searchbar">
-      <input rv-on-input='this.on_search'></input>
+      <input rv-on-input='this.on_search' rv-on-focus='this.on_input_focus' rv-on-blur='this.on_input_blur' value='Search' style='color: grey;'></input>
     </div>
     <div class="searchlist">
       <div class="songitem" rv-each-song="data.filtered_songs" rv-on-click="this.on_click">
@@ -121,16 +131,25 @@ Songlist.prototype.CSS = `
     vertical-align: middle;
   }
 
+  .songitem img {
+    width: 25%;
+  }
+
   .songitem span {
     font-size: 0.8em;
-    max-width: 13em;
+    width: 75%;
+    padding: 0.2em;
     display: inline-block;
     white-space: normal;
   }
 
+  .songitem:first-child {
+    margin-top: 0;
+  }
+
 
   input {
-  	font-size: 1em;
+  	font-size: 1.3em;
     width: 100%;
   }
 

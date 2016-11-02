@@ -26,10 +26,12 @@ function wait_for_youtube_api(callback) {
 function YTPlayer(parent, video_id) {
   this.timer = false;
   this.video_id = false;
+  this._duration = 0;
   this._current_time = 0;
-  this.on_deck = false;
+  this.on_deck = false; 
   this.videodata = {};
   this.timechange_callbacks = [];
+  this.bind_handlers();
   wait_for_youtube_api( function(video_id) {
     this.player = this.build_player(parent, video_id);
   }.bind(this,video_id));
@@ -38,6 +40,9 @@ function YTPlayer(parent, video_id) {
 
 YTPlayer.prototype = {
   constructor: YTPlayer,
+  bind_handlers() {
+
+  },
   url_regex: /https:\/\/www.youtube.com\/watch\?v=(.{11})/,
 
   set current_time(time_s) {
@@ -51,10 +56,14 @@ YTPlayer.prototype = {
   },
 
   get duration() {
-    return this.player.getDuration();
+    if(this._duration != this.player.getDuration) {
+      this._duration = this.player.getDuration();
+      this.ev_fire( 'duration', this._duration );
+    }
+    return this._duration;
   },
 
-  build_player: function(parent_id,vid_id) {
+  build_player(parent_id,vid_id) {
     this.video_id = vid_id;
     return new YT.Player(parent_id, {
       height: '390', 
@@ -67,13 +76,13 @@ YTPlayer.prototype = {
     });
   },
 
-  onPlayerReady: function(event) {
+  onPlayerReady(event) {
     if(this.on_deck) { this.load(this.video_id); return; }
     event.target.playVideo();
     this.get_video_data();
   },
 
-  update_time: function(time_s) {
+  update_time(time_s) {
     time_s = time_s || this.player.getCurrentTime();
     this._current_time = typeof(time_s) == 'undefined' ? 0 : time_s.toFixed(3);
     for(var i=0; i < this.timechange_callbacks.length; i++) {
@@ -82,33 +91,58 @@ YTPlayer.prototype = {
     }
   },
 
-  onPlayerStateChange: function(event) {
+  onPlayerStateChange(event) {
     if(this.timer)  { clearInterval(this.timer); this.timer = false; }
-    if( event.data == YT.PlayerState.PLAYING ) { this.timer = setInterval( this.update_time.bind(this), 100 ); }
-    //else                                       { this.timer = setInterval( this.update_time.bind(this), 500 ); }
+    switch(event.data) {
+      case YT.PlayerState.ENDED:
+        this.ev_fire('ended',null);
+        this.update_time();
+        //console.log('ENDED');
+        break;
+      case YT.PlayerState.PLAYING:
+        this.duration;
+        this.timer = setInterval( this.update_time.bind(this), 100 );
+        break;
+      case YT.PlayerState.PAUSED:
+        //console.log('PAUSED');
+        break;
+      case YT.PlayerState.BUFFERING:
+        //console.log('BUFFERING');
+        break;
+      case YT.PlayerState.CUED:
+        //console.log('CUED');
+        break;
+    }
+    
+    //else { this.timer = setInterval( this.update_time.bind(this), 500 ); }
   },
 
-  onVideoData: function(data) {
+  onVideoData(data) {
     this.videodata = data;
     if(isFunction(this.videodata_callback)) {
       this.videodata_callback(data);
     }
   },
 
-  on_time_change: function(callback) {
+  on_time_change(callback) {
     this.timechange_callbacks.push(callback);
   },
 
-  on_video_data: function(callback) {
+  on_video_data(callback) {
     this.videodata_callback = callback
   },
 
-  load: function(url) {
+  load(url) {
     if( empty(url) ) { return; }
     var match = this.url_regex.exec(url);
     if(!match && url.length != 11) { alert('invalid syntax'); return; }
     this.video_id = url.length == 11 ? url : match[1];
     //console.log(this.player);
+    if( empty(this.player) ) {
+      console.log('tried to load video before player was ready');
+      this.on_deck = true;
+      return;
+    }
     if( isFunction(this.player.loadVideoById) ) {
       this.player.loadVideoById(this.video_id, 0, "large");
       this.get_video_data();
@@ -116,12 +150,14 @@ YTPlayer.prototype = {
     else { this.on_deck = true; }
   },
 
-  stop: function() {
+  stop() {
     this.player.stopVideo();
   },
 
-  get_video_data: function() {
+  get_video_data() {
     $.get('/youtube/videodata/' + this.video_id, this.onVideoData.bind(this));
   }
 
 }
+
+Object.assign( YTPlayer.prototype, ev_channel );

@@ -21,9 +21,19 @@ get '/pages/:name.html' do
   slim(:"../pages/#{params[:name]}/#{params[:name]}")
 end
 
+get '/:name.js' do
+  pass unless File.file? "pages/#{params[:name]}/#{params[:name]}.js"  
+  send_file "pages/#{params[:name]}/#{params[:name]}.js"
+end
+
 get '/pages/:name.js' do
   pass unless File.file? "pages/#{params[:name]}/#{params[:name]}.js"  
   send_file "pages/#{params[:name]}/#{params[:name]}.js"
+end
+
+get '/:name.css' do
+  pass unless File.file? "pages/#{params[:name]}/#{params[:name]}.css"
+  send_file "pages/#{params[:name]}/#{params[:name]}.css"
 end
 
 get '/pages/:name.css' do

@@ -27,11 +27,13 @@ Palette.prototype = {
     return ary[0]._color;
   },
 
+  find_index(chord) { 
+    var chord_matches_test = function(x) { return x.label == chord; };
+    return this.state.chords.findIndex(chord_matches_test);
+  },
+
   already_exists: function(chord) {
-    let result = $.grep(this.state.chords, function(x) { 
-      return x.label == chord; 
-    });
-    if(result.length) return true;
+    if( this.find_index(chord) ) return true;
     return false;
   },
 
@@ -53,6 +55,15 @@ Palette.prototype = {
     }
   },
 
+  highlight_chord(chord) {
+    var idx = this.find_index(chord);
+    var elems = this.dom.getElementsByClassName('chord');
+    for(var i=0; i<elems.length; i++) {
+      elems[i].style.boxShadow =  ( (i == idx) ? '.5em .5em .5em black, 0 0 .5em black' : '0 0 .1em black' );
+      elems[i].style.textShadow =  ( (i == idx) ? '0 0 .1em white, 0 0 .5em white' : '' );
+    }
+  },
+
   bind_handlers: function() {
 
     this.add_chord = function(e,m) {
@@ -69,6 +80,7 @@ Palette.prototype = {
     }.bind(this);
 
     this.sel_chord = function(e,m) {
+      this.ev_fire('selected', m.chord );
       if( ! isFunction(this.on_chord) ) return;
       this.on_chord(m.chord);
     }.bind(this);
@@ -76,6 +88,8 @@ Palette.prototype = {
   }
 
 }
+
+Object.assign( Palette.prototype, ev_channel );
 
 Palette.prototype.HTML = `
 
@@ -134,6 +148,7 @@ Palette.prototype.CSS = `
 
   #palette .delete {
     content: 'X';
+    text-shadow: none;
     position: absolute;
     top: -.75em; left: -.75em;
     line-height: 1.5em;

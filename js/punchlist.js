@@ -3,7 +3,7 @@ function Punchlist() {
 	this.current_index = -1;
   this.current_time = 0;
   this.punch_callbacks = [];
-  this.update_time = this.update_time.bind(this);
+  this.bind_listeners();
 }
 
 Punchlist.prototype = {
@@ -15,64 +15,80 @@ Punchlist.prototype = {
   get next_punch()    { return( this.punches[this.current_index + 1 ] ); },
   get prev_punch()    { return( this.punches[this.current_index - 1 ] ); },
 
-	add_punch: function(punch) {
+	add_punch(punch) {
     this.punches.push( new Punch(punch.time, punch.chord) );
     this.punches.sort( SortByTime );
     this._on_list_change();
 	},
 
-	add_punches: function(punches) {
+	add_punches(punches) {
     for(var i=0; i<punches.length; i++) { this.punches.push( new Punch(punches[i].time, punches[i].chord) ); }
     this.punches.sort( SortByTime );
     this._on_list_change();
 	},
 
-	del_punch: function(punch) {
+	del_punch(punch) {
 		var i = typeof(punch) == number ? punch : data.punches.indexOf(m.punch);
     data.punches.splice(i,1);
     this._on_list_change();
 	},
 
-	clear: function() { 
+	clear() { 
     this.punches = []; 
     this._on_list_change(); 
   },
 
-	load: function (punches) {
+	load(punches) {
 		this.punches = [];
     this.add_punches(punches);
     this.current_index = -1;
     this.current_time = 0;
   },
 
-  jog: function(offset_ms) {
-    for(var i=0; i<this.punches.length; i++) this.punches[i].jog(offset_ms); 
-  }
 }
+
+Object.assign( Punchlist.prototype, ev_channel );
 
 Object.assign( 
   Punchlist.prototype, {
 
-    link_list: function() {
+    jog(offset_ms) {
+      for(var i=0; i<this.punches.length; i++) this.punches[i].jog(offset_ms); 
+    },
+
+    link_list() {
       for(var i=0; i<this.punches.length; i++) {
-        prev_punch = ( i!=0 ) ? this.punches[i-1] : null 
+        prev_punch = ( i!=0 ) ? this.punches[i-1] : null;
         next_punch = ( i==this.punches.length-1 ) ? null : this.punches[i+1];
         this.punches[i].link(prev_punch, next_punch);
+        this.punches[i].on_change = this.on_punch_change;
+      }
+    },
+
+    on_punch_change() {
+      this._on_list_change();
+    },
+
+    set_current_punch(time_s) {
+      //console.log(`${time_s} ${this.current_index} ${this.punches[0].time}`);
+      for(var i=0; i<this.punches.length; i++) {
+        if(this.punches[i].occupies(time_s)) {
+          this.current_index = i;
+          this._on_punch_change();
+          return;
+        }
       }
     }
 
   }
 );
 
-
-Object.assign( 
-  Punchlist.prototype, {
-
-  }
-);
-
 Object.assign(
   Punchlist.prototype, {
+    bind_listeners() {
+      this.update_time     = this.update_time.bind(this);
+      this.on_punch_change = this.on_punch_change.bind(this);
+    },
 
     update_time: function(time_s) {
       this.current_time = time_s;
@@ -94,38 +110,12 @@ Object.assign(
 
     _on_list_change: function() {
       this.link_list();
-      //console.log(this.punches);
+      this.ev_fire('list_changed', this.punches);
     },
 
     _on_punch_change: function() {
       var punch = this.current_index==-1 ? new Punch(0,'No Chord'): this.current_punch;
-      //console.log(punch.chord);
-      for(var i=0; i < this.punch_callbacks.length; i++) {
-        if( ! isFunction(this.punch_callbacks[i]) ) continue;
-        this.punch_callbacks[i](punch);
-      }
-    },
-
-    on_punch_change: function(callback) {
-      this.punch_callbacks.push(callback);
-    }
-
-  }
-);
-
-
-Object.assign(
-  Punchlist.prototype, {
-    
-    set_current_punch: function(time_s) {
-      //console.log(`${time_s} ${this.current_index} ${this.punches[0].time}`);
-      for(var i=0; i<this.punches.length; i++) {
-        if(this.punches[i].occupies(time_s)) {
-          this.current_index = i;
-          this._on_punch_change();
-          return;
-        }
-      }
+      this.ev_fire('current_punch_changed', this.current_punch );
     }
 
   }

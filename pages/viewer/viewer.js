@@ -27,8 +27,9 @@ $(document).ready(function() {
   ytplayer.on_video_data(on_video_data); 
 
   ytplayer.ev_sub('duration', function(duration) { timeline.set_duration(duration); })
+  ytplayer.ev_sub('ended', function() { timeline.update_time(); } )
 
-  punchlist.on_punch_change( function(punch) {
+  punchlist.ev_sub( 'current_punch_changed', function(punch) {
     fretboard.load_chord(chordlib.get_chord(punch.chord));
   });
   

@@ -77,13 +77,12 @@
   content: '';
   display: inline-block;
   vertical-align: middle;
-  height: 26vw;
-
+  height: 20vw;
 }
 
 #ytplayer_container {
-  width: 36vw;
-  height: 26vw;
+  width: 28vw;
+  height: 20vw;
   border: 1px solid black;
   box-shadow: 0 0 0.1em black;
 }
@@ -125,6 +124,21 @@
   width: 20vw;
   vertical-align: top;
   max-height: 35.2vw;
+}
+
+#palette_container {
+  border: 1px solid black;
+  box-shadow: 0 0 0.1em black;
+  margin-top: 1vw;
+  font-size: 0.8em;
+}
+
+#ctrlbar_container {
+  border: 1px solid black;
+  box-shadow: 0 0 0.1em black;
+  margin-top: 1vw;
+  font-size: 1.3vw;
+  padding-bottom: 0.3em;
 }
 
 @media (max-width: 1350px) {

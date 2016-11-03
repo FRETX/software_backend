@@ -25,14 +25,14 @@ $(document).ready(function() {
   ytplayer.on_time_change( timeline.update_time   );
   ytplayer.on_time_change( punchlist.update_time  );
   ytplayer.on_time_change( ctrlbar.on_time_change );
-
   ytplayer.on_video_data(on_video_data); 
+  ytplayer.ev_sub( 'duration', timeline.set_duration );
 
-  ytplayer.ev_sub('duration', function(duration) { timeline.set_duration(duration); })
+  palette.ev_sub( 'selected', add_chord_now );
 
-  punchlist.on_punch_change( function(punch) {
-    fretboard.load_chord(chordlib.get_chord(punch.chord));
-  });
+  punchlist.ev_sub( 'list_changed', timeline.load );
+  punchlist.ev_sub( 'current_punch_changed', current_punch_changed );
+  punchlist.ev_sub( 'current_punch_changed', ctrlbar.on_punch_change );
   
 });
 
@@ -46,11 +46,19 @@ function load_song(song) {
   }
   punchlist.load(punches);
   palette.load(punches);
-  timeline.load(punches);
   ytplayer.load(song.youtube_id);
 }
 
 function on_video_data() {
   punchlist.update_time(0);
-  //setTimeout(function() { timeline.set_duration(ytplayer.duration); }, 1200)
 }
+
+function current_punch_changed(punch) {
+  fretboard.load_chord(chordlib.get_chord(punch.chord));
+  palette.highlight_chord(punch.chord);
+}
+
+function add_chord_now(chord) {
+  console.log(chord);
+  punchlist.add_punch( { time: ytplayer.current_time , chord: chord.label } );
+} 

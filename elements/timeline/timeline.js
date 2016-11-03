@@ -45,18 +45,22 @@ Timeline.prototype = {
   },
 
   set_duration(value) {
-    console.log(`timeline duration set: ${value}`)
+    console.log(`timeline duration set: ${value}`);
     this.state.duration = value;
     this.link_punches();
     this.draw_scale();
     this.draw_chords();
   },
 
-  bind_handlers() {
-    this.update_time = function(time_s) {
+  update_time(time_s) {
       if(this._scrubbing) return;
       this._update_time(time_s);
-    }.bind(this);
+  },
+
+  bind_handlers() {
+    this.set_duration = this.set_duration.bind(this);
+    this.update_time  = this.update_time.bind(this);
+    this.load         = this.load.bind(this);
   },
 
   _update_time(time_s) {

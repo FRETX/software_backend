@@ -32,10 +32,6 @@ Punch.prototype = {
 
   //////////////////////// PROPERTIES //////////////////////////////////
 
-  short_disp_time: function() {
-  
-  },
-
   generate_display_time: function() {
   	if( empty(this._time) ) return '';
 
@@ -60,6 +56,7 @@ Punch.prototype = {
     let t = parseFloat(this.time) + parseFloat( offset_ms / 1000 );
     this.time = (t < 0 ? 0 : t);
     this.generate_display_time();
+    this._on_change();
     return this;
   },
 
@@ -69,7 +66,12 @@ Punch.prototype = {
 
   to_json: function() {
   	return JSON.stringify( this.to_model )
-  }
+  },
+
+  _on_change() {
+    if( ! isFunction(this.on_change) ) return;
+    this.on_change();
+  },
 
 }
 
@@ -79,7 +81,6 @@ Object.assign(
     occupies: function(time_s) {
       if( ! this.linked ) return false;
       time_s = parseFloat(time_s);
-      //var is_last_node = ( this._next_node == null );
 
       if( time_s <  parseFloat(this.time) )            { return false; }  // TOO LOW
       if( empty(this._next_node)          )            { return true;  }  // LAST NODE
@@ -95,3 +96,5 @@ Object.assign(
 
   }
 );
+
+Object.assign(Punch.prototype, ev_channel);

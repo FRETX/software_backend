@@ -1,5 +1,6 @@
 require 'sinatra'
 
+set :bind, '0.0.0.0'
 set :views, 'slim'
 
 Dir.chdir File.expand_path(File.dirname(__FILE__))
@@ -11,3 +12,5 @@ Dir["ruby/*.rb"].each { |file| require File.expand_path(file); }
 # Fri 10/28 5pm -  7pm 2hrs
 # Tue 11/01 9pm - 12am 3hrs
 # Wed 11/02 8pm - 1am  5hrs
+# Thu 11/03 9pm - 1am  4hrs
+

@@ -10,30 +10,38 @@ function Timeline(parent,palette) {
   this.setup_rivets();
   this.bind_handlers();
   this.build_dom(parent);
+  this.get_dom_refs();
   this.bind_dom();
   this.load_styles();
   this.draw_scale();
   this.set_drag_handlers();
+  this.set_resize_handlers();
 }
 
 Timeline.prototype = {
   
-  load: function(punches) {
+  load(punches) {
     this.state.punches = punches;
     this.link_punches();
     this.draw_chords();
     this.draw_scale();
   },
 
-  link_punches: function() {
+  link_punches() {
     this.state.punches.forEach(function(e,i,a) {
       e.next_node = ( i + 1 < this.state.punches.length ) ? this.state.punches[i+1] : new Punch(this.state.duration,'No Chord');
     }.bind(this));
   },
 
-  build_dom:   function(parent) { this.dom = render(this.HTML);  if(!empty(parent)) parent.appendChild(this.dom); },
-  bind_dom:    function()       { rivets.bind(this.dom, { data: this.state, obj: this }); },
-  load_styles: function()       { load_css('timeline_styles', this.CSS); },
+  build_dom(parent) { this.dom = render(this.HTML);  if(!empty(parent)) parent.appendChild(this.dom); },
+  bind_dom()        { rivets.bind(this.dom, { data: this.state, obj: this }); },
+  load_styles()     { load_css('timeline_styles', this.CSS); },
+
+  get_dom_refs() {
+    this.indicator = this.dom.getElementsByClassName('indicator')[0];
+    this.scale     = this.dom.getElementsByClassName('scale')[0];
+    this.chordline = this.dom.getElementsByClassName('chords')[0];
+  },
   
   bind_dom: function() {
     rivets.bind(this.dom, { data: this.state } );
@@ -52,6 +60,12 @@ Timeline.prototype = {
     this.draw_chords();
   },
 
+  render() {
+    this.update_font_size_px();
+    this.draw_scale();
+    this.draw_chords();
+  },
+
   update_time(time_s) {
       if(this._scrubbing) return;
       this._update_time(time_s);
@@ -61,27 +75,30 @@ Timeline.prototype = {
     this.set_duration = this.set_duration.bind(this);
     this.update_time  = this.update_time.bind(this);
     this.load         = this.load.bind(this);
+    this.render       = this.render.bind(this);
   },
 
   _update_time(time_s) {
-    this.indicator = this.dom.getElementsByClassName('indicator')[0];
-    let width_ems = this.s_to_ems(time_s);
-    let width_px  = this.ems_to_px( width_ems );
-
-    this.indicator.style.width = width_ems + 'em';
+    let width_px = this.s_to_px(time_s);
+    this.indicator.style.width = width_px + 'px';
     this.dom.scrollLeft = width_px - (this.dom.clientWidth/2);
   },
 
   s_to_ems(time_s) { return time_s * this.state.scale_factor; },
-  s_to_px(time_s)  { return this.ems_to_px(this.s_to_ems(time_s)); },
   ems_to_s(ems)    { return ems    / this.state.scale_factor; },
   ems_to_px(ems)   { return ems * this.font_size_px; },
   px_to_ems(px)    { return px  / this.font_size_px; },
+  s_to_px(time_s)  { return this.ems_to_px(this.s_to_ems(time_s)); },
   px_to_s(px)      { return this.ems_to_s( this.px_to_ems( px ) ); },
 
   
   get font_size_px()    { return this._font_size_px || this.update_font_size_px(); },
-  update_font_size_px() { this._font_size_px = parseFloat( getComputedStyle(this.dom).fontSize ); return this._font_size_px; }
+  update_font_size_px() { this._font_size_px = parseFloat( getComputedStyle(this.dom).fontSize ); return this._font_size_px; },
+
+  set_resize_handlers() {
+    window.onresize = this.render;
+    window.addEventListener("orientationchange", this.render, false);
+  }
 
 }
 
@@ -90,7 +107,6 @@ Timeline.prototype = {
 Object.assign( Timeline.prototype, {
 
   draw_scale() {
-    this.scale = this.dom.getElementsByClassName('scale')[0];
     this.scale.innerHTML = '';
     var i=1;
     for(; i<this.state.duration; i++) {
@@ -102,7 +118,6 @@ Object.assign( Timeline.prototype, {
   },
 
   draw_chords() {
-    this.chordline = this.dom.getElementsByClassName('chords')[0];
     this.chordline.innerHTML = '';
     for(var i=0; i<this.state.punches.length; i++) {
       let chord = this.generateChordElement(this.state.punches[i]);
@@ -112,12 +127,12 @@ Object.assign( Timeline.prototype, {
   },
 
   generateTick(time,duration) {
-    let width = `width: ${this.s_to_ems(duration) + 'em'};`; 
+    let width = `width: ${this.s_to_px(duration) + 'px'};`; 
     return render(`<div class='tick' style='${width}'>${display_time(time,{ no_hours: true, no_ms: true })}</div>`);
   },
 
   generateChordElement(punch,offset) { 
-    var width = `width:${ this.s_to_px(punch.duration_s) + 'px'}; `;
+    var width = `width: ${ this.s_to_px(punch.duration_s) + 'px'}; `;
     var color = isFunction(this.get_color) ? `background: ${this.get_color(punch.chord)}; ` : '';
     return render(`
       <div class='chord' style='${width}${color}' >
@@ -200,8 +215,8 @@ Timeline.prototype.CSS = `
   position: absolute;
   background-color: rgb(0,0,0,0.1);
   box-shadow: 0 0 0.1em black;
-  padding: 0.4em;
-  font-size: 16pt;
+  padding: 0.5em;
+  height: 5em;
 }
 
 #timeline {
@@ -225,14 +240,13 @@ Timeline.prototype.CSS = `
 
 #timeline .chords {
   display: inline-block;
-  padding-bottom: 0.4em;
+  padding-bottom: 0.5em;
   white-space: nowrap;
   position: relative;
   z-index: 1;
   height: 3em;
   vertical-align: middle;
 }
-
 
 
 #timeline .chord {
@@ -265,16 +279,10 @@ Timeline.prototype.CSS = `
   vertical-align: middle;
 }
 
-#timeline .chordtime {  
-  position: relative;
-  font-size: 0.8em;
-  z-index: 1;
-}
-
 #timeline .scale {
   display: inline-block;
   background-color: rgba(100,100,100,0.8);
-  height: 1em;
+  height: 1.2em;
   white-space: nowrap;
   position: relative;
   box-shadow: 0 0 0.1em black;
@@ -286,13 +294,14 @@ Timeline.prototype.CSS = `
   vertical-align: top;
   display: inline-block;
   width: 1px;
-  height: 1em;
-  line-height: 1em;
+  height: 1.2em;
+  line-height: 1.2em;
   border-right: 1px solid green;
   box-sizing: border-box;
   text-align: right;
   padding-right: 0.1em;
   color: white;
+  
 }
 
 #timeline .indicator {

@@ -57,23 +57,27 @@ Songlist.prototype = {
 
 ///////////////////////////////// EVENTS ///////////////////////////////////////////////
 
+Object.assign( Songlist.prototype, ev_channel );
+
 Object.assign(Songlist.prototype, {
 
-  on_select(callback) { this.callbacks.on_select.push(callback); },
+  //on_select(callback) { this.callbacks.on_select.push(callback); },
   select(index) {
-    for(var i=0; i < this.callbacks.on_select.length; i++) {
-      if( ! isFunction(this.callbacks.on_select[i]) ) continue;
-      this.callbacks.on_select[i](this.state.songs[index]);
-    } 
+    this.ev_fire('selected', this.state.filtered_songs[index] );
+    //for(var i=0; i < this.callbacks.on_select.length; i++) {
+    //  if( ! isFunction(this.callbacks.on_select[i]) ) continue;
+    //  this.callbacks.on_select[i](this.state.songs[index]);
+    //} 
   },
 
-  on_list_loaded(callback) { this.callbacks.on_list_loaded.push(callback); },
+  //on_list_loaded(callback) { this.callbacks.on_list_loaded.push(callback); },
   list_loaded() {
     this.state.filtered_songs = this.state.songs;
-    for(var i=0; i < this.callbacks.on_list_loaded.length; i++) {
-      if( ! isFunction(this.callbacks.on_list_loaded[i]) ) continue;
-      this.callbacks.on_list_loaded[i]();
-    } 
+    this.ev_fire('list_loaded');
+    //for(var i=0; i < this.callbacks.on_list_loaded.length; i++) {
+    //  if( ! isFunction(this.callbacks.on_list_loaded[i]) ) continue;
+    //  this.callbacks.on_list_loaded[i]();
+    //} 
   }
 
 });

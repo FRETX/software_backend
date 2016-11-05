@@ -8,6 +8,10 @@
 }
 
 body {
+  box-shadow: 0 0 0.1em black inset;
+}
+
+#fretboard_container {
   -webkit-transition: box-shadow: 1s;
   transition: box-shadow: 1s;
 }
@@ -67,7 +71,7 @@ body {
   border: 1px solid black;
   height: 30vw;
   width: 33vw;
-  box-shadow: 0 0 0.5em black;
+  box-shadow: 0 0 0.3em black;
   background-color: rgba(0,0,0,0.1);
   font-size: 1.4vw;
 }
@@ -88,7 +92,7 @@ body {
   width: 40vw;
   height: 30vw;
   border: 1px solid black;
-  box-shadow: 0 0 0.1em black;
+  box-shadow: 0 0 0.3em black;
 }
 
 
@@ -108,13 +112,13 @@ body {
 
 #timeline {
   border: 1px solid black;
-  box-shadow: 0 0 0.1em black;
+  box-shadow: 0 0 0.3em black;
   height: 7vw;
   font-size: 1.5vw;
 }
 
 #songlist {
- box-shadow: 0 0 0.1em black;
+ box-shadow: 0 0 0.3em black;
 }
 
 #songlist_container {

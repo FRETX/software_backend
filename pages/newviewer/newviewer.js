@@ -57,7 +57,8 @@ function on_video_data() {
 }
 
 function set_ambient_color(color) {
-  id('fretboard_container').style.boxShadow =`0 0 0.5em ${color} inset`;
+  //id('fretboard_container').style.boxShadow = `0 0 0.2em ${color} inset, 0 0 0.5em black`;
+ // document.body.style.boxShadow = `0 0 1vw ${color} inset`;
   // = build_header_gradient(color);
 }
 

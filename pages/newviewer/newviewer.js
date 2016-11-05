@@ -31,6 +31,7 @@ $(document).ready(function() {
 
   punchlist.ev_sub( 'current_punch_changed', function(punch) {
     fretboard.load_chord(chordlib.get_chord(punch.chord));
+    set_ambient_color(palette.get_color(punch.chord));
   });
 
   id('logo').addEventListener('click', function() { window.location.href = "http://fretx.rocks"; } );
@@ -53,4 +54,18 @@ function load_song(song) {
 
 function on_video_data() {
   punchlist.update_time(0);
+}
+
+function set_ambient_color(color) {
+  id('fretboard_container').style.boxShadow =`0 0 0.5em ${color} inset`;
+  // = build_header_gradient(color);
+}
+
+function build_header_gradient(color) {
+  return `
+    background: white; /* Old browsers */
+    background: -moz-linear-gradient(    top,       white 0%, rgba(221,241,249,1) 35%, ${color} 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient( top,       white 0%, rgba(221,241,249,1) 35%, ${color} 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(         to bottom, white 0%, rgba(221,241,249,1) 35%, ${color} 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  `.untab(2);
 }

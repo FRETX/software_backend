@@ -3,14 +3,14 @@ body {
 	margin: 0;
 }
 
-.header {
+#header {
   position: relative;
   margin-bottom: 1em;
   box-shadow: 0 0.3em 0.3em grey;
   height: 4em;
 }
 
-.header #logo {
+#header #logo {
   display: inline-block;
   padding: 0.5em 2em;
   border-right: 1px solid black;
@@ -18,29 +18,29 @@ body {
   vertical-align: top;
 }
 
-.header #logo:hover {
+#header #logo:hover {
   background: rgba(40,40,100,0.2);
 }
 
-.header #logo img {
+#header #logo img {
   height: 3em;
 }
 
 
-.header #menu {
+#header #menu {
   display: inline-block;
   height: 100%;
 }
 
-.header #menu .menuitem::before {
+#header #menu .menuitem::before {
 
 } 
 
-.header {
+#header {
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#feffff+0,ddf1f9+35,ffc6ed+100 */
   background: rgb(254,255,255); /* Old browsers */
-  background: -moz-linear-gradient(top,  rgba(254,255,255,1) 0%, rgba(221,241,249,1) 35%, rgba(255,198,237,1) 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top,  rgba(254,255,255,1) 0%,rgba(221,241,249,1) 35%,rgba(255,198,237,1) 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom,  rgba(254,255,255,1) 0%,rgba(221,241,249,1) 35%,rgba(255,198,237,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  background: -moz-linear-gradient(top,  rgba(254,255,255,1) 0%, rgba(221,241,249,1) 35%, rgba(255,220,237,1) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  rgba(254,255,255,1) 0%,rgba(221,241,249,1) 35%,rgba(255,220,237,1) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  rgba(254,255,255,1) 0%,rgba(221,241,249,1) 35%,rgba(255,220,237,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#feffff', endColorstr='#ffc6ed',GradientType=0 ); /* IE6-9 */
 }

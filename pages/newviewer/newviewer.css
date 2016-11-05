@@ -7,6 +7,11 @@
   user-select: none; 
 }
 
+body {
+  -webkit-transition: box-shadow: 1s;
+  transition: box-shadow: 1s;
+}
+
 .content_wrapper {
   padding-top: 2em;
   text-align: center;
@@ -129,6 +134,7 @@
     width: 95vw;
     padding-left: 0;
     margin-top: 2vw;
+    height: 70vw;
   }
   
   #timeline {

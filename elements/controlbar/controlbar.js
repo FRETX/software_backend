@@ -60,6 +60,8 @@ Controlbar.prototype.HTML = `
       <span class='jog' rv-on-click='this.jog_left'>-</span>
       <span>{data.punch._display_time }</span>
       <span class='jog' rv-on-click='this.jog_right'>+</span>
+      <br>
+      <span rv-on-click='this.delete'>X</span>
     </div>
   </div>
 `;

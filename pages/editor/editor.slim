@@ -6,12 +6,16 @@ html
     == js  ['elements/palette', 'elements/songlist', 'editor']
   body
 
-    .header
+    #header
       #logo
         img src='newlogo.svg'
       #menu
         .menuitem
-          span add a new song
+          | Edit An Existing Song
+        .menuitem
+          | Import A New Song
+        .menuitem
+          | Save Your Work
 
     .content_wrapper
       #content

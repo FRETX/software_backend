@@ -27,13 +27,30 @@ body {
 
 
 #header #menu {
+  float: right;
   display: inline-block;
   height: 100%;
+  font-family: sans-serif;
+}
+
+#header #menu .menuitem {
+  height: 100%;
+  padding: 0 1em;
+  box-shadow: 0 0 0.3em black inset;
+  display: inline-block;
+  cursor: pointer;
 }
 
 #header #menu .menuitem::before {
-
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
 } 
+
+#header #menu .menuitem:hover {
+  background-color: rgba(0,0,0,0.1);
+}
 
 #header {
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#feffff+0,ddf1f9+35,ffc6ed+100 */

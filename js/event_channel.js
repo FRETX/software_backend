@@ -1,21 +1,21 @@
 ev_channel = {
 
-  ev_listners: [],
-
   ev_fire(eventname, payload) {
-    var listners = this.ev_listners.filter( function(listner) { return listner.event == eventname; } );
-    listners.forEach( function(listner) { listner.callback.call(this,payload); } );
+    this.ev_listeners = this.ev_listeners || [];
+    var listeners = this.ev_listeners.filter( function(listener) { return listener.event == eventname; } );
+    listeners.forEach( function(listener) { listener.callback.call(this,payload); } );
   },	
   
   ev_sub(eventname,callback) {
+    this.ev_listeners = this.ev_listeners || [];
   	var token = this.ev_gen_token();
-    var listner = { token: token, event: eventname, callback: callback }
-    this.ev_listners.push(listner);
+    var listener = { token: token, event: eventname, callback: callback }
+    this.ev_listeners.push(listener);
     return token;
   },
 
   ev_unsub(token) {
-    this.listners = this.ev_listners.filter( function(listner) { return listner.token != token; } );
+    this.ev_listeners = this.ev_listeners.filter( function(listener) { return listener.token != token; } );
   },
 
   ev_gen_token() { return Math.random().toString(36).slice(2); }

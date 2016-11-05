@@ -113,7 +113,7 @@ Songlist.prototype.CSS = `
   }
 
   .searchlist {
-  	padding: 0.5em;
+  	padding: 0.7em;
   	overflow-y: scroll;
     box-shadow: 0 0 0.4em black inset;
   }
@@ -122,7 +122,7 @@ Songlist.prototype.CSS = `
     cursor: pointer;
   	border: 1px solid black;
   	padding: 0.5em;
-  	margin: 0.5em 0;
+  	margin: 0.7em 0;
     box-shadow: 0 0 0.2em black;
     text-align: left;
     white-space: nowrap;

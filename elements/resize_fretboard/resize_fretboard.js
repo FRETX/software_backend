@@ -16,13 +16,14 @@ function Fretboard(parent) {
   this.build_dom(parent);
   this.bind_dom();
   this.load_styles();
+  this.bind_handlers();
 }
 
 Fretboard.prototype = {
   constructor:   Fretboard,
 
   build_dom(parent) { this.dom = render(this.HTML);  if(!empty(parent)) parent.appendChild(this.dom); },
-  bind_dom()        { rivets.bind(this.dom, { data: this.state, obj: this }); },
+  bind_dom()        { rivets.bind(this.dom, { data: this.state, this: this }); },
   load_styles()     { load_css('fretboard_styles', this.CSS); },
 
   reset() {
@@ -54,6 +55,10 @@ Fretboard.prototype = {
       this.state.strings[cmd[1]-1].frets[cmd[0]].val = 1; 
     }
     
+  },
+
+  bind_handlers() {
+    this.tog_lefty = this.tog_lefty.bind(this);
   },
 
   tog_lefty()    { this.lefty = !this.lefty; },
@@ -113,6 +118,8 @@ Fretboard.prototype.HTML = `
 
   <div class='chordname' rv-text='data.name'></div>
 
+  <div class='lefty' rv-data-sel='data.lefty' rv-on-click='this.tog_lefty'>lefty</div>
+
 </div>
 
 `;
@@ -141,7 +148,7 @@ Fretboard.prototype.CSS = `
 #fretboard .lights .light                 { height: 0.4em;  }
 
 
-#fretboard .chordname                     { margin: 10px;   }
+#fretboard .chordname                     { margin: .4em;   }
 #fretboard .fret_display                  { margin: .5em .5em 0 .5em; }
 #fretboard .frets .wire                   { margin: 1px 0; }
 
@@ -232,11 +239,29 @@ Fretboard.prototype.CSS = `
 }
 
 #fretboard .chordname {
-  font-size: 18pt;
+  font-size: 0.6em;
   font-weight: bold;
   text-align: center;
 }
 
+#fretboard .lefty {
+  position: absolute;
+  bottom: 1em;
+  right: 6%;
+  background-color: rgba(0,0,0,0.1);
+  box-shadow: 0 0 0.2em black;
+  color: grey;
+  padding: 0.2em 0.4em;
+  font-size: 0.3em;
+  cursor: pointer;
+  border-radius: 0.2em;
+}
+
+#fretboard .lefty[data-sel='true'] {
+  background-color: rgba(0,100,0,0.1);
+  box-shadow: 0 0 0.2em rgba(40,150,40,1);
+  color: rgba(40,150,40,1);
+}
 
 
 #fretboard .strings .string {

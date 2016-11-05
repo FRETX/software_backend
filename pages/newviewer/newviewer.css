@@ -175,5 +175,17 @@ body {
   #content_wrapper {
     padding-top: 1vw;
   }
+  
+}
 
+@media (max-width: 750px) {
+  #fretboard .strings .string {
+    height: 3px !important;
+  }
+}
+
+@media (max-width: 550px) {
+  #fretboard .strings .string {
+    height: 2px !important;
+  }
 }

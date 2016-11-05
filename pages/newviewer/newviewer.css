@@ -154,17 +154,12 @@
     font-size: 2vw;
   }
 
-  #songlist_container {
-    position: absolute;
-    left: 0; right: 0;
-    bottom: 2.5vw;
-    top: 75vw;
-    height: auto;
-    margin: auto;
+  #songlist img  {
+
   }
 
   #songlist {
-    font-size: 1.5em;
+    font-size: 1em;
   }
 
   #content_wrapper {

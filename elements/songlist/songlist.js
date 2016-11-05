@@ -51,7 +51,13 @@ Songlist.prototype = {
   },
 
   get length() { return this.state.songs.length; },
-  get random() { return this.state.songs[ Math.floor( Math.random() * this.length ) ]; }
+  get random() { 
+    var rnd = Math.random();
+    var idx = Math.floor( rnd * this.length );
+    var song = this.state.songs[ idx ];
+    console.log(`Random Song: ${song.title} len:${this.length} rnd:${rnd} idx:${idx}`);
+    return song;
+  }
 
 }
 
@@ -61,23 +67,13 @@ Object.assign( Songlist.prototype, ev_channel );
 
 Object.assign(Songlist.prototype, {
 
-  //on_select(callback) { this.callbacks.on_select.push(callback); },
   select(index) {
     this.ev_fire('selected', this.state.filtered_songs[index] );
-    //for(var i=0; i < this.callbacks.on_select.length; i++) {
-    //  if( ! isFunction(this.callbacks.on_select[i]) ) continue;
-    //  this.callbacks.on_select[i](this.state.songs[index]);
-    //} 
   },
 
-  //on_list_loaded(callback) { this.callbacks.on_list_loaded.push(callback); },
   list_loaded() {
     this.state.filtered_songs = this.state.songs;
     this.ev_fire('list_loaded');
-    //for(var i=0; i < this.callbacks.on_list_loaded.length; i++) {
-    //  if( ! isFunction(this.callbacks.on_list_loaded[i]) ) continue;
-    //  this.callbacks.on_list_loaded[i]();
-    //} 
   }
 
 });
@@ -136,7 +132,7 @@ Songlist.prototype.CSS = `
   }
 
   .songitem img {
-    width: 25%;
+    width: 4em;
   }
 
   .songitem span {

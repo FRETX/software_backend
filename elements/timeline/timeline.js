@@ -155,10 +155,13 @@ Object.assign( Timeline.prototype, {
     this._scrubbing = false;
     this._lastPosition = null;
     this._delta = null;
-    this.dom.addEventListener('mousedown',  this.on_mouse_down.bind(this)  );
-    this.dom.addEventListener('mousemove',  this.on_mouse_move.bind(this)  );
-    this.dom.addEventListener('mouseup',    this.on_mouse_up.bind(this)    );
-    this.dom.addEventListener('mouseenter', this.on_mouse_enter.bind(this) );
+    this.dom.addEventListener('touchstart',  this.on_mouse_down.bind(this)  );
+    this.dom.addEventListener('mousedown',   this.on_mouse_down.bind(this)  );
+    this.dom.addEventListener('touchmove',   this.on_mouse_move.bind(this)  );
+    this.dom.addEventListener('mousemove',   this.on_mouse_move.bind(this)  );
+    this.dom.addEventListener('touchend',    this.on_mouse_up.bind(this)    );
+    this.dom.addEventListener('mouseup',     this.on_mouse_up.bind(this)    );
+    this.dom.addEventListener('mouseenter',  this.on_mouse_enter.bind(this) );
   },
 
   on_mouse_down(e) {

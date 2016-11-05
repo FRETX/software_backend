@@ -15,9 +15,6 @@ $(document).ready(function() {
   songlist  = new Songlist(  id('songlist_container')  );
   palette   = new Palette();
 
-  //songlist.on_list_loaded( function()     { load_song( songlist.random ); } );
-  //songlist.on_select(      function(song) { load_song( song );            } );
-
   songlist.ev_sub('list_loaded', function()     { load_song( songlist.random ); } );
   songlist.ev_sub('selected',    function(song) { load_song( song ); } );
 

@@ -114,8 +114,8 @@ Object.assign(
     },
 
     _on_punch_change: function() {
-      var punch = this.current_index==-1 ? new Punch(0,'No Chord'): this.current_punch;
-      this.ev_fire('current_punch_changed', this.current_punch );
+      var punch = this.current_index==-1 ? new Punch(0,'No Chord') : this.current_punch;
+      this.ev_fire('current_punch_changed', punch );
     }
 
   }

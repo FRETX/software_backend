@@ -103,15 +103,19 @@ Songlist.prototype.CSS = `
   	border: 1px solid black;
   	height: 100%;
   	box-sizing: border-box;
+    background-color: rgba(0,0,0,0.1);
   }
 
   .searchbar {
-    padding: 0.5em;
+    padding: 1em;
+    box-shadow: 0 0 0.4em rgba(0,0,0,0.4);
+    border-bottom: 1px solid black;
   }
 
   .searchlist {
   	padding: 0.5em;
-  	overflow-y: scroll;  
+  	overflow-y: scroll;
+    box-shadow: 0 0 0.4em black inset;
   }
 
   .songitem {
@@ -122,6 +126,7 @@ Songlist.prototype.CSS = `
     box-shadow: 0 0 0.2em black;
     text-align: left;
     white-space: nowrap;
+    background-color: white;
   }
 
   .songitem:hover  { background-color: rgba(0,0,0,0.2); }
@@ -152,6 +157,10 @@ Songlist.prototype.CSS = `
   input {
   	font-size: 1.3em;
     width: 100%;
+    border-radius: 0.4em;
+    border: 0;
+    box-shadow: 0 0 0.2em black;
+    padding: 0 0.5em;
   }
 
 `.untab(2);

@@ -4,8 +4,10 @@ body {
 }
 
 .header {
+  position: relative;
   margin-bottom: 1em;
   box-shadow: 0 0.3em 0.3em grey;
+  height: 4em;
 }
 
 .header #logo {
@@ -13,6 +15,7 @@ body {
   padding: 0.5em 2em;
   border-right: 1px solid black;
   cursor: pointer;
+  vertical-align: top;
 }
 
 .header #logo:hover {
@@ -23,9 +26,15 @@ body {
   height: 3em;
 }
 
-.header #menu {
 
+.header #menu {
+  display: inline-block;
+  height: 100%;
 }
+
+.header #menu .menuitem::before {
+
+} 
 
 .header {
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#feffff+0,ddf1f9+35,ffc6ed+100 */

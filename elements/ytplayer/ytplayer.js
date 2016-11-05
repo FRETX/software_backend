@@ -64,11 +64,11 @@ YTPlayer.prototype = {
   },
 
   build_player(parent_id,vid_id) {
-    this.video_id = vid_id;
+    this.video_id = vid_id || this.video_id;
     return new YT.Player(parent_id, {
       height: '390', 
       width: '640',
-      videoId: vid_id,
+      videoId: this.video_id,
       events: {
         'onReady': this.onPlayerReady.bind(this),
         'onStateChange': this.onPlayerStateChange.bind(this)
@@ -77,7 +77,11 @@ YTPlayer.prototype = {
   },
 
   onPlayerReady(event) {
-    if(this.on_deck) { this.load(this.video_id); return; }
+    if(this.on_deck) { 
+      this.on_deck = false;
+      console.log( `loading on deck video ${this.video_id}` );
+      this.load(this.video_id); return; 
+    }
     event.target.playVideo();
     this.get_video_data();
   },
@@ -137,9 +141,8 @@ YTPlayer.prototype = {
     var match = this.url_regex.exec(url);
     if(!match && url.length != 11) { alert('invalid syntax'); return; }
     this.video_id = url.length == 11 ? url : match[1];
-    //console.log(this.player);
     if( empty(this.player) ) {
-      console.log('tried to load video before player was ready');
+      console.log(`tried to load video before player was ready: ${this.video_id}`);
       this.on_deck = true;
       return;
     }

@@ -53,5 +53,4 @@ function load_song(song) {
 
 function on_video_data() {
   punchlist.update_time(0);
-  //setTimeout(function() { timeline.set_duration(ytplayer.duration); }, 1200)
 }

@@ -1,13 +1,17 @@
 html
   head
-    == css ['fonts', 'editor']
+    == css ['fonts', 'header', 'editor']
     == js  ['jquery', 'rivets', 'lib', 'chord', 'chordlib', 'event_channel', 'punch', 'punchlist']
     == js  ['elements/ytplayer', 'elements/fretboard', 'elements/controlbar', 'elements/timeline']
     == js  ['elements/palette', 'elements/songlist', 'editor']
   body
 
     .header
-      img#logo src='newlogo.svg'
+      #logo
+        img src='newlogo.svg'
+      #menu
+        .menuitem
+          span add a new song
 
     .content_wrapper
       #content

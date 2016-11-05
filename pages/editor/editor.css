@@ -7,13 +7,9 @@
   user-select: none; 
 }
 
-#logo {
-  margin: 2em;
-  height: 6em;
-}
-
 .content_wrapper {
   text-align: center;
+  padding-top: 2em;
 }
 
 #content {

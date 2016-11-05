@@ -5,14 +5,10 @@ function Songlist(parent) {
   	search_text: ''
   }
 
-  this.callbacks = {
-    on_select: [],
-    on_list_loaded: []
-  }
-
-  this.build_dom(parent);
-  this.load_styles();
   this.bind_handlers();
+  this.build_dom(parent);
+  this.get_dom_refs();
+  this.load_styles();
   this.bind_dom();
   this.fetch();
 }
@@ -26,40 +22,61 @@ Songlist.prototype = {
     rivets.formatters.img_url = function(val) { return `http://img.youtube.com/vi/${val}/1.jpg`; }
   	rivets.bind(this.dom, { data: this.state, this: this }); 
   },
-  
-  fetch() { $.get('/songs/list', this.on_song_list ); },
 
-  bind_handlers() {
-  	this.on_search    = function(e)  { 
-      if( e.target.value == '' || e.target.value == 'Search' ) this.state.filtered_songs = this.state.songs;
-      else {
-        this.state.filtered_songs = this.state.songs.filter( function(song) { return song.title.toLowerCase().indexOf(e.target.value.toLowerCase())!=-1; } );
-      }
-    }.bind(this);
-  	this.on_click     = function(e,m)  { this.select(m.index); }.bind(this);  
-  	this.on_song_list = function(list) { this.state.songs = list; this.list_loaded(); }.bind(this);
-    this.on_input_focus = function(e,m) {
-      e.target.style.color = 'black';
-      if(e.target.value == "Search" ) { e.target.value = ''; }
-      else { e.target.select(); }
-    }.bind(this);
-    this.on_input_blur = function(e,m) { 
-      console.log(e.target.value);
-      e.target.value = ( e.target.value == '' ? "Search" : e.target.value ); 
-      if(e.target.value == 'Search' ) { e.target.style.color = 'grey'; }
-    }.bind(this);
-  },
+  fetch()        { $.get('/songs/list', this.on_song_list ); },
+  get_dom_refs() { this.input = this.dom.getElementsByTagName('input')[0]; },
 
   get length() { return this.state.songs.length; },
-  get random() { 
-    var rnd = Math.random();
-    var idx = Math.floor( rnd * this.length );
-    var song = this.state.songs[ idx ];
-    console.log(`Random Song: ${song.title} len:${this.length} rnd:${rnd} idx:${idx}`);
-    return song;
+  get random() { return this.state.songs[ Math.floor( Math.random() * this.length ) ]; },
+
+  reset_filter() {
+    this.state.filtered_songs = this.state.songs;
+    this.input.value = "Search";
+    this.input.style.color = 'grey';
   }
 
 }
+
+//////////////////////////////// HANDLERS //////////////////////////////////////////////
+
+Object.assign( 
+  Songlist.prototype, {
+
+    bind_handlers() {
+      this.on_click       = this.on_click.bind(this);
+      this.on_song_list   = this.on_song_list.bind(this);
+      this.on_search      = this.on_search.bind(this);
+      this.on_input_focus = this.on_input_focus.bind(this);
+      this.on_input_blur  = this.on_input_blur.bind(this);
+    },
+
+    on_click(e,m)      { this.select(m.index); },
+    on_song_list(list) { this.state.songs = list; this.list_loaded(); },
+
+    on_search(e)  { 
+      if( e.target.value == '' || e.target.value == 'Search' ) { this.state.filtered_songs = this.state.songs; return; }
+      var byNameFilter = function(song) { return song.title.toLowerCase().indexOf(e.target.value.toLowerCase())!=-1; }
+      this.state.filtered_songs = this.state.songs.filter( byNameFilter );
+    },
+
+    on_input_focus(e,m) {
+      e.target.style.color = 'black';
+      if(e.target.value == "Search" ) { e.target.value = ''; }
+      else { e.target.select(); }
+    },
+
+    on_input_blur(e,m) {
+      if(this.state.filtered_songs.length == 0 ) { this.reset_filter(); return; }
+      e.target.value = ( e.target.value == '' ? "Search" : e.target.value ); 
+      if(e.target.value == 'Search' ) { e.target.style.color = 'grey'; }
+    }
+
+  }
+);
+
+
+//////////////////////////////// HANDLERS //////////////////////////////////////////////
+
 
 ///////////////////////////////// EVENTS ///////////////////////////////////////////////
 
@@ -69,6 +86,7 @@ Object.assign(Songlist.prototype, {
 
   select(index) {
     this.ev_fire('selected', this.state.filtered_songs[index] );
+    this.reset_filter();
   },
 
   list_loaded() {

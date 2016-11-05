@@ -56,6 +56,15 @@ Fretboard.prototype = {
     
   },
 
+  tog_lefty()    { this.lefty = !this.lefty; },
+  get lefty()    { return this.state.lefty;  },
+  set lefty(val) { 
+    this.state.lefty = val; 
+    if(this.state.lefty) { this.dom.className = 'lefty'; }
+    else                 { this.dom.className = ''; } 
+    this.update_display();
+  },
+
   on_resize(e) {
     console.log(e);
   },
@@ -143,6 +152,14 @@ Fretboard.prototype.CSS = `
   vertical-align: middle;
   position: relative;
   font-size: 2em;
+}
+
+#fretboard.lefty .fret_display {
+  -moz-transform: scaleX(-1);    /* Gecko */
+  -o-transform: scaleX(-1);      /* Opera */
+  -webkit-transform: scaleX(-1); /* Webkit */
+  transform: scaleX(-1);         /* Standard */
+  filter: FlipH;                 /* IE 6/7/8 */
 }
 
 #fretboard .fret_display {

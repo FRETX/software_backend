@@ -2,6 +2,7 @@
 function Fretboard(parent) {
   this.state = {
     name: 'No Chord',
+    lefty: false,
     fingering: [0],
   	strings: [
   	  { frets: [ {val:0}, {val:0}, {val:0}, {val:0}, {val:0} ] },
@@ -19,17 +20,18 @@ function Fretboard(parent) {
 
 Fretboard.prototype = {
   constructor:   Fretboard,
-  build_dom:     function(parent) { this.dom = render(this.HTML);  if(!empty(parent)) parent.appendChild(this.dom); },
-  bind_dom:      function()       { rivets.bind(this.dom, { data: this.state, obj: this }); },
-  load_styles:   function()       { load_css('fretboard_styles', this.CSS); },
 
-  reset: function() {
+  build_dom(parent) { this.dom = render(this.HTML);  if(!empty(parent)) parent.appendChild(this.dom); },
+  bind_dom()        { rivets.bind(this.dom, { data: this.state, obj: this }); },
+  load_styles()     { load_css('fretboard_styles', this.CSS); },
+
+  reset() {
     this.state.name = 'No Chord';
     this.state.fingering = [0];
     this.clear_display();
   },
 
-  load_chord: function(chord) {
+  load_chord(chord) {
     //console.log(chord.name);
     if(chord.root_value == 0 ) { this.reset(); return; }
     if(this.state.fingering == chord.fingering) return;
@@ -38,7 +40,7 @@ Fretboard.prototype = {
     this.update_display();
   },
 
-  update_display: function() {
+  update_display() {
     this.clear_display();
     for(var i=0; i<this.state.fingering.length; i++) {
       if(this.state.fingering[i]==0) break;
@@ -48,7 +50,15 @@ Fretboard.prototype = {
     
   },
 
-  clear_display: function() {
+  tog_lefty()    { this.lefty = !this.lefty; },
+  get lefty()    { return this.state.lefty;  },
+  set lefty(val) { 
+    this.state.lefty = val; 
+    if(this.state.lefty) { this.dom.className = 'lefty'; }
+    else                 { this.dom.className = ''; } 
+  },
+
+  clear_display() {
     for(var i=0; i<6; i++) {
       for(var j=0; j<5; j++) {
         this.state.strings[i].frets[j].val = 0;
@@ -105,6 +115,14 @@ Fretboard.prototype.CSS = `
 #fretboard {
   display: inline-block;
   position: relative;
+}
+
+#fretboard.lefty .fret_display {
+  -moz-transform: scaleX(-1);    /* Gecko */
+  -o-transform: scaleX(-1);      /* Opera */
+  -webkit-transform: scaleX(-1); /* Webkit */
+  transform: scaleX(-1);         /* Standard */
+  filter: FlipH;                 /* IE 6/7/8 */
 }
 
 #fretboard .fret_display {

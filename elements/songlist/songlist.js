@@ -133,6 +133,7 @@ Songlist.prototype.CSS = `
 
   .songitem img {
     width: 4em;
+    max-width: 25%
   }
 
   .songitem span {

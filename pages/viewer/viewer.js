@@ -6,6 +6,9 @@ data = {
 
 $(document).ready(function() {
 
+  feedback = new FeedbackForm();
+  modal = new Modal(feedback.dom);
+
   punchlist = new Punchlist();
   chordlib  = new Chordlib();
 
@@ -15,8 +18,10 @@ $(document).ready(function() {
   songlist  = new Songlist(  id('songlist_container')  );
   palette   = new Palette();
 
-  songlist.on_list_loaded( function()     { load_song( songlist.random ); } );
-  songlist.on_select(      function(song) { load_song( song );            } );
+  feedback.ev_sub('done', modal.hide );
+
+  songlist.ev_sub('list_loaded', function()     { load_song( songlist.random ); } );
+  songlist.ev_sub('selected',    function(song) { load_song( song ); } );
 
   timeline.on_scrub  = function(time_s) { ytplayer.current_time = time_s; } 
   timeline.get_color = function(chord_label) { return palette.get_color(chord_label); } 
@@ -31,9 +36,10 @@ $(document).ready(function() {
 
   punchlist.ev_sub( 'current_punch_changed', function(punch) {
     fretboard.load_chord(chordlib.get_chord(punch.chord));
+    set_ambient_color(palette.get_color(punch.chord));
   });
 
-  id('logo').addEventListener('click', function() { window.location.href = "http://fretx.rocks"; } );
+  add_click_listeners();
   
 });
 
@@ -53,5 +59,40 @@ function load_song(song) {
 
 function on_video_data() {
   punchlist.update_time(0);
-  //setTimeout(function() { timeline.set_duration(ytplayer.duration); }, 1200)
+}
+
+
+////////////////////////////////////////// CLICK LISTENERS ///////////////////////////////////////////////////
+
+function add_click_listeners() {
+  id('logo').addEventListener('click', goto_indiegogo );
+  var menuitems = id('menu').children;
+  menuitems[0].addEventListener('click', goto_indiegogo );
+  menuitems[1].addEventListener('click', get_feedback );
+}
+
+function goto_indiegogo() { window.location.href = "http://fretx.rocks"; }
+
+function get_feedback() {
+  modal.show();
+}
+
+////////////////////////////////////////// CLICK LISTENERS ///////////////////////////////////////////////////
+
+
+////////////////////////////////////////// COLOR EFFECTS /////////////////////////////////////////////////////
+
+function set_ambient_color(color) {
+  //id('fretboard_container').style.boxShadow = `0 0 0.2em ${color} inset, 0 0 0.5em black`;
+ // document.body.style.boxShadow = `0 0 1vw ${color} inset`;
+  // = build_header_gradient(color);
+}
+
+function build_header_gradient(color) {
+  return `
+    background: white; /* Old browsers */
+    background: -moz-linear-gradient(    top,       white 0%, rgba(221,241,249,1) 35%, ${color} 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient( top,       white 0%, rgba(221,241,249,1) 35%, ${color} 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(         to bottom, white 0%, rgba(221,241,249,1) 35%, ${color} 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  `.untab(2);
 }

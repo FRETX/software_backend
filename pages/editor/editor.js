@@ -9,12 +9,13 @@ $(document).ready(function() {
   punchlist = new Punchlist();
   chordlib  = new Chordlib();
 
-  ytplayer  = new YTPlayer(   id('ytplayer_container')  );
-  fretboard = new Fretboard(  id('fretboard_container') );
-  ctrlbar   = new Controlbar( id('ctrlbar_container')   );
-  timeline  = new Timeline(   id('timeline_container')  );
-  songlist  = new Songlist(   id('songlist_container')  );
-  palette   = new Palette(    id('palette_container')   );
+  ytplayer    = new YTPlayer(   id('ytplayer_container')  );
+  fretboard   = new Fretboard(  id('fretboard_container') );
+  ctrlbar     = new Controlbar( id('ctrlbar_container')   );
+  timeline    = new Timeline(   id('timeline_container')  );
+  songlist    = new Songlist(   id('songlist_container')  );
+  palette     = new Palette(    id('palette_container')   );
+  picker      = new chordpicker();
 
   songlist.ev_sub('list_loaded', function()     { load_song( songlist.random ); } );
   songlist.ev_sub('selected',    function(song) { load_song( song ); } );
@@ -28,7 +29,9 @@ $(document).ready(function() {
   ytplayer.on_video_data(on_video_data); 
   ytplayer.ev_sub( 'duration', timeline.set_duration );
 
+  
   palette.ev_sub( 'selected', add_chord_now );
+  palette.ev_sub( 'get_chord', picker.get_new_chord );
 
   punchlist.ev_sub( 'list_changed', timeline.load );
   punchlist.ev_sub( 'current_punch_changed', current_punch_changed );

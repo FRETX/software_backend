@@ -25,7 +25,7 @@ function render(html) {
 
 function load_css(id,css) {
   var elem = document.createElement('style');
-  elem.id = name;
+  elem.id = id;
   elem.innerHTML = css;
   document.getElementsByTagName("head")[0].appendChild(elem);  
 }

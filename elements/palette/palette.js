@@ -67,11 +67,13 @@ Palette.prototype = {
   bind_handlers: function() {
 
     this.add_chord = function(e,m) {
-      this.chordpicker.set_chord('No Chord');
-      this.chordpicker.get_chord( function(chord) {
+      this.ev_fire('get_chord', function(chord) {
         if( this.already_exists(chord) ) return;
         this.state.chords.push( new Chord(chord) );
       }.bind(this));
+//      this.chordpicker.set_chord('No Chord');
+//      this.chordpicker.get_chord( function(chord) {
+//      }.bind(this));
     }.bind(this);
 
     this.del_chord = function(e,m) {

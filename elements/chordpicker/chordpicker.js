@@ -14,10 +14,13 @@ function chordpicker() {
   this.container.appendChild(this.rootlist.dom);
   this.container.appendChild(this.qualitylist.dom);
   document.body.appendChild(this.container);
+  this.load_styles();
 }
 
 chordpicker.prototype = {
   constructor: chordpicker,
+
+  load_styles()     { load_css('chordpicker_styles', this.CSS); },
 
   show() { this.container.style.display = 'block'; },
   hide() { this.container.style.display = 'none'; },

@@ -3,13 +3,17 @@ html
     == css ['fonts', 'header', 'newviewer']
     == js  ['jquery', 'rivets', 'lib', 'chord', 'chordlib', 'event_channel', 'punch', 'punchlist']
     == js  ['elements/ytplayer', 'elements/resize_fretboard', 'elements/timeline']
-    == js  ['elements/palette', 'elements/songlist', 'newviewer']
+    == js  ['elements/palette', 'elements/songlist', 'modal', 'elements/feedback_form', 'newviewer']
   body
 
     #header
       #logo
         img src='newlogo.svg'
       #menu
+        .menuitem
+          | Support Us on Indiegogo!
+        .menuitem
+          | Send Us Feedback!
 
     .content_wrapper
       #content

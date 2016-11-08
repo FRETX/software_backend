@@ -22,14 +22,6 @@ function render(html) {
   return elem.children[0]  
 }
 
-String.prototype.untab = function(spacing) {
-  var lines = this.split("\n");
-  lines = lines.filter(function(el) { return el.length > spacing; } )
-  lines = lines.map(function(el) { 
-    return el.split('').splice(spacing,el.length-spacing).join('')
-  });
-  return lines.join('\n');  
-}
 
 function load_css(id,css) {
   var elem = document.createElement('style');
@@ -77,4 +69,23 @@ function display_time(time_s, options = {}) {
   if(val_or_default(options.no_ms,    false)) { ms = null; }
 
   return ( hrs ? hrs + ':' : '' ) + mins + ':' + secs + ( ms ? '.' + ms : '' );
+}
+/*
+Object.prototype._bind_handlers = function(arr_of_handlers) {
+  for(var i; i<arr_of_handlers.length; i++) {
+    this.arr_of_handlers[i] = this.arr_of_handlers[i].bind(this)
+  } 
+}
+*/
+Array.prototype.for_each = function foreach(arr, func) {
+  for(var i=0; i<arr.length; i++) { func(arr[i]); }
+}
+
+String.prototype.untab = function(spacing) {
+  var lines = this.split("\n");
+  lines = lines.filter(function(el) { return el.length > spacing; } )
+  lines = lines.map(function(el) { 
+    return el.split('').splice(spacing,el.length-spacing).join('')
+  });
+  return lines.join('\n');  
 }

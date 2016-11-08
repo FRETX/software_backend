@@ -1,31 +1,84 @@
-function Modal(element) {
-
-  document.createElement('div')
+function Modal(content) {
+  this.content = content || null;
+  this.build_dom(document.body);
+  this.bind_dom();
+  this.bind_handlers();
+  this.load_styles();
 }
 
 Modal.prototype = {
   constructor: Modal,
   
+  build_dom(parent_element) { this.dom = render(this.HTML);  if( ! empty(parent_element) ) parent_element.appendChild(this.dom); },
+  bind_dom()                { rivets.bind(this.dom, { this: this }); },
+  load_styles()             { load_css('modal_styles', this.CSS); },
+
+  show(content) {
+    this.content = content || this.content;
+    if( empty(this.content ) ) return;
+    this.dom.children[0].appendChild(this.content);
+    this.dom.style.display = 'inline-block';
+  },
+
+  hide() {
+    this.dom.style.display = 'none';
+  }
 
 }
 
+Object.assign(
+  Modal.prototype, {
+    
+    bind_handlers() { 
+      this.on_exit_click = this.on_exit_click.bind(this);
+      this.on_content_click = this.on_content_click.bind(this);
+      this.hide = this.hide.bind(this);
+    },
+
+    on_exit_click(e,m)    { this.hide();    },
+    on_content_click(e,m) { cancelEvent(e); }
+  }
+);
+
 Modal.prototype.HTML = `
-  
-`;
+
+  <div id='modal' rv-on-click='this.on_exit_click'>
+    <div class='modal_content' rv-on-click='this.on_content_click'></div>
+  </div>
+
+`.untab(2);
 
 Modal.prototype.CSS = `
   
-  #Modal {
+  #modal {
   	position: absolute;
   	top: 0; bottom: 0;
   	left: 0; right: 0;
-  	background: rgba(0,0,0,0.2);
+  	background: rgba(0,0,0,0.8);
+    display: none;
+    text-align: center;
+    cursor: pointer;
+    z-index: 99;  
   }
 
-  #Modal:before {
+  #modal:before {
   	content: '';
   	display: inline-block;
-  	  
+    vertical-align: middle;
+    height: 100%;
   }
 
-`
+  #modal .modal_content {
+    max-width: 70vw;
+    max-height: 70vh;
+  }
+
+  #modal .modal_content {
+    vertical-align: middle;
+    display: inline-block;
+    background: white;
+    box-shadow: 0 0 1em black inset, 0 0 1em black;
+    padding: 1em;
+  }
+
+`.untab(2);

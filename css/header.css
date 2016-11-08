@@ -17,10 +17,6 @@ body {
   vertical-align: top;
 }
 
-#header #logo:hover {
-  box-shadow: 0 0 0.3em black inset;
-}
-
 #header #logo img {
   height: 3em;
 }
@@ -50,6 +46,11 @@ body {
 
 #header #menu .menuitem:hover {
   background-color: rgba(0,0,0,0.1);
+}
+
+#header #menu .menuitem:active {
+  box-shadow: 0 0 1em black inset;
+  background-color: rgba(200,200,255,0.5);
 }
 
 #header {

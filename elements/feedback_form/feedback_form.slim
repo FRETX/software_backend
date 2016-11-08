@@ -1,0 +1,25 @@
+html
+  head
+    == js  ['rivets','lib','modal','feedback_form']
+    == css ['fonts']
+
+    javascript:
+      window.onload = function() { 
+        feedback = new FeedbackForm();
+        modal = new Modal(feedback.dom);
+
+        id('show_modal').addEventListener('click', show_modal);
+
+        function show_modal() {
+          modal.show();
+        }
+      }
+
+    css:
+      #show_modal {
+        cursor: pointer;  
+      }
+
+  body
+    button#show_modal
+      | SHOW MODAL

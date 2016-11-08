@@ -6,6 +6,9 @@ data = {
 
 $(document).ready(function() {
 
+  feedback = new FeedbackForm();
+  modal = new Modal(feedback.dom);
+
   punchlist = new Punchlist();
   chordlib  = new Chordlib();
 
@@ -14,6 +17,8 @@ $(document).ready(function() {
   timeline  = new Timeline(  id('timeline_container')  );
   songlist  = new Songlist(  id('songlist_container')  );
   palette   = new Palette();
+
+  feedback.ev_sub('done', modal.hide );
 
   songlist.ev_sub('list_loaded', function()     { load_song( songlist.random ); } );
   songlist.ev_sub('selected',    function(song) { load_song( song ); } );
@@ -34,7 +39,7 @@ $(document).ready(function() {
     set_ambient_color(palette.get_color(punch.chord));
   });
 
-  id('logo').addEventListener('click', function() { window.location.href = "http://fretx.rocks"; } );
+  add_click_listeners();
   
 });
 
@@ -55,6 +60,27 @@ function load_song(song) {
 function on_video_data() {
   punchlist.update_time(0);
 }
+
+
+////////////////////////////////////////// CLICK LISTENERS ///////////////////////////////////////////////////
+
+function add_click_listeners() {
+  id('logo').addEventListener('click', goto_indiegogo );
+  var menuitems = id('menu').children;
+  menuitems[0].addEventListener('click', goto_indiegogo );
+  menuitems[1].addEventListener('click', get_feedback );
+}
+
+function goto_indiegogo() { window.location.href = "http://fretx.rocks"; }
+
+function get_feedback() {
+  modal.show();
+}
+
+////////////////////////////////////////// CLICK LISTENERS ///////////////////////////////////////////////////
+
+
+////////////////////////////////////////// COLOR EFFECTS /////////////////////////////////////////////////////
 
 function set_ambient_color(color) {
   //id('fretboard_container').style.boxShadow = `0 0 0.2em ${color} inset, 0 0 0.5em black`;

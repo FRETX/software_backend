@@ -23,7 +23,7 @@ Songlist.prototype = {
   	rivets.bind(this.dom, { data: this.state, this: this }); 
   },
 
-  fetch()        { $.get('/songs/list', this.on_song_list ); },
+  fetch()        { $.get('/songs/list', this.on_song_list ).fail(this.on_load_failed); },
   get_dom_refs() { this.input = this.dom.getElementsByTagName('input')[0]; },
 
   get length() { return this.state.songs.length; },
@@ -48,6 +48,7 @@ Object.assign(
       this.on_search      = this.on_search.bind(this);
       this.on_input_focus = this.on_input_focus.bind(this);
       this.on_input_blur  = this.on_input_blur.bind(this);
+      this.on_load_failed = this.on_load_failed.bind(this);
     },
 
     on_click(e,m)      { this.select(m.index); },
@@ -69,6 +70,10 @@ Object.assign(
       if(this.state.filtered_songs.length == 0 ) { this.reset_filter(); return; }
       e.target.value = ( e.target.value == '' ? "Search" : e.target.value ); 
       if(e.target.value == 'Search' ) { e.target.style.color = 'grey'; }
+    },
+
+    on_load_failed(e) {
+      console.log(e);
     }
 
   }
@@ -134,6 +139,7 @@ Songlist.prototype.CSS = `
   	padding: 0.7em;
   	overflow-y: scroll;
     box-shadow: 0 0 0.4em black inset;
+    height: 100%;
   }
 
   .songitem {

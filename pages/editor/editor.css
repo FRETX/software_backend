@@ -65,15 +65,15 @@
   background-color: rgba(0,0,0,0.1);
 }
 
-#fretboard * {
-  vertical-align: middle;
-}
-
 #fretboard_container::before {
   content: '';
   display: inline-block;
   vertical-align: middle;
   height: 20vw;
+}
+
+#fretboard {
+  font-size: 2.5vw !important;
 }
 
 #ytplayer_container {
@@ -94,7 +94,7 @@
 
 #timeline_container {
   max-width: 100%;
-  height: 9vw;
+  height: 7vw;
   position: relative;
   vertical-align: bottom;
 }
@@ -102,7 +102,7 @@
 #timeline {
   border: 1px solid black;
   box-shadow: 0 0 0.1em black;
-  height: 7vw;
+  font-size: 1vw;
 }
 
 #songlist {
@@ -137,15 +137,6 @@
   padding-bottom: 0.3em;
 }
 
-@media (max-width: 1350px) {
-  
-  #songlist_container {
-    display: block;
-    width: auto;
-    padding-left: 0;
-    padding-top: 1vw;
-  }
-
-
-
+#songlist {
+  max-height: 60vh;
 }

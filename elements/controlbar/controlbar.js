@@ -34,7 +34,8 @@ Object.assign(
     on_time_change(time_s) { this.state.time_s = time_s; },
     on_punch_change(punch) { console.log(punch); this.state.punch = punch; },
     jog_left()  { this.state.punch.jog(-100); },
-    jog_right() { this.state.punch.jog(100);  }
+    jog_right() { this.state.punch.jog(100);  },
+    delete()    { }
   }
 );
 
@@ -43,25 +44,20 @@ Object.assign(
 Controlbar.prototype.HTML = `
   <div id='controlbar'>
     <div class='clock'>{ data.clock < time_s }</div>
-    <div class='transport'>
-      <button>&#xF488;</button>
-      <button>&#xF210;</button>
-      <button>&#xF427;</button>
-    </div>
     <div class='group'>
-      <div>Playback Speed</div>
-      <button>1/4x</button>
-      <button>1/2x</button>
-      <button>3/4x</button>
-      <button>1x</button>
-    </div>
-    <div class='group'>
-      <div>{data.punch.chord}</div>
-      <span class='jog' rv-on-click='this.jog_left'>-</span>
-      <span>{data.punch._display_time }</span>
-      <span class='jog' rv-on-click='this.jog_right'>+</span>
-      <br>
-      <span rv-on-click='this.delete'>X</span>
+      <div class='subgroup'>
+        <div>Current Chord:</div>
+        <div>{data.punch.chord}</div>
+      </div>
+      <div class='subgroup'>
+        <div>Start Time</div>
+        <span class='jog' rv-on-click='this.jog_left'>Jog Left</span>
+        <span>{data.punch._display_time}</span>
+        <span class='jog' rv-on-click='this.jog_right'>Jog Right</span>
+      </div>
+      <div class='subgroup'>
+        <span class='delete' rv-on-click='this.delete'>Delete</span>
+      </div>
     </div>
   </div>
 `;
@@ -86,64 +82,41 @@ Controlbar.prototype.CSS = `
   font-family: 'ninepin';
   width: 9em;
   text-align: center;
-  height: 2em;
+  height: 2.5em;
   line-height: 2em;
   box-sizing: border-box;
   margin-right: 0.1em;
 }
 
-#controlbar .transport {
-  vertical-align: middle;
-  position: relative;
-  display: inline-block;
-}
-
-#controlbar .transport button {
-  vertical-align: middle;
-  display: inline-block;
-  background: rgb(50,50,50);
-  border: 0;
-
-  font-family: Ionicons;
-
-  border-radius: 0.2em;
-  box-shadow: 0 0 0.2em;
-  color: rgb(100,255,100);
-  margin: 0 0.1em; 
-  height: 2em;
-  line-height: 1.8em;
-  width: 2em;
-  cursor: pointer;
-}
-
 #controlbar .group {
   display: inline-block;
   background: rgb(50,50,50);
-  border-radius: 0.2em;
-  width: 10em;
-  height: 2em;
-  vertical-align: middle;
-}
-
-#controlbar .group div,
-#controlbar .group span {
   color: rgb(100,255,100);
-  font-size: 0.5em;
-  margin-top: 0.1em;
+  border-radius: 0.2em;
+  height: 2.5em;
+  vertical-align: middle;
 }
 
 #controlbar .group button {
   color: rgb(100,255,100);
   background: rgb(50,50,50);
-  font-size: 0.5em;
   cursor: pointer;
 }
 
-#controlbar .jog {
+#controlbar .jog,
+#controlbar .delete {
   display: inline-block;
   border: 1px solid rgb(100,255,100);
-  width: 1.2em;
+  width: 4em;
   cursor: pointer;
+  margin: 0 1em;
+}
+
+#controlbar .subgroup {
+  height: 100%;
+  display: inline-block;
+  padding: 0 1em;
+  font-size: 0.8em;
 }
 
 `;

@@ -1,9 +1,9 @@
 html
   head
     == css ['fonts', 'header', 'editor']
-    == js  ['jquery', 'rivets', 'lib', 'chord', 'chordlib', 'event_channel', 'punch', 'punchlist', 'elements/chordpicker']
-    == js  ['elements/ytplayer', 'elements/fretboard', 'elements/controlbar', 'elements/timeline']
-    == js  ['elements/palette', 'elements/songlist', 'editor']
+    == js  ['jquery', 'rivets', 'lib', 'chord', 'chordlib', 'event_channel', 'punch', 'punchlist', 'elements/chordpicker' ]
+    == js  ['elements/ytplayer', 'elements/resize_fretboard', 'elements/controlbar', 'elements/timeline', 'elements/punch_editor', 'modal' ]
+    == js  ['elements/palette', 'elements/songlist', 'elements/addvid', 'elements/input_with_default', 'editor']
   body
 
     #header
@@ -27,5 +27,3 @@ html
           #ctrlbar_container
           #timeline_container
           #palette_container
-
-        #songlist_container

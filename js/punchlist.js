@@ -92,6 +92,14 @@ Object.assign(
 
     update_time: function(time_s) {
       this.current_time = time_s;
+      
+      if(this.punches.length==0) {
+        if(this.current_index==-1) return;
+        this.current_index = -1;
+        this._on_punch_change();
+        return;
+      }
+
       if( parseFloat(time_s) < parseFloat(this.punches[0].time) && this.current_index!=-1 ) {
         this.current_index=-1;
         this._on_punch_change();

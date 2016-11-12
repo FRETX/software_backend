@@ -15,7 +15,8 @@ Modal.prototype = {
 
   show(content) {
     this.content = content || this.content;
-    if( empty(this.content ) ) return;
+    if( empty( this.content ) ) return;
+    this.dom.children[0].innerHTML = '';
     this.dom.children[0].appendChild(this.content);
     this.dom.style.display = 'inline-block';
   },

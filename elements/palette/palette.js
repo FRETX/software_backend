@@ -17,11 +17,11 @@ Palette.prototype = {
 
   constructor: Palette,	
 
-  build_dom:   function(parent) { this.dom = render(this.HTML);  if(!empty(parent)) parent.appendChild(this.dom); },
-  bind_dom:    function()       { rivets.bind(this.dom, { data: this.state, obj: this }); },
-  load_styles: function()       { load_css('changespicker_styles', this.CSS); },
+  build_dom(parent) { this.dom = render(this.HTML);  if(!empty(parent)) parent.appendChild(this.dom); },
+  bind_dom()        { rivets.bind(this.dom, { data: this.state, obj: this }); },
+  load_styles()     { load_css('changespicker_styles', this.CSS); },
 
-  get_color:   function(label)  {
+  get_color(label)  {
     var ary = this.state.chords.filter(function(el) { return el.label == label; });
     if(ary.length==0) return(new Chord('No Chord').color);
     return ary[0]._color;
@@ -32,17 +32,17 @@ Palette.prototype = {
     return this.state.chords.findIndex(chord_matches_test);
   },
 
-  already_exists: function(chord) {
+  already_exists(chord) {
     if( this.find_index(chord) ) return true;
     return false;
   },
 
-  setup_rivets: function() {
+  setup_rivets() {
     rivets.binders['style-*'] = function(el, value) { el.style.setProperty(this.args[0], value); };
   },
 
-  load: function(punches) {
-    this.state.chords = [];
+  load(punches) {
+    this.clear();
     for(var i=0; i<punches.length; i++) {                                 // For each punch
       if(this.state.chords.length==0) {                                   
         this.state.chords.push(new Chord(punches[i].chord)); continue;    // Add a new chord if the list is empty
@@ -65,28 +65,32 @@ Palette.prototype = {
   },
 
   bind_handlers: function() {
+    this.get_chord = this.get_chord.bind(this);
+    this.add_chord  = this.add_chord.bind(this);
+    this.del_chord = this.del_chord.bind(this);
+    this.sel_chord = this.sel_chord.bind(this);
+  },
 
-    this.add_chord = function(e,m) {
-      this.ev_fire('get_chord', function(chord) {
-        if( this.already_exists(chord) ) return;
-        this.state.chords.push( new Chord(chord) );
-      }.bind(this));
-//      this.chordpicker.set_chord('No Chord');
-//      this.chordpicker.get_chord( function(chord) {
-//      }.bind(this));
-    }.bind(this);
+  get_chord(e,m) { this.ev_fire('get_chord', this.add_chord); },
 
-    this.del_chord = function(e,m) {
-      cancelEvent(e.originalEvent);
-      this.state.chords.splice(m.index,1);
-    }.bind(this);
+  add_chord(chord) {
+    if( this.already_exists(chord) ) return;
+    this.state.chords.push( new Chord(chord) );
+  },
 
-    this.sel_chord = function(e,m) {
-      this.ev_fire('selected', m.chord );
-      if( ! isFunction(this.on_chord) ) return;
-      this.on_chord(m.chord);
-    }.bind(this);
+  del_chord(e,m) {
+    cancelEvent(e.originalEvent);
+    this.state.chords.splice(m.index,1);
+  },
 
+  sel_chord(e,m) {
+    this.ev_fire('selected', m.chord );
+    if( ! isFunction(this.on_chord) ) return;
+    this.on_chord(m.chord);
+  },
+
+  clear() {
+    this.state.chords = [];
   }
 
 }
@@ -106,7 +110,7 @@ Palette.prototype.HTML = `
       <div class='label' rv-text='chord.label'></div>
     </div>
 
-    <div class='addbtn' rv-on-click='obj.add_chord'>
+    <div class='addbtn' rv-on-click='obj.get_chord'>
       <div class='gloss'></div>
       <div class='label'>+</div>
     </div>

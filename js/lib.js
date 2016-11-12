@@ -17,9 +17,8 @@ function isFunction(functionToCheck) {
 function render(html) {
   var elem = document.createElement('div');
   elem.innerHTML = html;
-  if(elem.children.length==0) throw 'Error Rendering HTML: No Elements Generated'
-  if(elem.children.length>1)  throw 'Error Rendering HTML: Only One Parent Allowed'
-  return elem.children[0]  
+  if(elem.children.length==1) return elem.children[0];
+  throw `Error Rendering HTML: ${html}`;
 }
 
 

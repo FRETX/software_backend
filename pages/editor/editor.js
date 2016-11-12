@@ -8,27 +8,30 @@ $(document).ready(function() {
 
   punchlist = new Punchlist();
   chordlib  = new Chordlib();
+  songlist  = new Songlist();
+  modal     = new Modal();
+  addvid    = new AddVid();
 
   ytplayer    = new YTPlayer(   id('ytplayer_container')  );
   fretboard   = new Fretboard(  id('fretboard_container') );
   ctrlbar     = new Controlbar( id('ctrlbar_container')   );
   timeline    = new Timeline(   id('timeline_container')  );
-  songlist    = new Songlist(   id('songlist_container')  );
   palette     = new Palette(    id('palette_container')   );
   picker      = new chordpicker();
+
+  //puncheditor = new PunchEditor( id('puncheditor_container') );
 
   songlist.ev_sub('list_loaded', function()     { load_song( songlist.random ); } );
   songlist.ev_sub('selected',    function(song) { load_song( song ); } );
 
-  timeline.on_scrub  = function(time_s) { ytplayer.current_time = time_s; } 
+  timeline.on_scrub  = function(time_s)      { ytplayer.current_time = time_s; } 
   timeline.get_color = function(chord_label) { return palette.get_color(chord_label); } 
 
   ytplayer.on_time_change( timeline.update_time   );
   ytplayer.on_time_change( punchlist.update_time  );
   ytplayer.on_time_change( ctrlbar.on_time_change );
-  ytplayer.on_video_data(on_video_data); 
+  ytplayer.on_video_data( on_video_data ); 
   ytplayer.ev_sub( 'duration', timeline.set_duration );
-
   
   palette.ev_sub( 'selected', add_chord_now );
   palette.ev_sub( 'get_chord', picker.get_new_chord );
@@ -36,10 +39,23 @@ $(document).ready(function() {
   punchlist.ev_sub( 'list_changed', timeline.load );
   punchlist.ev_sub( 'current_punch_changed', current_punch_changed );
   punchlist.ev_sub( 'current_punch_changed', ctrlbar.on_punch_change );
+  //punchlist.ev_sub( 'current_punch_changed', puncheditor.on_punch_change );
+
+  addvid.ev_sub( 'add_video', load_new_song );
+
+  add_click_listeners();
   
 });
 
 /////////////////////////////////////////////// SETUP /////////////////////////////////////////////////////////
+
+function load_new_song(url_or_id) {
+  modal.hide();
+  palette.clear();
+  punchlist.clear();
+  ytplayer.load(url_or_id);
+
+}
 
 function load_song(song) {
   fretboard.reset();
@@ -65,3 +81,28 @@ function add_chord_now(chord) {
   console.log(chord);
   punchlist.add_punch( { time: ytplayer.current_time , chord: chord.label } );
 } 
+
+
+//////////////////////////////////////// CLICK LISTENERS ///////////////////////////////////////////////////////
+
+function add_click_listeners() {
+  var menuitems = id('menu').children;
+  menuitems[0].addEventListener('click', edit_menu );
+  menuitems[1].addEventListener('click', open_new  );
+  menuitems[2].addEventListener('click', save_work );
+}
+
+function edit_menu() {
+  modal.show(songlist.dom);
+}
+
+function open_new() {
+  addvid.reset();
+  modal.show(addvid.dom)
+}
+
+function save_work() {
+
+}
+
+//////////////////////////////////////// CLICK LISTENERS ///////////////////////////////////////////////////////

@@ -41,7 +41,7 @@ function YTPlayer(parent, video_id) {
 YTPlayer.prototype = {
   constructor: YTPlayer,
   bind_handlers() {
-
+    this.load = this.load.bind(this);
   },
   url_regex: /https:\/\/www.youtube.com\/watch\?v=(.{11})/,
 

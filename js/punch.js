@@ -73,6 +73,12 @@ Punch.prototype = {
     this.on_change();
   },
 
+  delete() {
+    if(isFunction(this.on_delete)) {
+      this.on_delete(this);
+    }
+  }
+
 }
 
 Object.assign( 

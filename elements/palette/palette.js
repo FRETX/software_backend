@@ -32,10 +32,7 @@ Palette.prototype = {
     return this.state.chords.findIndex(chord_matches_test);
   },
 
-  already_exists(chord) {
-    if( this.find_index(chord) ) return true;
-    return false;
-  },
+  already_exists(chord) { return( this.find_index(chord) != -1 ) },
 
   setup_rivets() {
     rivets.binders['style-*'] = function(el, value) { el.style.setProperty(this.args[0], value); };

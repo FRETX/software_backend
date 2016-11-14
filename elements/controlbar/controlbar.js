@@ -29,13 +29,14 @@ Object.assign(
       this.on_punch_change = this.on_punch_change.bind(this);
       this.jog_left        = this.jog_left.bind(this);
       this.jog_right       = this.jog_right.bind(this);
+      this.delete          = this.delete.bind(this);
     },
 
     on_time_change(time_s) { this.state.time_s = time_s; },
     on_punch_change(punch) { console.log(punch); this.state.punch = punch; },
     jog_left()  { this.state.punch.jog(-100); },
     jog_right() { this.state.punch.jog(100);  },
-    delete()    { }
+    delete()    { this.state.punch.delete();  }
   }
 );
 
@@ -46,8 +47,7 @@ Controlbar.prototype.HTML = `
     <div class='clock'>{ data.clock < time_s }</div>
     <div class='group'>
       <div class='subgroup'>
-        <div>Current Chord:</div>
-        <div>{data.punch.chord}</div>
+        <div>Current Chord:<br>{data.punch.chord}</div>
       </div>
       <div class='subgroup'>
         <div>Start Time</div>
@@ -56,7 +56,7 @@ Controlbar.prototype.HTML = `
         <span class='jog' rv-on-click='this.jog_right'>Jog Right</span>
       </div>
       <div class='subgroup'>
-        <span class='delete' rv-on-click='this.delete'>Delete</span>
+        <span class='delete' rv-on-click='this.delete'>Delete<br>Chord</span>
       </div>
     </div>
   </div>
@@ -97,6 +97,14 @@ Controlbar.prototype.CSS = `
   vertical-align: middle;
 }
 
+#controlbar .group::before {
+  content: '';
+  position: relative;
+  height: 100%;
+  vertical-align: middle;
+  display: inline-block;
+}
+
 #controlbar .group button {
   color: rgb(100,255,100);
   background: rgb(50,50,50);
@@ -110,13 +118,14 @@ Controlbar.prototype.CSS = `
   width: 4em;
   cursor: pointer;
   margin: 0 1em;
+  padding: 0.1em;
 }
 
 #controlbar .subgroup {
-  height: 100%;
   display: inline-block;
   padding: 0 1em;
   font-size: 0.8em;
+  vertical-align: middle;
 }
 
 `;

@@ -28,9 +28,12 @@ Punchlist.prototype = {
 	},
 
 	del_punch(punch) {
-		var i = typeof(punch) == number ? punch : data.punches.indexOf(m.punch);
-    data.punches.splice(i,1);
-    this._on_list_change();
+		var i = typeof(punch) == 'number' ? punch : this.punches.indexOf(punch);
+    this.punches.splice(i,1);
+    this.link_list();
+    this.set_current_punch()
+      this._on_list_change();
+    this._on_punch_change();
 	},
 
 	clear() { 
@@ -62,6 +65,7 @@ Object.assign(
         next_punch = ( i==this.punches.length-1 ) ? null : this.punches[i+1];
         this.punches[i].link(prev_punch, next_punch);
         this.punches[i].on_change = this.on_punch_change;
+        this.punches[i].on_delete = this.del_punch;
       }
     },
 
@@ -78,6 +82,14 @@ Object.assign(
           return;
         }
       }
+    },
+
+    to_models() {
+      var punches = [];
+      for(var i=0; i<this.punches.length; i++) {
+        punches.push(this.punches[i].to_model());
+      }
+      return punches;
     }
 
   }
@@ -88,6 +100,7 @@ Object.assign(
     bind_listeners() {
       this.update_time     = this.update_time.bind(this);
       this.on_punch_change = this.on_punch_change.bind(this);
+      this.del_punch       = this.del_punch.bind(this);
     },
 
     update_time: function(time_s) {

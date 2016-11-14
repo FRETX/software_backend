@@ -21,6 +21,18 @@ Modal.prototype = {
     this.dom.style.display = 'inline-block';
   },
 
+  show_toast(text,color,time) {
+    var dom = render(`<div class='toast' style='background-color:${color};'>${text}</div>`);
+    this.show(dom);
+    if(time) { setTimeout(this.hide, time); }
+  },
+
+  show_loading(msg, time) {
+    var dom = render(`<div class='loading'></div>`);
+    this.show(dom);
+    if(time) { setTimeout(this.hide, time); }
+  },
+
   hide() {
     this.dom.style.display = 'none';
   }
@@ -49,6 +61,12 @@ Modal.prototype.HTML = `
 
 `.untab(2);
 
+Modal.prototype.TOAST = `
+  <div id='toast'>
+    
+  </div>
+`.untab(2);
+
 Modal.prototype.CSS = `
   
   #modal {
@@ -66,7 +84,7 @@ Modal.prototype.CSS = `
   	content: '';
   	display: inline-block;
     vertical-align: middle;
-    height: 100%;
+    height: 100%; 
   }
 
   #modal .modal_content {
@@ -80,6 +98,22 @@ Modal.prototype.CSS = `
     background: white;
     box-shadow: 0 0 1em black inset, 0 0 1em black;
     padding: 1em;
+  }
+
+  #modal .toast,
+  #modal .loading {
+    width: 10em;
+    padding: 3em;
+    font-size: 2.5em;
+    font-family: monospace;
+    box-shadow: 0 0 0.4em black, 0 0 2em black inset;
+  }
+
+  #modal .loading {
+    background-image: url('loading.gif');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   }
 
 `.untab(2);

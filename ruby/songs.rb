@@ -1,7 +1,7 @@
 get '/songs/applist' do
   content_type :json
   with_db do |conn|
-    resp = conn.exec jsonarray("SELECT id AS key, title, youtube_id FROM songs")
+    resp = conn.exec jsonarray("SELECT DISTINCT ON (youtube_id), id AS key, title, youtube_id FROM songs ORDER BY uploaded_on")
     get_val(resp,[])
   end
 end
@@ -9,7 +9,7 @@ end
 get '/songs/list' do
   content_type :json
   with_db do |conn|
-    resp = conn.exec jsonarray("SELECT * FROM songs")
+    resp = conn.exec jsonarray("SELECT DISTINCT ON(youtube_id) id,uploaded_on,youtube_id,title,punches FROM songs ORDER BY youtube_id,uploaded_on DESC")
     get_val(resp,[])
   end
 end
@@ -17,17 +17,9 @@ end
 post '/songs/add' do
   with_db do |conn|
     data = JSON.parse request.body.read
-
     query = %{
-      WITH update AS (
-        UPDATE songs 
-        SET punches = $3, title = $2
-        WHERE youtube_id = $1
-        RETURNING id
-      )
       INSERT INTO songs (youtube_id,title,punches)
       SELECT $1, $2, $3
-      WHERE NOT EXISTS (SELECT * FROM UPDATE)
       RETURNING id;
     } 
     conn.exec_params( query, [data['id'],data['title'],JSON.generate(data['chords'])] )

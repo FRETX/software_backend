@@ -12,13 +12,13 @@ body {
 
 #header #logo {
   display: inline-block;
-  padding: 0.5em 2em;
+  padding: 1em 2em;
   cursor: pointer;
   vertical-align: top;
 }
 
 #header #logo img {
-  height: 3em;
+  height: 2em;
 }
 
 

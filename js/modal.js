@@ -48,10 +48,12 @@ Object.assign(
       this.hide = this.hide.bind(this);
     },
 
-    on_exit_click(e,m)    { this.hide();    },
+    on_exit_click(e,m)    { this.hide(); this.ev_fire('exit'); },
     on_content_click(e,m) { cancelEvent(e); }
   }
 );
+
+Object.assign(Modal.prototype, ev_channel);
 
 Modal.prototype.HTML = `
 

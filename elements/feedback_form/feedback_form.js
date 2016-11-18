@@ -143,10 +143,8 @@ FeedbackForm.prototype.CSS = `
   #feedbackForm input,
   #feedbackForm textarea,
   #feedbackForm button {
-  	width: 30em;
   	font-size: 1.5em;
   	box-shadow: 0 0 0.4em black;
-  	
     font-family: monospace;
   }
 

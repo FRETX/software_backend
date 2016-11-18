@@ -1,5 +1,8 @@
 html
   head
+    == no_scaling 
+    == fb_image 'logo.png'
+    title FretX Player
     == css ['fonts', 'header', 'viewer']
     == js  ['jquery', 'rivets', 'lib', 'chord', 'chordlib', 'event_channel', 'punch', 'punchlist']
     == js  ['elements/ytplayer', 'elements/resize_fretboard', 'elements/timeline']
@@ -11,9 +14,11 @@ html
         img src='newlogo.svg'
       #menu
         .menuitem
-          | Support Us on Indiegogo!
+          span Open Another Song
         .menuitem
-          | Send Us Feedback!
+          span Support us on Indiegogo!
+        .menuitem
+          span Send Us Feedback!
 
     .content_wrapper
       #content

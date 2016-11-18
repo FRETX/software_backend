@@ -1,4 +1,6 @@
+def html_fb; "\n<html xmlns='http://www.w3.org/1999/xhtml' xmlns:fb='http://ogp.me/ns/fb#'>" end
 def no_scaling; "\n<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0'/>" end
+def fb_image(path) "\n<meta property='og:image' content='#{path}' />"  end
 def css(path) handleArray(path) { |x| "\n<link rel='stylesheet' type='text/css' href='#{x}.css'/>" } + "\n" end
 def js(path)  handleArray(path) { |x| "\n<script src='#{x}.js'></script>" } + "\n" end
 

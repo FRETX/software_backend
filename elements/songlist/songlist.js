@@ -16,12 +16,14 @@ function Songlist(parent) {
 Songlist.prototype = {
   constructor: Songlist,
 
-  build_dom:   function(parent) { this.dom = render(this.HTML);  if(!empty(parent)) parent.appendChild(this.dom); },
+  build_dom:   function(parent) { this.dom = render(this.HTML); this.mount(parent); },
   load_styles: function()       { load_css('timeline_styles', this.CSS); },
   bind_dom:    function()       {
     rivets.formatters.img_url = function(val) { return `http://img.youtube.com/vi/${val}/1.jpg`; }
   	rivets.bind(this.dom, { data: this.state, this: this }); 
   },
+
+  mount(parent) { if(!empty(parent)) { parent.innerHTML = ''; parent.appendChild(this.dom); } },
 
   fetch()        { $.get('/songs/list', this.on_song_list ).fail(this.on_load_failed); },
   get_dom_refs() { this.input = this.dom.getElementsByTagName('input')[0]; },
@@ -49,6 +51,7 @@ Object.assign(
       this.on_input_focus = this.on_input_focus.bind(this);
       this.on_input_blur  = this.on_input_blur.bind(this);
       this.on_load_failed = this.on_load_failed.bind(this);
+      this.mount          = this.mount.bind(this);
     },
 
     on_click(e,m)      { this.select(m.index); },

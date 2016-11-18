@@ -6,9 +6,10 @@ data = {
 
 $(document).ready(function() {
 
-  feedback = new FeedbackForm();
-  modal = new Modal(feedback.dom);
+  window.scrollTo(0,1);
 
+  modal     = new Modal();
+  feedback  = new FeedbackForm();
   punchlist = new Punchlist();
   chordlib  = new Chordlib();
 
@@ -19,9 +20,10 @@ $(document).ready(function() {
   palette   = new Palette();
 
   feedback.ev_sub('done', modal.hide );
+  modal.ev_sub('exit', function() { songlist.mount(id('songlist_container')); });
 
   songlist.ev_sub('list_loaded', function()     { load_song( songlist.random ); } );
-  songlist.ev_sub('selected',    function(song) { load_song( song ); } );
+  songlist.ev_sub('selected',    function(song) { load_song( song ); modal.hide(); songlist.mount(id('songlist_container')); } );
 
   timeline.on_scrub  = function(time_s) { ytplayer.current_time = time_s; } 
   timeline.get_color = function(chord_label) { return palette.get_color(chord_label); } 
@@ -65,16 +67,26 @@ function on_video_data() {
 ////////////////////////////////////////// CLICK LISTENERS ///////////////////////////////////////////////////
 
 function add_click_listeners() {
-  id('logo').addEventListener('click', goto_indiegogo );
+  //id('logo').addEventListener('click', goto_indiegogo );
   var menuitems = id('menu').children;
-  menuitems[0].addEventListener('click', goto_indiegogo );
-  menuitems[1].addEventListener('click', get_feedback );
+  menuitems[0].addEventListener('click', open_new_song );
+  menuitems[1].addEventListener('click', goto_indiegogo );
+  menuitems[2].addEventListener('click', get_feedback )
 }
 
-function goto_indiegogo() { window.location.href = "http://fretx.rocks"; }
+function open_new_song(e) {
+  modal.show(songlist.dom);
+  cancelEvent(e)
+}
 
-function get_feedback() {
-  modal.show();
+function goto_indiegogo(e) { 
+  window.location.href = "http://fretx.rocks";
+  cancelEvent(e);
+}
+
+function get_feedback(e) {
+  modal.show(feedback.dom);
+  cancelEvent(e);
 }
 
 ////////////////////////////////////////// CLICK LISTENERS ///////////////////////////////////////////////////

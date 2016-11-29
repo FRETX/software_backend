@@ -9,9 +9,9 @@ end
 
 get '/songs/:youtube_id.txt' do
   with_db do |conn|
-    resp = conn.exec_params jsonrow("SELECT punches,uploaded_on FROM songs WHERE youtube_id = $1"), [params[:youtube_id]]
+    resp = conn.exec_params jsonrow("SELECT DISTINCT ON(youtube_id) youtube_id, punches, uploaded_on FROM songs WHERE youtube_id = $1 ORDER BY youtube_id, uploaded_on DESC"), [params[:youtube_id]]
     halt 404 if resp.ntuples==0 
-    val = JSON.parse get_val( resp, [] )
+    val = JSON.parse get_val( resp, "{}" )
     p val
     song_to_fretx_raw( val['punches'] )
   end

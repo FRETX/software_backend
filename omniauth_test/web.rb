@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'thin'
 
 set :bind, '0.0.0.0'
 set :views, 'slim'

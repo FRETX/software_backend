@@ -6,6 +6,15 @@ get '/songs/applist' do
   end
 end
 
+get '/songs/:id.txt' do
+  with_db do |conn|
+    resp = conn.exec_params jsonrow("SELECT punches,uploaded_on FROM songs WHERE id = $1"), [params[:id]]
+    halt 404 if resp.ntuples==0 
+    val = get_val( resp, [] )
+    song_to_fretx_raw( val )
+  end
+end
+
 get '/songs/list' do
   content_type :json
   with_db do |conn|
@@ -48,5 +57,24 @@ def song_to_fretx(data)
     end
     data['chords'].first(4) 
     { :key => key, :payload => payload }
+  end
+end
+
+def song_to_fretx_raw(data)
+  with_db do |conn|
+    payload = ""
+    data.each do |chord|
+      time_ms = ( chord['time'].to_f * 1000 ).round()
+      if(chord['chord'] == 'No Chord') then
+        fingering = '{0}'
+      else
+        chord_obj = chord_from_name(chord['chord'])
+        resp = conn.exec_params "SELECT * FROM chords WHERE root=$1 AND quality=$2", [chord_obj[:root_value], chord_obj[:quality]]
+        return { :error => 'Unknown Chord', :chord => chord['chord'] } if resp.ntuples==0
+        fingering = resp[0]['fingering']
+      end
+      payload << "#{time_ms} #{fingering}\r\n"
+    end
+    payload
   end
 end

@@ -1,7 +1,7 @@
-get '/songs/applist' do
+get '/songs/index.json' do
   content_type :json
   with_db do |conn|
-    resp = conn.exec jsonarray("SELECT DISTINCT ON (youtube_id), id AS key, title, youtube_id FROM songs ORDER BY uploaded_on")
+    resp = conn.exec jsonarray("SELECT DISTINCT ON(youtube_id) id, uploaded_on FROM songs ORDER BY youtube_id, uploaded_on DESC")
     get_val(resp,[])
   end
 end

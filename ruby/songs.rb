@@ -11,8 +11,9 @@ get '/songs/:id.txt' do
   with_db do |conn|
     resp = conn.exec_params jsonrow("SELECT punches,uploaded_on FROM songs WHERE id = $1"), [params[:id]]
     halt 404 if resp.ntuples==0 
-    val = get_val( resp, [] )
-    song_to_fretx_raw( val )
+    val = JSON.parse get_val( resp, [] )
+    p val
+    song_to_fretx_raw( val['punches'] )
   end
 end
 
@@ -64,6 +65,7 @@ end
 def song_to_fretx_raw(data)
   with_db do |conn|
     payload = ""
+    p data
     data.each do |chord|
       time_ms = ( chord['time'].to_f * 1000 ).round()
       if(chord['chord'] == 'No Chord') then

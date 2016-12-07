@@ -23,4 +23,10 @@ Dir["ruby/*.rb"].each { |file| require File.expand_path(file); }
 
 # Thu 11/18 9pm - 1am 4hrs
 # Sat 11/26 3pm - 6pm 3hrs
-# Mon 11/28 7pm - 
+
+# Mon 11/28 7pm - 12am 5hrs  ( FretXApi Module )
+# Tue 11/29 10pm - 3am 5hrs  ( FretXApi Module )
+# Wed 11/30 9pm - 2am  5hrs  ( light delay, preroll, searchlist and player cleanup )
+
+
+

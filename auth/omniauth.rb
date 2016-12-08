@@ -9,8 +9,10 @@ use OmniAuth::Builder do
 end
 
 get '/auth/:provider/callback' do
-  puts JSON.pretty_generate(request.env['omniauth.auth'])
-  slim :logged_in
+  data = request.env['omniauth.auth']
+  p data
+  #session[:user] = User.create(:email => )
+  #redirect '/editor'
 end
 
 get '/auth/:provider/deauthorized' do

@@ -34,10 +34,14 @@ LoginForm.prototype.HTML = `
     </div>
     <hr>
     <div class='section'>
-      <img src='login-facebook.png'/>
+      <a href='/auth/facebook'>
+        <img src='login-facebook.png'/>
+      </a>
     </div>
     <div class='section'>
-      <img src='login-google.png'/>
+      <a href='/auth/google_oauth2'>
+        <img src='login-google.png'/>
+      </a>
     </div>
   </div>
 `.untab(2);

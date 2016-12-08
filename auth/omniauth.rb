@@ -8,3 +8,11 @@ use OmniAuth::Builder do
   provider :google_oauth2, ENV['GOOGLE_ID'], ENV['GOOGLE_SECRET'], {access_type: "offline", prompt: "consent", scope: 'userinfo.email, userinfo.profile'}
 end
 
+get '/auth/:provider/callback' do
+  puts JSON.pretty_generate(request.env['omniauth.auth'])
+  slim :logged_in
+end
+
+get '/auth/:provider/deauthorized' do
+  "App Deauthorized"
+end

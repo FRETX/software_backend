@@ -27,7 +27,7 @@ get '/auth/:provider/callback' do
     obj.name = data[:name]
   end
 
-  user.add_to_omniaccounts(omni)
+  user.add_omniaccount(omni)
 
   session[:user] = user
 

@@ -13,9 +13,9 @@ get '/auth/:provider/callback' do
 
   data = {
     :uid       => auth["uid"],
-    :provider  => auth["provider"]
-    :email     => auth["info"]["email"]
-    :name      => auth["info"]["name"]
+    :provider  => auth["provider"],
+    :email     => auth["info"]["email"],
+    :name      => auth["info"]["name"],
     :photo_url => auth["info"]["image"]
   }
   
@@ -30,7 +30,7 @@ get '/auth/:provider/callback' do
   user.add_to_omniaccounts(omni)
 
   session[:user] = user
-  
+
   redirect '/editor'
 end
 

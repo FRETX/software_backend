@@ -32,4 +32,3 @@ def get_val(resp, default); resp.ntuples==1 ? resp.getvalue(0,0) : default end
 args = get_heroku_pg_args
 
 $DB = Sequel.postgres(args[:dbname], args )
-p $DB

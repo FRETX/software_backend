@@ -82,6 +82,7 @@ GEM
     representable (2.3.0)
       uber (~> 0.0.7)
     retriable (2.1.0)
+    sequel (4.41.0)
     signet (0.7.3)
       addressable (~> 2.3)
       faraday (~> 0.9)
@@ -119,6 +120,7 @@ DEPENDENCIES
   omniauth-facebook
   omniauth-google-oauth2
   pg
+  sequel
   sinatra
   slim
   thin

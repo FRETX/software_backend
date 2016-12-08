@@ -14,6 +14,8 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 
+gem 'sequel'
+
 group :production do
    gem 'heroku-deflater'
 end 

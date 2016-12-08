@@ -9,7 +9,7 @@ use OmniAuth::Builder do
 end
 
 get '/auth/:provider/callback' do
-  data = request.env['omniauth.auth']
+  auth = request.env['omniauth.auth']
 
   data = {
     :uid       => auth["uid"],

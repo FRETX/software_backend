@@ -24,7 +24,7 @@ get '/auth/:provider/callback' do
   end
 
   user = User.find_or_create( :email => data[:email] ) do |obj|
-    u.name = data[:name]
+    obj.name = data[:name]
   end
 
   user.add_to_omniaccounts(omni)

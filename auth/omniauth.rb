@@ -10,9 +10,28 @@ end
 
 get '/auth/:provider/callback' do
   data = request.env['omniauth.auth']
-  p data
-  #session[:user] = User.create(:email => )
-  #redirect '/editor'
+
+  data = {
+    :uid       => auth["uid"],
+    :provider  => auth["provider"]
+    :email     => auth["info"]["email"]
+    :name      => auth["info"]["name"]
+    :photo_url => auth["info"]["image"]
+  }
+  
+  omni = Omniaccount.find_or_create( :provider => data[:provider], :uid => data[:uid] ) do |obj|
+    obj.photo_url = data[:photo_url]
+  end
+
+  user = User.find_or_create( :email => data[:email] ) do |obj|
+    u.name = data[:name]
+  end
+
+  user.add_to_omniaccounts(omni)
+
+  session[:user] = user
+  
+  redirect '/editor'
 end
 
 get '/auth/:provider/deauthorized' do

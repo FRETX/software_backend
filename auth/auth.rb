@@ -7,6 +7,7 @@ set(:auth) do |role|
   end
 end
 
-def logged_in? 
+def logged_in?
+  p session[:user] unless session[:user].nil?
   !session[:user].nil?
 end

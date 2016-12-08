@@ -19,7 +19,7 @@ get '/auth/:provider/callback' do
     :photo_url => auth["info"]["image"]
   }
   
-  omni = Omniaccount.find_or_create( :provider => data[:provider], :uid => data[:uid] ) do |obj|
+  omni = Omniaccount.find_or_create( :provider => data[:provider], :provider_id => data[:uid] ) do |obj|
     obj.photo_url = data[:photo_url]
   end
 

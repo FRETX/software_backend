@@ -41,9 +41,15 @@ get '/pages/:name.css' do
   send_file "pages/#{params[:name]}/#{params[:name]}.css"
 end
 
+get '/login' do
+  slim :login
+end
+
+get '/editor', :auth => 'boss' do
+  slim(:"../pages/editor/editor")
+end
 
 get('/')                    { slim(:"../pages/viewer/viewer" )     }
-get('/editor')              { slim(:"../pages/editor/editor")      }
 get('*/:file.html')         { slim params[:file].to_sym            }
 get('*/:file.css' )         { send_file "css/#{params[:file]}.css" }
 get('*/:file.js'  )         { send_file "js/#{params[:file]}.js"   }

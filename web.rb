@@ -1,10 +1,14 @@
 require 'sinatra'
+require 'pry'
 
 set :bind, '0.0.0.0'
 set :views, 'slim'
 
 Dir.chdir File.expand_path(File.dirname(__FILE__))
 Dir["ruby/*.rb"].each { |file| require File.expand_path(file); }
+Dir["auth/*.rb"].each { |file| require File.expand_path(file); }
+Dir["auth/models/*.rb"].each { |file| require File.expand_path(file); }
+
 
 # Tue 10/18 10pm - 2am 4hrs
 
@@ -27,6 +31,4 @@ Dir["ruby/*.rb"].each { |file| require File.expand_path(file); }
 # Mon 11/28 7pm - 12am 5hrs  ( FretXApi Module )
 # Tue 11/29 10pm - 3am 5hrs  ( FretXApi Module )
 # Wed 11/30 9pm - 2am  5hrs  ( light delay, preroll, searchlist and player cleanup )
-
-
-
+# Wed 12/07 9pm - 12am 3hrs  ( Authentication & Authorization )

@@ -4,11 +4,12 @@ class User < Sequel::Model
 	many_to_many :roles
 
 	def has_role?(role)
-      !roles[:name=>role].nil?
+	  p roles
+      !roles[:role=>Role[:name=>role]].nil?
 	end
 
 	def photo_url
-      omniaccounts.all[0].photo_url
+      omniaccounts.first.photo_url
 	end
 
 end

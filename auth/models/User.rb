@@ -4,8 +4,8 @@ class User < Sequel::Model
 	many_to_many :roles
 
 	def has_role?(role)
-	  p self	
-	  p self.roles
+	  p "SELF = #{self}"	
+	  p "ROLES = #{self.roles}"
 	  role = Role[ :name => role ]
 	  p role
 	  p roles[role.id]

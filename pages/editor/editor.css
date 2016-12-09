@@ -26,6 +26,9 @@
   vertical-align: middle;
 }
 
+#usericon {
+  display: inline-block;
+}
 
 #fretboard_container {
   text-align: center;

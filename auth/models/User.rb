@@ -7,9 +7,9 @@ class User < Sequel::Model
 	  p "SELF = #{self}"	
 	  p "ROLES = #{roles}"
 	  role = Role[ :name => role ]
-	  p role
-	  p roles[role.id]
-      !roles[role.id].nil?
+	  p role.id
+	  p roles.where(:id => role.id)
+      roles.where(:id => role.id) == role
 	end
 
 	def photo_url

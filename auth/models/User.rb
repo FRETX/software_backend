@@ -8,8 +8,8 @@ class User < Sequel::Model
 	  p "ROLES = #{roles}"
 	  role = Role[ :name => role ]
 	  p role.id
-	  p roles.where(:id => role.id)
-      roles.where(:id => role.id) == role
+	  p roles_dataset.where(:id => role.id)
+      roles_dataset.where(:id => role.id) == role
 	end
 
 	def photo_url

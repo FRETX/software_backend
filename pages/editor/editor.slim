@@ -1,5 +1,7 @@
 html
+
   head
+
     javascript:
       var x = 5;
       user = { "name": "#{session[:user].name}", "photo_url": "#{session[:user].photo_url}" };
@@ -9,8 +11,6 @@ html
     == js  ['elements/ytplayer', 'elements/resize_fretboard', 'elements/controlbar', 'elements/timeline', 'elements/punch_editor', 'modal' ]
     == js  ['elements/palette', 'elements/songlist', 'elements/addvid', 'elements/input_with_default', 'editor']
 
-
-
   body
 
     #header
@@ -18,7 +18,6 @@ html
         img src='newlogo.svg'
       #usericon
         img src=#{session[:user].photo_url}
-        span #{session[:user].name}
         button log out
       #menu
         .menuitem

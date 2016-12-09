@@ -1,9 +1,16 @@
 html
   head
+    javascript:
+      var x = 5;
+      user = { "name": "#{session[:user].name}", "photo_url": "#{session[:user].photo_url}" };
+
     == css ['fonts', 'header', 'editor']
     == js  ['jquery', 'rivets', 'lib', 'chord', 'chordlib', 'event_channel', 'punch', 'punchlist', 'elements/chordpicker' ]
     == js  ['elements/ytplayer', 'elements/resize_fretboard', 'elements/controlbar', 'elements/timeline', 'elements/punch_editor', 'modal' ]
     == js  ['elements/palette', 'elements/songlist', 'elements/addvid', 'elements/input_with_default', 'editor']
+
+
+
   body
 
     #header

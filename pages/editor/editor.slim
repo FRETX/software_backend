@@ -16,6 +16,10 @@ html
     #header
       #logo
         img src='newlogo.svg'
+      #usericon
+        img src=#{session[:user].photo_url}
+        span #{session[:user].name}
+        button log out
       #menu
         .menuitem
           | Edit An Existing Song

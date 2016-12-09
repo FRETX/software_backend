@@ -45,7 +45,7 @@ get '/login' do
   slim :login
 end
 
-get '/editor', :auth => 'boss' do
+get '/editor', :auth => 'admin' do
   slim(:"../pages/editor/editor")
 end
 

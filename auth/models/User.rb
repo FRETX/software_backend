@@ -5,7 +5,10 @@ class User < Sequel::Model
 
 	def has_role?(role)
 	  p roles
-      !roles[:role=>Role[:name=>role]].nil?
+	  role = Role[ :name => role ]
+	  p role
+	  p roles[role.id]
+      !roles[role.id].nil?
 	end
 
 	def photo_url

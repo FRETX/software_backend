@@ -5,7 +5,7 @@ class User < Sequel::Model
 
 	def has_role?(role)
 	  p "SELF = #{self}"	
-	  p "ROLES = #{self.roles}"
+	  p "ROLES = #{roles}"
 	  role = Role[ :name => role ]
 	  p role
 	  p roles[role.id]

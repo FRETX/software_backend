@@ -6,7 +6,7 @@ html
       user = { "name": session[:user][:name], "photo_url": session[:user].photo_url }
   
     == css ['fonts', 'header', 'editor']
-    == js  ['jquery', 'rivets', 'lib', 'chord', 'chordlib', 'event_channel', 'punch', 'punchlist', 'elements/chordpicker' ]
+    == js  ['jquery', 'rivets', 'lib', 'chord', 'chordlib', 'event_channel', 'punch', 'punchlist', 'elements/chordpicker', 'userview' ]
     == js  ['elements/ytplayer', 'elements/resize_fretboard', 'elements/controlbar', 'elements/timeline', 'elements/punch_editor', 'modal' ]
     == js  ['elements/palette', 'elements/songlist', 'elements/addvid', 'elements/input_with_default', 'editor']
 
@@ -15,11 +15,7 @@ html
     #header
       #logo
         img src='newlogo.svg'
-      #usericon
-        img src="#{session[:user].photo_url}"
-        span 
-          | #{session[:user][:name]}
-        button log out
+      #userview_container
       #menu
         .menuitem
           | Edit An Existing Song

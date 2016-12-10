@@ -6,13 +6,14 @@ data = {
 
 $(document).ready(function() {
 
-  userview  = new UserView(user);
+
   punchlist = new Punchlist();
   chordlib  = new Chordlib();
   songlist  = new Songlist();
   modal     = new Modal();
   addvid    = new AddVid();
 
+  userview    = new UserView(   id('userview_container')  );
   ytplayer    = new YTPlayer(   id('ytplayer_container')  );
   fretboard   = new Fretboard(  id('fretboard_container') );
   ctrlbar     = new Controlbar( id('ctrlbar_container')   );

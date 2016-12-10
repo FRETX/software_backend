@@ -1,7 +1,7 @@
-function UserView(user) {
+function UserView(parent) {
 	
   this.state = {
-	"user": user
+	"user": getCookie('user')
   }
 
   this.build_dom(parent);

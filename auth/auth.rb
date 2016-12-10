@@ -9,6 +9,11 @@ set(:auth) do |role|
 end
 
 def logged_in?
-  p session[:user] unless session[:user].nil?
   !session[:user].nil?
+end
+
+get '/logout' do
+  session[:user] = nil
+  cookie[:user]  = nil
+  redirect '/login'
 end

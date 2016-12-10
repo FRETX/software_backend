@@ -12,17 +12,20 @@ function UserView(parent) {
 UserView.prototype = {
 	constructor: UserView,
 
+  submit() { $.post('logout'); }
 }
 
 Object.assign( UserView.prototype, element);
 Object.assign( UserView.prototype, ev_channel);
 
 UserView.prototype.HTML = `
+
   <div id="UserView">
-    <img rv-src="state.user.photo_url"/>
-    <div class="name">{state.user.name}</div>
-    <button>Log Out</button>
+    <img rv-src='state.user.photo_url'/>
+    <div class='name'>{state.user.name}</div>
+    <div class='submit' rv-on-click='this.submit'>Log Out</button>
   </div>
+
 `.untab(2);
 
 UserView.prototype.CSS = `
@@ -34,7 +37,5 @@ UserView.prototype.CSS = `
   #UserView .name {
     display: inline-block;
   }
-
-
 
 `.untab(2);

@@ -12,6 +12,10 @@
   padding-top: 2em;
 }
 
+#userview_container {
+  display: inline-block;
+}
+
 #content {
   display: inline-block;
 }

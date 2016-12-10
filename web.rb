@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'sinatra/cookies'
 
 set :bind, '0.0.0.0'
 set :views, 'slim'

@@ -3,6 +3,7 @@ source "https://rubygems.org"
 gem 'thin'
 gem 'json'
 gem 'sinatra'
+gem 'sinatra-contrib'
 gem 'slim'
 gem 'pg'
 

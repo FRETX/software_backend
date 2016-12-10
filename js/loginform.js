@@ -1,8 +1,9 @@
 function LoginForm(parent) {
   
-  this.style = {
+  this.state = {
     "email": "",
-    "password": ""
+    "password": "",
+    "mode": "",
   }
 
   this.build_dom(parent);

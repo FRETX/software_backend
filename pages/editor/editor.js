@@ -6,6 +6,7 @@ data = {
 
 $(document).ready(function() {
 
+  userview  = new UserView(user);
   punchlist = new Punchlist();
   chordlib  = new Chordlib();
   songlist  = new Songlist();

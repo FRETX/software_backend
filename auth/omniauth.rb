@@ -30,7 +30,7 @@ get '/auth/:provider/callback' do
   user.add_omniaccount(omni)
 
   session[:user] = user
-  cookies[:user] = JSON.generate { :name => user.name, :photo_url => user.photo_url }
+  cookies[:user] = JSON.generate({ :name => user.name, :photo_url => user.photo_url })
 
   redirect '/editor'
 end

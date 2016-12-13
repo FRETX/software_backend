@@ -14,12 +14,12 @@ end
 
 post '/logout' do
   session[:user] = nil
-  cookie[:user]  = nil
   redirect '/login'
 end
 
 get '/current_user' do
   content_type :json
   user = session[:user]
+  halt 404 if user.nil?
   JSON.generate({ :name => user.name, :photo_url => user.photo_url })	
 end

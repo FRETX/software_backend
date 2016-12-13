@@ -5,6 +5,7 @@
   -moz-user-select: none;      /* Firefox */
   -ms-user-select: none;       /* Internet Explorer/Edge */
   user-select: none; 
+  font-family: 'Roboto', sans-serif;
 }
 
 .content_wrapper {
@@ -14,6 +15,7 @@
 
 #userview_container {
   display: inline-block;
+  padding: 1em;
 }
 
 #content {

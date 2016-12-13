@@ -1,12 +1,9 @@
 html
 
   head
-  
-    javascript: 
-      user = { "name": "#{session[:user][:name]}", "photo_url": "#{session[:user].photo_url}" }
-  
+    title Fretx Editor
     == css ['fonts', 'header', 'editor']
-    == js  ['jquery', 'rivets', 'lib', 'chord', 'chordlib', 'event_channel', 'element', 'punch', 'punchlist', 'elements/chordpicker', 'userview' ]
+    == js  ['jquery', 'rivets', 'lib', 'chord', 'chordlib', 'event_channel', 'element', 'punch', 'punchlist', 'elements/chordpicker', 'elements/userview' ]
     == js  ['elements/ytplayer', 'elements/resize_fretboard', 'elements/controlbar', 'elements/timeline', 'elements/punch_editor', 'modal' ]
     == js  ['elements/palette', 'elements/songlist', 'elements/addvid', 'elements/input_with_default', 'editor']
 
@@ -17,6 +14,8 @@ html
         img src='newlogo.svg'
       #userview_container
       #menu
+        .menuitem
+          | Player
         .menuitem
           | Edit An Existing Song
         .menuitem

@@ -13,6 +13,7 @@ $(document).ready(function() {
   punchlist = new Punchlist();
   chordlib  = new Chordlib();
 
+  userview  = new UserView(  id('userview_container')  );
   ytplayer  = new YTPlayer(  id('ytplayer_container')  );
   fretboard = new Fretboard( id('fretboard_container') );
   timeline  = new Timeline(  id('timeline_container')  );
@@ -69,14 +70,19 @@ function on_video_data() {
 function add_click_listeners() {
   //id('logo').addEventListener('click', goto_indiegogo );
   var menuitems = id('menu').children;
-  menuitems[0].addEventListener('click', open_new_song );
-  menuitems[1].addEventListener('click', goto_indiegogo );
-  menuitems[2].addEventListener('click', get_feedback )
+  menuitems[0].addEventListener('click', open_new_song  );
+  menuitems[1].addEventListener('click', to_editor      );
+  menuitems[2].addEventListener('click', goto_indiegogo );
+  menuitems[3].addEventListener('click', get_feedback   );
 }
 
 function open_new_song(e) {
   modal.show(songlist.dom);
   cancelEvent(e)
+}
+
+function to_editor(e) {
+  window.location = '/editor';
 }
 
 function goto_indiegogo(e) { 

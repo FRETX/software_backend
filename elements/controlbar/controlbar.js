@@ -115,10 +115,11 @@ Controlbar.prototype.CSS = `
 #controlbar .delete {
   display: inline-block;
   border: 1px solid rgb(100,255,100);
-  width: 4em;
+  width: 6em;
   cursor: pointer;
   margin: 0 1em;
   padding: 0.1em;
+  font-size: 0.8em;
 }
 
 #controlbar .subgroup {

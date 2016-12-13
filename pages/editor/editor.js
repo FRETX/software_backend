@@ -5,7 +5,8 @@ data = {
 /////////////////////////////////////////////// SETUP /////////////////////////////////////////////////////////
 
 $(document).ready(function() {
-
+  
+  remove_facebook_redirect_hash();
 
   punchlist = new Punchlist();
   chordlib  = new Chordlib();
@@ -51,6 +52,10 @@ $(document).ready(function() {
 
 /////////////////////////////////////////////// SETUP /////////////////////////////////////////////////////////
 
+function remove_facebook_redirect_hash() {
+  history.pushState("", document.title, window.location.pathname);
+}
+
 function load_new_song(url_or_id) {
   modal.hide();
   palette.clear();
@@ -89,9 +94,14 @@ function add_chord_now(chord) {
 
 function add_click_listeners() {
   var menuitems = id('menu').children;
-  menuitems[0].addEventListener('click', edit_menu );
-  menuitems[1].addEventListener('click', open_new  );
-  menuitems[2].addEventListener('click', save_work );
+  menuitems[0].addEventListener('click', to_player );
+  menuitems[1].addEventListener('click', edit_menu );
+  menuitems[2].addEventListener('click', open_new  );
+  menuitems[3].addEventListener('click', save_work );
+}
+
+function to_player() {
+  window.location = '/';
 }
 
 function edit_menu() {

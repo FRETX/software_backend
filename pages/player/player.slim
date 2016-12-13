@@ -1,20 +1,30 @@
 html
+  
   head
+
+    title FretX Player
+
     == no_scaling 
     == fb_image 'logo.png'
-    title FretX Player
-    == css ['fonts', 'header', 'viewer']
-    == js  ['jquery', 'rivets', 'lib', 'chord', 'chordlib', 'event_channel', 'punch', 'punchlist']
-    == js  ['elements/ytplayer', 'elements/resize_fretboard', 'elements/timeline']
-    == js  ['elements/palette', 'elements/songlist', 'modal', 'elements/feedback_form', 'viewer']
+
+    == css [ 'fonts', 'header', 'player']
+
+    == js  [ 'jquery', 'rivets', 'lib']
+    == js  [ 'chord', 'chordlib', 'event_channel', 'punch', 'punchlist', 'element', 'modal']
+    == js  [ 'elements/userview', 'elements/ytplayer', 'elements/resize_fretboard', 'elements/timeline']
+    == js  [ 'elements/palette', 'elements/songlist', 'elements/feedback_form', 'player']
+
   body
 
     #header
       #logo
         img src='newlogo.svg'
+      #userview_container
       #menu
         .menuitem
           span Open Another Song
+        .menuitem
+          span Editor
         .menuitem
           span Support us on Indiegogo!
         .menuitem

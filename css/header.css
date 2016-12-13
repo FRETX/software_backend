@@ -37,6 +37,11 @@ body {
   cursor: pointer;
 }
 
+#header #menu .menuitem span {
+  width: 100%;
+  text-align: center;
+}
+
 #header #menu .menuitem::before {
   content: '';
   display: inline-block;

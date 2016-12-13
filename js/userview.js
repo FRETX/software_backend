@@ -1,18 +1,27 @@
 function UserView(parent) {
 	
   this.state = {
-	  "user": getCookie('user')
+	  "user": {}
   }
+  
 
   this.build_dom(parent);
   this.load_styles();
   this.bind_dom();
+  this.get_user();
 }
 
 UserView.prototype = {
 	constructor: UserView,
 
-  submit() { $.post('logout'); }
+  submit() { $.post('logout'); },
+
+  get_user() {
+    $.get('/current_user', function(user) {
+      var x = 5;
+    }.bind(this));
+  }
+
 }
 
 Object.assign( UserView.prototype, element);

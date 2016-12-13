@@ -12,8 +12,13 @@ def logged_in?
   !session[:user].nil?
 end
 
-get '/logout' do
+post '/logout' do
   session[:user] = nil
   cookie[:user]  = nil
   redirect '/login'
+end
+
+get '/current_user' do
+  content_type :json
+  JSON.generate({ :name => user.name, :photo_url => user.photo_url })	
 end

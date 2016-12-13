@@ -41,7 +41,6 @@ get '/pages/:name.css' do
   send_file "pages/#{params[:name]}/#{params[:name]}.css"
 end
 
-
 get('/')                          { slim(:"../pages/player/player" ) }
 get('/player')                    { slim(:"../pages/player/player")  }
 get('/login')                     { slim(:"../pages/login/login")    }

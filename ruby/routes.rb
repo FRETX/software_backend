@@ -41,7 +41,20 @@ get '/pages/:name.css' do
   send_file "pages/#{params[:name]}/#{params[:name]}.css"
 end
 
-get('/')                          { slim(:"../pages/player/player" ) }
+get('/') do
+
+ Dir.pwd
+ Dir.exists?('slim')
+ Dir.exists?('slim/..')
+ Dir.exists?('slim/../pages')
+ Dir.exists?('slim/../pages/player')
+ p slim :test
+
+
+ slim(:"../pages/player/player" )
+
+end
+
 get('/player')                    { slim(:"../pages/player/player")  }
 get('/login')                     { slim(:"../pages/login/login")    }
 get('/editor', :auth => 'admin' ) { slim(:"../pages/editor/editor")  }

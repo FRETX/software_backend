@@ -34,3 +34,4 @@ Dir["ruby/*.rb"].each { |file| require File.expand_path(file); }
 # Tue 11/29 10pm - 3am 5hrs  ( FretXApi Module )
 # Wed 11/30 9pm - 2am  5hrs  ( light delay, preroll, searchlist and player cleanup )
 # Wed 12/07 9pm - 1am  4hrs  ( Authentication & Authorization )
+# Mon 12/12 10pm - 1am 3hrs  ( Authentication & Authorization )

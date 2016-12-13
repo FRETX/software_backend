@@ -20,5 +20,6 @@ end
 
 get '/current_user' do
   content_type :json
+  user = session[:user]
   JSON.generate({ :name => user.name, :photo_url => user.photo_url })	
 end

@@ -1,10 +1,11 @@
 require 'sinatra'
-require 'sinatra/cookies'
+
+Dir.chdir File.expand_path(File.dirname(__FILE__))
 
 set :bind, '0.0.0.0'
 set :views, 'slim'
 
-Dir.chdir File.expand_path(File.dirname(__FILE__))
+
 require_relative 'ruby/database.rb'
 Dir["auth/models/*.rb"].each { |file| require File.expand_path(file); }
 Dir["auth/*.rb"].each { |file| require File.expand_path(file); }

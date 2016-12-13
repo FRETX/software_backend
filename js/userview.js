@@ -18,7 +18,7 @@ UserView.prototype = {
 
   get_user() {
     $.get('/current_user', function(user) {
-      var x = 5;
+      this.state.user = user;
     }.bind(this));
   }
 

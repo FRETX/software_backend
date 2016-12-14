@@ -81,3 +81,9 @@ def song_to_fretx_raw(data)
     payload
   end
 end
+
+def convert_songdata(id)
+  with_db do |conn|
+      
+  end   
+end

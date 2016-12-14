@@ -1,3 +1,5 @@
+require 'pry'
+
 get '/songs/index.json' do
   content_type :json
   with_db do |conn|
@@ -14,6 +16,16 @@ get '/songs/:youtube_id.txt' do
     val = JSON.parse get_val( resp, "{}" )
     p val
     song_to_fretx_raw( val['punches'] )
+  end
+end
+
+get '/songs/:youtube_id.json' do
+  with_db do |conn|
+    resp = conn.exec_params jsonrow("SELECT DISTINCT ON(youtube_id) youtube_id, uploaded_on, title, artist, song_title, punches FROM songs WHERE youtube_id = $1 ORDER BY youtube_id, uploaded_on DESC"), [params[:youtube_id]]
+    halt 404 if resp.ntuples==0 
+    val = JSON.parse get_val( resp, "{}" )
+    val['punches'] = convert_punches val['punches']
+    JSON.pretty_generate( val )
   end
 end
 
@@ -82,8 +94,28 @@ def song_to_fretx_raw(data)
   end
 end
 
-def convert_songdata(id)
+def convert_punches(punches)
   with_db do |conn|
-      
+    punches.each do |punch|
+      punch[:time_ms] = ( punch['time'].to_f * 1000 ).round()
+      punch[:chord] = { :name => punch['chord'] }
+      punch.delete('time')
+      punch.delete('disp_time')
+      punch.delete('chord')
+
+      if( punch[:chord][:name] == 'No Chord') then
+        punch[:chord][:root]    = ""
+        punch[:chord][:rootval] = 0
+        punch[:chord][:quality] = ""
+        punch[:chord][:fingering] = '{0}'
+      else
+        chord_obj = chord_from_name(punch[:chord][:name])  
+        punch[:chord][:root]    = chord_obj[:root]
+        punch[:chord][:rootval] = chord_obj[:root_value]
+        punch[:chord][:quality] = chord_obj[:quality]
+        resp = conn.exec_params "SELECT * FROM chords WHERE root=$1 AND quality=$2", [chord_obj[:root_value], chord_obj[:quality]]
+        punch[:chord][:fingering] = resp[0]['fingering']
+      end
+    end
   end   
 end

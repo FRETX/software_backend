@@ -7,6 +7,7 @@ set :views, 'slim'
 
 
 require_relative 'ruby/database.rb'
+
 Dir["auth/models/*.rb"].each { |file| require File.expand_path(file); }
 Dir["auth/*.rb"].each { |file| require File.expand_path(file); }
 Dir["ruby/*.rb"].each { |file| require File.expand_path(file); }

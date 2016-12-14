@@ -1,5 +1,3 @@
-require 'pry'
-
 get '/songs/index.json' do
   content_type :json
   with_db do |conn|
@@ -119,3 +117,35 @@ def convert_punches(punches)
     end
   end   
 end
+
+
+
+{
+  "youtube_id": "eHuebHTD-lY",
+  "uploaded_on": "2016-11-17T02:50:17.292087+00:00",
+  "title": "Sam Sparro - Black and Gold",
+  "artist": "Sam Sparro",
+  "song_title": "Black And Gold",
+  "punches": [
+    {
+      "time_ms": 2065,
+      "chord": {
+        "name": "E min",
+        "root": "E",
+        "rootval": 5,
+        "quality": "min",
+        "fingering": "{6,25,24,3,2,1,0}"
+      }
+    },
+    {
+      "time_ms": 16108,
+      "chord": {
+        "name": "C Maj",
+        "root": "C",
+        "rootval": 1,
+        "quality": "Maj",
+        "fingering": "{35,24,3,12,1,0}"
+      }
+    }
+  ]
+}

@@ -28,6 +28,7 @@ get '/auth/:provider/callback' do
   end
 
   user.add_omniaccount(omni)
+  user.add_role Role[1]
 
   session[:user] = user
 

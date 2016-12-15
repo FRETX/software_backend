@@ -4,8 +4,8 @@ get('/')                          { fetch_page :landing   }
 get('/player')                    { fetch_page :newplayer }
 get('/login')                     { fetch_page :login     }
 get('/faq')                       { fetch_page :faq       }
-get('/editor', :auth => 'admin' ) { fetch_page :neweditor }
-get('/list',   :auth => 'admin' ) { fetch_page :list      } 
+get('/editor', :auth => 'user' )  { fetch_page :neweditor }
+get('/list',   :auth => 'user' )  { fetch_page :list      } 
 
 
 ######################################## PAGE ROUTES ###########################################

@@ -1,0 +1,14 @@
+* { 
+  font-family: 'Roboto';
+}
+
+body { 
+  background: url('grey_wash_wall.png');
+  text-align: center;
+}
+
+body {
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+}

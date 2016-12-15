@@ -1,0 +1,340 @@
+* {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none; 
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  box-shadow: 0 0 0.1em black inset;
+}
+
+#fretboard_container {
+  -webkit-transition: box-shadow: 1s;
+  transition: box-shadow: 1s;
+}
+
+.content_wrapper {
+  padding-top: 2em;
+  text-align: center;
+  position: relative;
+}
+
+#content {
+  display: inline-block;
+  vertical-align: middle;
+  width: 74vw;
+}
+
+.row {
+  white-space: nowrap;
+}
+
+.row * {
+  vertical-align: middle;
+}
+
+
+#fretboard_container {
+  text-align: center;
+}
+
+#timeline_container {
+  position: relative;
+}
+
+#timeline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+#content {
+  text-align: center;
+}
+
+#content * {
+  vertical-align: middle;
+}
+
+#viewer, 
+#ytplayer_container,
+#fretboard_container,
+#songlist_container {
+  display: inline-block;
+}
+
+#fretboard_container {
+  border: 1px solid black;
+  height: 30vw;
+  width: 33vw;
+  box-shadow: 0 0 0.3em black;
+  background-color: rgba(0,0,0,0.1);
+  font-size: 1.4vw;
+}
+
+#fretboard * {
+  vertical-align: middle;
+}
+
+#fretboard_container::before {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
+
+}
+
+#ytplayer_container {
+  width: 40vw;
+  height: 30vw;
+  border: 1px solid black;
+  box-shadow: 0 0 0.3em black;
+}
+
+
+#viewer { 
+  position: relative; 
+  box-sizing: border-box;
+}
+
+
+#timeline_container {
+  max-width: 100%;
+  height: 10vw;
+  position: relative;
+  vertical-align: bottom;
+  box-sizing: border-box;
+}
+
+#timeline {
+  border: 1px solid black;
+  box-shadow: 0 0 0.3em black;
+  height: 7vw;
+  font-size: 1.5vw;
+}
+
+#songlist {
+  box-shadow: 0 0 0.3em black;
+  max-height: 70vh;
+}
+
+#songlist_container {
+  padding-left: 1vw;
+  width: 20vw;
+  height: 40vw;
+}
+
+#FeedbackForm {
+  width: 40vw;
+}
+
+#appmenu {
+  margin-top: 1em;
+  display: inline-block;
+}
+
+#appmenu .menuitem {
+  height: 100%;
+  padding: 0 1em;
+  box-shadow: 0 0 0.3em black inset;
+  display: inline-block;
+  cursor: pointer;
+  height: 3em;
+}
+
+#appmenu .menuitem span {
+  width: 100%;
+  text-align: center;
+}
+
+#appmenu .menuitem::before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+} 
+
+#appmenu .menuitem:hover {
+  background-color: rgba(0,0,0,0.1);
+}
+
+#appmenu .menuitem:active {
+  box-shadow: 0 0 1em black inset;
+  background-color: rgba(200,200,255,0.5);
+}
+
+@media (max-width: 1000px) {
+
+  .content_wrapper {
+    padding-top: 1vw;
+  }
+
+  
+  #songlist_container {
+    display: none;
+  }
+
+  #songlist {
+    height: 70vh !important;
+  }
+  
+  #timeline {
+    font-size: 2vw;
+  }
+
+  #timeline_container {
+    margin-top: 4vw;
+    width: 95vw;
+  }
+
+  #ytplayer_container {
+    width: 50vw;
+    height: 40vw;
+    box-sizing: border-box;
+  }
+
+  #fretboard_container {
+    width: 45vw;
+    height: 40vw;
+    padding: 1vw;
+    box-sizing: border-box;
+    font-size: 2vw;
+  }
+
+  #songlist {
+    font-size: 1em;
+  }
+
+  #content_wrapper {
+    padding-top: 1vw;
+  }
+  
+}
+
+
+@media (max-width: 750px) {
+
+  .content_wrapper {
+    padding-top: 0;
+  }
+
+  #header {
+    position: relative;
+    height: 10vh;
+    margin: 0;
+  }
+
+  #header #logo {
+    height: 100%;
+    padding: 0 5vw;
+  }
+
+
+  #header #logo::before {
+    content: '';
+    vertical-align: middle;
+    display: inline-block;
+    height: 100%;
+  }
+
+  #header #logo img {
+    vertical-align: middle;
+    height: 45%;
+  }
+
+  #appmenu .menuitem {
+    width: 7vw;
+    vertical-align: top;
+    padding: 0 2vw;
+  }
+
+  #appmenu .menuitem span {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 2vw;
+    font-size: 1.6vw;
+  }
+
+  #content_wrapper {
+    padding-top: 1vh;
+  }
+
+  #ytplayer_container {
+    display: block;
+    width: 100vw;
+    height: 35vh;
+    margin: 0;
+  }
+
+  #fretboard_container {
+    width: 95vw;
+    height: 33vh;
+    border: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  #UserView {
+    font-size: 1.6vw;
+  }
+
+  #userview_container {
+    padding: 1.8em 0;
+    vertical-align: middle;
+  }
+
+  #fretboard {
+    font-size: 5.3vh !important;
+  }
+
+
+  #songlist_container {
+    display: none;
+  }
+
+
+  #timeline_container {
+    height: 20vh;
+    width: 100vw;
+  }
+
+  #timeline {
+    font-size: 2.5vh;
+  }
+
+  body {
+    height: 105vh;
+  }
+
+  #FeedbackForm {
+    font-size: 2.5vw;
+    width: 80vw;
+  }
+
+  #songlist {
+    height: 70vh !important;
+    font-size: 4vw;
+    width: 80vw;
+  }
+
+  #modal .modal_content { 
+    max-width: 80vw !important;
+  }
+
+  body {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0.2+0,0+30,0+70,0+100,0.01+100,0.2+100 */
+    background: -moz-linear-gradient(left,  rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 70%, rgba(0,0,0,0.2) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,0) 70%,rgba(0,0,0,0.2) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,0) 70%,rgba(0,0,0,0.2) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33000000', endColorstr='#33000000',GradientType=1 ); /* IE6-9 */
+  }
+
+}
+

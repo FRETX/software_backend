@@ -1,3 +1,4 @@
+
 def html_fb; "\n<html xmlns='http://www.w3.org/1999/xhtml' xmlns:fb='http://ogp.me/ns/fb#'>" end
 def no_scaling; "\n<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0'/>" end
 def fb_image(path) "\n<meta property='og:image' content='#{path}' />"  end
@@ -16,4 +17,8 @@ end
 
 def render_slim(path, options = {})
   Slim::Template.new(path).render
+end
+
+def partial(name)
+  include_slim( "partials/#{name}" )
 end

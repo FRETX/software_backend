@@ -31,8 +31,8 @@ UserView.prototype.HTML = `
 
   <div id="UserView">
     <div rv-if='state.user'>
-      <img rv-src='state.user.photo_url'/>
       <div class='name'>{state.user.name}</div>
+      <img rv-src='state.user.photo_url'/>
       <div class='logout' rv-on-click='this.logout'>Logout</div>
     </div>
     <div rv-unless='state.user'>
@@ -49,39 +49,38 @@ UserView.prototype.CSS = `
   }
 
   #UserView img {
-    height: 2em;
+    height: 1.5em;
+    width: 1.5em;
     vertical-align: middle;
-    border-radius: .75em 0 0 .75em;
-    box-shadow: 0 0 0.2em black;
+    border: 1px solid black;
   }
 
   #UserView .name {
-    line-height: 2em;
+
+    line-height: 100%;
     display: inline-block;
-    box-shadow: 0 0 0.2em black;
     padding: 0 1em;
+    border-radius: .25em 0 0 .25em;
+    display: none;
   }
 
   #UserView .logout {
-    line-height: 2em;
-    background: rgba(0,0,0,0.6);
+    line-height: 1.6em;
     display: inline-block;
-    border-radius: 0 .75em .75em  0;
-    box-shadow: 0 0 0.2em black;
-    padding: 0 1em;
-    color: white;
+    padding: 0 .5em;
     cursor: pointer;
   }
 
   #UserView .login {
-    line-height: 2em;
-    background: rgba(0,0,0,0.6);
+    line-height: 1.6em;
     display: inline-block;
-    border-radius: .75em;
-    box-shadow: 0 0 0.2em black;
-    padding: 0 1em;
-    color: white;
+    padding: 0 .5em;
     cursor: pointer;
+  }
+
+  #UserView .login:hover,
+  #UserView .logout:hover {
+    color: #B00;
   }
 
 `.untab(2);

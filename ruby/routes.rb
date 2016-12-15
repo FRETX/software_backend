@@ -1,6 +1,16 @@
-get '/elements/:name.html' do
-  slim(:"../elements/#{params[:name]}/#{params[:name]}")
-end
+######################################## PAGE ROUTES ###########################################
+
+get('/')                          { fetch_page :landing   }
+get('/player')                    { fetch_page :newplayer }
+get('/login')                     { fetch_page :login     }
+get('/faq')                       { fetch_page :faq       }
+get('/editor', :auth => 'admin' ) { fetch_page :neweditor }
+get('/list',   :auth => 'admin' ) { fetch_page :list      } 
+
+
+######################################## PAGE ROUTES ###########################################
+
+get('/elements/:name.html') { fetch_element params[:name] }
 
 get '/elements/:name.js' do
   pass unless File.file? "elements/#{params[:name]}/#{params[:name]}.js"	
@@ -15,10 +25,6 @@ end
 get '/elements/:name.css' do
   pass unless File.file? "elements/#{params[:name]}/#{params[:name]}.css"
   send_file "/elements/#{params[:name]}/#{params[:name]}.css"
-end
-
-get '/pages/:name.html' do
-  slim(:"../pages/#{params[:name]}/#{params[:name]}")
 end
 
 get '/:name.js' do
@@ -40,26 +46,6 @@ get '/pages/:name.css' do
   pass unless File.file? "pages/#{params[:name]}/#{params[:name]}.css"
   send_file "pages/#{params[:name]}/#{params[:name]}.css"
 end
-
-get('/') do
-
- Dir.pwd
- Dir.exists?('slim')
- Dir.exists?('slim/..')
- Dir.exists?('slim/../pages')
- Dir.exists?('slim/../pages/player')
- p slim :test
-
-
- slim(:"../pages/player/player" )
-
-end
-
-get('/player')                    { slim(:"../pages/player/player")  }
-get('/login')                     { slim(:"../pages/login/login")    }
-get('/editor', :auth => 'admin' ) { slim(:"../pages/editor/editor")  }
-get('/list',   :auth => 'admin' ) { slim(:"../pages/list/list")      } 
-
 
 get('*/:file.html')         { slim params[:file].to_sym            }
 get('*/:file.css' )         { send_file "css/#{params[:file]}.css" }
@@ -83,3 +69,7 @@ get /.*\.(ttf|woff|eot|svg|woff2)/ do
   response['Cache-Control'] = 'public, max-age=86400'
   send_file "fonts#{path}"
 end
+
+def fetch_page(page_name)    slim :"../pages/#{page_name}/#{page_name}"    end
+def fetch_element(elem_name) slim :"../elements/#{elem_name}/#{elem_name}" end
+def fetch_elem_js(js_name)   slim :"../elements/#{js_name}/#{js_name}"     end

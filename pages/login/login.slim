@@ -1,8 +1,8 @@
 html
   head
     title Login To Fretx
-    == js ['jquery', 'rivets', 'lib', 'element', 'event_channel', 'loginform']
-    == css ['login']
+    == js  [ 'jquery', 'rivets', 'lib', 'element', 'event_channel', 'elements/loginform', 'login' ]
+    == css [ 'fonts', 'site', 'layout', 'menu', 'login']
 
     javascript:
       $(document).ready(function() {
@@ -10,4 +10,5 @@ html
       });
 
   body
+
     #login_container

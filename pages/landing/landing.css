@@ -1,0 +1,4 @@
+ul#menu li:nth-child(1) {
+    color: #B00;
+    border-bottom: 3px solid #B00;
+}

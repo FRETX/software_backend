@@ -8,6 +8,11 @@
   font-family: 'Roboto', sans-serif;
 }
 
+ul#menu li:nth-child(3) {
+    color: #B00;
+    border-bottom: 3px solid #B00;
+}
+
 .content_wrapper {
   text-align: center;
   padding-top: 2em;

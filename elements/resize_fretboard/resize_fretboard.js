@@ -1,6 +1,7 @@
 
 function Fretboard(parent) {
   this.state = {
+    lefty: false,
     name: 'No Chord',
     fingering: [0],
   	strings: [
@@ -59,6 +60,8 @@ Fretboard.prototype = {
 
   bind_handlers() {
     this.tog_lefty = this.tog_lefty.bind(this);
+    this.set_left  = this.set_left.bind(this);
+    this.set_right = this.set_right.bind(this);
   },
 
   tog_lefty()    { this.lefty = !this.lefty; },
@@ -69,6 +72,9 @@ Fretboard.prototype = {
     else                 { this.dom.className = ''; } 
     this.update_display();
   },
+
+  set_left()  { this.lefty = true;  },
+  set_right() { this.lefty = false; },
 
   on_resize(e) {
     console.log(e);
@@ -118,7 +124,8 @@ Fretboard.prototype.HTML = `
 
   <div class='chordname' rv-text='data.name'></div>
 
-  <div class='lefty' rv-data-sel='data.lefty' rv-on-click='this.tog_lefty'>lefty</div>
+  <div class='lefty'  rv-data-sel='data.lefty'       rv-on-click='this.set_left'>lefty</div>
+  <div class='righty' rv-data-sel='data.lefty | not' rv-on-click='this.set_right'>righty</div>
 
 </div>
 
@@ -147,8 +154,6 @@ Fretboard.prototype.CSS = `
 #fretboard .strings .string               { height: 4px;   }
 #fretboard .lights .light                 { height: 0.4em;  }
 
-
-#fretboard .chordname                     { margin: .4em;   }
 #fretboard .fret_display                  { margin: .5em .5em 0 .5em; }
 #fretboard .frets .wire                   { margin: 1px 0; }
 
@@ -239,29 +244,54 @@ Fretboard.prototype.CSS = `
 }
 
 #fretboard .chordname {
+  height: 2em;
+  line-height: 2.8em;
   font-size: 0.6em;
   font-weight: bold;
   text-align: center;
 }
 
-#fretboard .lefty {
+#fretboard .lefty,
+#fretboard .righty {
   position: absolute;
-  bottom: 1em;
-  right: 6%;
+  bottom: 0;
   background-color: rgba(0,0,0,0.1);
   box-shadow: 0 0 0.2em black;
   color: grey;
-  padding: 0.2em 0.4em;
+  padding: .8em .8em;
   font-size: 0.3em;
   cursor: pointer;
   border-radius: 0.2em;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  font-weight: bold;
+  text-shadow: 0 0 0.2em white,  0 0 0.2em white;
+  width: 5em;
 }
 
-#fretboard .lefty[data-sel='true'] {
+#fretboard .lefty {
+  left: 6%;
+  background-image: url('left.png');
+  text-align: right;
+  background-position: left center;
+}
+
+#fretboard .righty {
+  right: 6%;
+  text-align: left;
+  background-image: url('right.png');
+  background-position: right center;
+
+}
+
+#fretboard .lefty[data-sel='true'],
+#fretboard .righty[data-sel='false'] {
   background-color: rgba(0,100,0,0.1);
   box-shadow: 0 0 0.2em rgba(40,150,40,1);
   color: rgba(40,150,40,1);
 }
+
+
 
 
 #fretboard .strings .string {

@@ -220,6 +220,8 @@ Timeline.prototype.CSS = `
   box-shadow: 0 0 0.1em black;
   padding: 0.5em;
   height: 5em;
+  scroll-behavior: smooth;
+
 }
 
 #timeline {

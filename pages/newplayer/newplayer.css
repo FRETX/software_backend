@@ -8,6 +8,11 @@
   font-family: 'Roboto', sans-serif;
 }
 
+ul#menu li:nth-child(2) {
+    color: #B00;
+    border-bottom: 3px solid #B00;
+}
+
 body {
   box-shadow: 0 0 0.1em black inset;
 }

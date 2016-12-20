@@ -24,7 +24,7 @@ $(document).ready(function() {
 
   //PunchEditorr = new PunchEditor( id('puncheditor_container') );
 
-  songlist.ev_sub('list_loaded', function()     { load_song( songlist.random ); } );
+  //songlist.ev_sub('list_loaded', function()     { load_song( songlist.random ); } );
   songlist.ev_sub('selected',    function(song) { load_song( song ); modal.hide(); } );
 
   timeline.on_scrub  = function(time_s)      { ytplayer.current_time = time_s; } 

@@ -29,8 +29,14 @@ end
 
 get '/songs/list' do
   content_type :json
+  return 401 unless logged_in?
   with_db do |conn|
-    resp = conn.exec jsonarray("SELECT DISTINCT ON(youtube_id) id,uploaded_on,youtube_id,title,punches FROM songs ORDER BY youtube_id,uploaded_on DESC")
+    if session[:user].has_role? 'admin' then
+      query = "SELECT DISTINCT ON(youtube_id) id,uploaded_on,youtube_id,title,punches FROM songs ORDER BY youtube_id,uploaded_on DESC"
+    else
+      query = "SELECT DISTINCT ON(youtube_id) id,uploaded_on,youtube_id,title,punches FROM songs WHERE uploaded_by=#{session[:user].id} ORDER BY youtube_id,uploaded_on DESC")
+    end
+    resp = conn.exec jsonarray(query)
     get_val(resp,[])
   end
 end
@@ -43,12 +49,8 @@ post '/songs/add' do
       SELECT $1, $2, $3, $4
       RETURNING id;
     } 
-    uploaded_by = session[:user].nil? ? '0' : session[:user]['id']
+    uploaded_by = ( session[:user].nil? ? '0' : session[:user].id )
     conn.exec_params( query, [ uploaded_by, data['id'], data['title'], JSON.generate(data['chords']) ] )
-#    song = song_to_fretx(data)
-#    puts song
-#    halt 500, JSON.pretty_generate(song) unless song[:error].nil?
-#    upload_song( song )   
   end 
 end
 

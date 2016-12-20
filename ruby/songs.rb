@@ -51,6 +51,7 @@ get '/songs/list' do
 end
 
 post '/songs/add' do
+  return 401 unless logged_in?
   with_db do |conn|
     data = JSON.parse request.body.read
     query = %{

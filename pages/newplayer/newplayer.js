@@ -17,8 +17,9 @@ $(document).ready(function() {
   ytplayer  = new YTPlayer(  id('ytplayer_container')  );
   fretboard = new Fretboard( id('fretboard_container') );
   timeline  = new Timeline(  id('timeline_container')  );
-  songlist  = new Songlist(  id('songlist_container')  );
   palette   = new Palette();
+
+  songlist  = new Songlist( id('songlist_container'), 'songs/list');
 
   feedback.ev_sub('done', modal.hide );
   modal.ev_sub('exit', function() { songlist.mount(id('songlist_container')); });

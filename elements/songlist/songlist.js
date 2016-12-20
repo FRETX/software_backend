@@ -1,8 +1,9 @@
-function Songlist(parent) {
+function Songlist(parent,path) {
   this.state = {
   	songs: [],
   	filtered_songs: [],
-  	search_text: ''
+  	search_text: '',
+    path: path
   }
 
   this.bind_handlers();
@@ -25,7 +26,7 @@ Songlist.prototype = {
 
   mount(parent) { if(!empty(parent)) { parent.innerHTML = ''; parent.appendChild(this.dom); } },
 
-  fetch()        { $.get('/songs/list', this.on_song_list ).fail(this.on_load_failed); },
+  fetch()        { $.get(this.state.path, this.on_song_list ).fail(this.on_load_failed); },
   get_dom_refs() { this.input = this.dom.getElementsByTagName('input')[0]; },
 
   get length() { return this.state.songs.length; },

@@ -27,7 +27,7 @@ get '/songs/:youtube_id.json' do
   end
 end
 
-get '/songs/list' do
+get '/mysongs' do
   content_type :json
   return 401 unless logged_in?
   with_db do |conn|
@@ -36,6 +36,15 @@ get '/songs/list' do
     else
       query = "SELECT DISTINCT ON(youtube_id) id,uploaded_on,youtube_id,title,punches FROM songs WHERE uploaded_by=#{session[:user].id} ORDER BY youtube_id,uploaded_on DESC"
     end
+    resp = conn.exec jsonarray(query)
+    get_val(resp,[])
+  end
+end
+
+get '/songs/list' do
+  content_type :json
+  with_db do |conn|
+    query = "SELECT DISTINCT ON(youtube_id) id,uploaded_on,youtube_id,title,punches FROM songs ORDER BY youtube_id,uploaded_on DESC"
     resp = conn.exec jsonarray(query)
     get_val(resp,[])
   end

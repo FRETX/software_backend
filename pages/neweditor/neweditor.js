@@ -10,7 +10,7 @@ $(document).ready(function() {
 
   punchlist = new Punchlist();
   chordlib  = new Chordlib();
-  songlist  = new Songlist();
+  
   modal     = new Modal();
   addvid    = new AddVid();
 
@@ -21,6 +21,8 @@ $(document).ready(function() {
   timeline    = new Timeline(   id('timeline_container')  );
   palette     = new Palette(    id('palette_container')   );
   picker      = new chordpicker();
+
+  songlist  = new Songlist(null, 'mysongs');
 
   //PunchEditorr = new PunchEditor( id('puncheditor_container') );
 

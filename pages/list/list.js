@@ -1,8 +1,13 @@
 /////////////////////////////////////////////// SETUP /////////////////////////////////////////////////////////
 
 $(document).ready(function() {
+
+  songlist  = new Songlist( id('songlist_container') );
   
-  userview = new UserView( id('userview_container') );
+  userview = new UserView( id('userview_container')  );
+  addvid   = new AddVid(   id('addvid_container')    );
+
+  addvid.ev_sub('add_video', function() { } );
   
 });
 

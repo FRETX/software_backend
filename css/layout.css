@@ -5,6 +5,26 @@
   height: 5em;
 }
 
+#header:before,
+#header .rightalign:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+#ordernow {
+  display: inline-block;
+  background: #E20009;
+  padding: .5em 1em;
+  font-size: 2em;
+  border-radius: 1.5em;
+  color: white;
+  font-weight: bold;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
 #footer {
   position: absolute;
   margin-top: 1em;
@@ -16,7 +36,7 @@
 #content {
   display: inline-block;
   position: relative;
-  max-width: 90%;
+  max-width: 100%;
   padding: 1em;	
 }
 
@@ -24,7 +44,7 @@
   display: inline-block;
   padding: 1em 1.5em;
   cursor: pointer;
-  vertical-align: top;
+  vertical-align: middle;
 }
 
 #header #logo img {
@@ -32,22 +52,24 @@
 }
 
 #userview_container {
-  position: absolute;
   display: inline-block;
-  top: .5em; right: .5em;
+  vertical-align: middle;
+  margin: 0 1em;
 }
 
 #content {
   background: rgba(255,255,255,0.9);
-  box-shadow: 0 0 1.5em black, inset 0 0 .2em black;
 }
 
 #header {
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+88,000000+91&0.95+0,0.8+85,0+100 */
-  background: -moz-linear-gradient(top,  rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 85%, rgba(255,255,255,0.64) 88%, rgba(0,0,0,0.48) 91%, rgba(0,0,0,0) 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top,  rgba(255,255,255,0.95) 0%,rgba(255,255,255,0.8) 85%,rgba(255,255,255,0.64) 88%,rgba(0,0,0,0.48) 91%,rgba(0,0,0,0) 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom,  rgba(255,255,255,0.95) 0%,rgba(255,255,255,0.8) 85%,rgba(255,255,255,0.64) 88%,rgba(0,0,0,0.48) 91%,rgba(0,0,0,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2ffffff', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
+  border: 1px solid black;
+}
+
+#header .rightalign {
+  right: 0;
+  position: absolute;
+  display: inline-block;
+  height: 100%;
 }
 
 #footer {

@@ -67,7 +67,6 @@ ul#menu li:nth-child(3) {
 #fretboard_container {
   border: 1px solid black;
   width: 29vw;
-  box-shadow: 0 0 0.1em black;
   background-color: rgba(0,0,0,0.1);
 }
 
@@ -86,7 +85,6 @@ ul#menu li:nth-child(3) {
   width: 28vw;
   height: 20vw;
   border: 1px solid black;
-  box-shadow: 0 0 0.1em black;
 }
 
 
@@ -107,12 +105,7 @@ ul#menu li:nth-child(3) {
 
 #timeline {
   border: 1px solid black;
-  box-shadow: 0 0 0.1em black;
   font-size: 1vw;
-}
-
-#songlist {
- box-shadow: 0 0 0.1em black;
 }
 
 
@@ -130,14 +123,12 @@ ul#menu li:nth-child(3) {
 
 #palette_container {
   border: 1px solid black;
-  box-shadow: 0 0 0.1em black;
   margin-top: 1vw;
   font-size: 0.8em;
 }
 
 #ctrlbar_container {
   border: 1px solid black;
-  box-shadow: 0 0 0.1em black;
   margin-top: 1vw;
   font-size: 1.3vw;
   padding-bottom: 1vw;
@@ -148,17 +139,16 @@ ul#menu li:nth-child(3) {
 }
 
 #appmenu {
-  margin-top: 1em;
   display: inline-block;
+  height: 100%;
 }
 
 #appmenu .menuitem {
   height: 100%;
   padding: 0 1em;
-  box-shadow: 0 0 0.3em black inset;
+  border-left: 1px solid black;
   display: inline-block;
   cursor: pointer;
-  height: 3em;
 }
 
 #appmenu .menuitem span {

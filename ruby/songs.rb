@@ -39,15 +39,16 @@ post '/songs/add' do
   with_db do |conn|
     data = JSON.parse request.body.read
     query = %{
-      INSERT INTO songs (youtube_id,title,punches)
-      SELECT $1, $2, $3
+      INSERT INTO songs (uploaded_by, youtube_id, title, punches)
+      SELECT $1, $2, $3, $4
       RETURNING id;
     } 
-    conn.exec_params( query, [data['id'],data['title'],JSON.generate(data['chords'])] )
-    song = song_to_fretx(data)
-    puts song
-    halt 500, JSON.pretty_generate(song) unless song[:error].nil?
-    upload_song( song )
+    uploaded_by = session[:user].nil? ? '0' : session[:user]['id']
+    conn.exec_params( query, [ uploaded_by, data['id'], data['title'], JSON.generate(data['chords']) ] )
+#    song = song_to_fretx(data)
+#    puts song
+#    halt 500, JSON.pretty_generate(song) unless song[:error].nil?
+#    upload_song( song )   
   end 
 end
 
@@ -117,35 +118,3 @@ def convert_punches(punches)
     end
   end   
 end
-
-
-
-{
-  "youtube_id": "eHuebHTD-lY",
-  "uploaded_on": "2016-11-17T02:50:17.292087+00:00",
-  "title": "Sam Sparro - Black and Gold",
-  "artist": "Sam Sparro",
-  "song_title": "Black And Gold",
-  "punches": [
-    {
-      "time_ms": 2065,
-      "chord": {
-        "name": "E min",
-        "root": "E",
-        "rootval": 5,
-        "quality": "min",
-        "fingering": "{6,25,24,3,2,1,0}"
-      }
-    },
-    {
-      "time_ms": 16108,
-      "chord": {
-        "name": "C Maj",
-        "root": "C",
-        "rootval": 1,
-        "quality": "Maj",
-        "fingering": "{35,24,3,12,1,0}"
-      }
-    }
-  ]
-}

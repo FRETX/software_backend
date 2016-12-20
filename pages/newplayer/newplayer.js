@@ -17,13 +17,13 @@ $(document).ready(function() {
   ytplayer  = new YTPlayer(  id('ytplayer_container')  );
   fretboard = new Fretboard( id('fretboard_container') );
   timeline  = new Timeline(  id('timeline_container')  );
-  songlist  = new Songlist();
+  songlist  = new Songlist(  id('songlist_container')  );
   palette   = new Palette();
 
   feedback.ev_sub('done', modal.hide );
   modal.ev_sub('exit', function() { songlist.mount(id('songlist_container')); });
 
-  songlist.ev_sub('list_loaded', function()     { load_song( songlist.random ); } );
+  //songlist.ev_sub('list_loaded', function()     { load_song( songlist.random ); } );
   songlist.ev_sub('selected',    function(song) { load_song( song ); modal.hide(); songlist.mount(id('songlist_container')); } );
 
   timeline.on_scrub  = function(time_s) { ytplayer.current_time = time_s; } 
@@ -68,11 +68,12 @@ function on_video_data() {
 ////////////////////////////////////////// CLICK LISTENERS ///////////////////////////////////////////////////
 
 function add_click_listeners() {
-  //id('logo').addEventListener('click', goto_indiegogo );
-  var menuitems = id('appmenu').children;
-  menuitems[0].addEventListener('click', open_new_song  );
-  menuitems[1].addEventListener('click', goto_indiegogo );
-  menuitems[2].addEventListener('click', get_feedback   );
+  id('ordernow').addEventListener('click', goto_indiegogo );
+  id('sharebutton').addEventListener('click', share_on_fb );
+  //var menuitems = id('appmenu').children;
+  //menuitems[0].addEventListener('click', open_new_song  );
+  //menuitems[1].addEventListener('click', goto_indiegogo );
+  //menuitems[2].addEventListener('click', get_feedback   );
 }
 
 function open_new_song(e) {
@@ -86,6 +87,11 @@ function to_editor(e) {
 
 function goto_indiegogo(e) { 
   window.location.href = "http://fretx.rocks";
+  cancelEvent(e);
+}
+
+function share_on_fb(e) {
+  window.location.href = "http://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fplayer.fretx.rocks"
   cancelEvent(e);
 }
 

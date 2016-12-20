@@ -6,11 +6,23 @@ html
 
     == css [ 'fonts', 'site', 'layout', 'menu', 'list' ]
     
-    == js  [ 'jquery', 'rivets', 'lib', 'element', 'event_channel', 'elements/userview', 'list' ]
+    == js  [ 'jquery', 'rivets', 'lib', 'element', 'event_channel']
+    == js  [ 'elements/userview', 'elements/addvid', 'elements/input_with_default', '/elements/songlist', 'list' ]
 
   body
 
     == partial(:header)
     
     #content
-      | My Songs
+      
+      .section
+      
+        .heading Upload A New Song To The Fretx Platform Here
+
+        #addvid_container
+
+      .section
+
+        .heading Edit Songs You Have Previously Uploaded Here
+
+        #songlist_container

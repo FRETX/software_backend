@@ -12,7 +12,20 @@ html
 
   body
 
-    == partial(:header)
+    #header
+
+      #logo
+        img src='newlogo.svg'
+  
+      .rightalign
+        #userview_container
+        #appmenu
+          .menuitem
+            | Edit An Existing Song
+          .menuitem
+            | Import A New Song
+          .menuitem
+            | Save Your Work
 
     #content
 
@@ -25,11 +38,3 @@ html
         #ctrlbar_container
         #timeline_container
         #palette_container
-
-      #appmenu
-        .menuitem
-          | Edit An Existing Song
-        .menuitem
-          | Import A New Song
-        .menuitem
-          | Save Your Work

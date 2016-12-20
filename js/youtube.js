@@ -65,7 +65,6 @@ youtube_player.prototype = {
   },
 
   onPlayerReady: function(event) {
-    event.target.playVideo();
     this.get_video_data();
   },
 

@@ -25,7 +25,7 @@ function wait_for_youtube_api(callback) {
 
 function YTPlayer(parent, video_id) {
   this.timer = false;
-  this.video_id = false;
+  this.video_id = 'eihus-1PN7o';
   this._duration = 0;
   this._current_time = 0;
   this.on_deck = false; 
@@ -108,7 +108,7 @@ YTPlayer.prototype = {
         break;
       case YT.PlayerState.PLAYING:
         this.duration;
-        this.timer = setInterval( this.update_time.bind(this), 60 );
+        this.timer = setInterval( this.update_time.bind(this), 70 );
         break;
       case YT.PlayerState.PAUSED:
         //console.log('PAUSED');

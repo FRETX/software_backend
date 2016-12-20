@@ -22,15 +22,15 @@ Object.assign( LoginForm.prototype, ev_channel);
 LoginForm.prototype.HTML = `
   <div id='LoginForm'>
     <div class='section'>Login To Continue</div>
-    <div class='section'>
+    <div class='section' style='display: none;'>
       <label>Email:</label>
       <input class='username'></input>
     </div>
-    <div class='section'>
+    <div class='section' style='display: none;'>
       <label>Password:</label>
       <input class='password' type='password'></input>
     </div>
-    <div class='section'>
+    <div class='section' style='display: none;'>
       <div class='submit'>Login</div>
     </div>
     <hr>
@@ -39,7 +39,7 @@ LoginForm.prototype.HTML = `
         <img src='login-facebook.png'/>
       </a>
     </div>
-    <div class='section'>
+    <div class='section' style='display: none;'>
       <a href='/auth/google_oauth2'>
         <img src='login-google.png'/>
       </a>

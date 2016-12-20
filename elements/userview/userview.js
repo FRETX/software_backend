@@ -14,7 +14,7 @@ UserView.prototype = {
 	constructor: UserView,
 
   login()  { document.cookie = "loc=" + window.location.pathname; window.location = '/login'; },
-  logout() { $.post('/logout', function() { location.reload(); } ); },
+  logout() { $.post('/logout', function() { window.location = '/'; } ); },
 
   get_user() {
     $.get('/current_user')
@@ -31,12 +31,12 @@ UserView.prototype.HTML = `
 
   <div id="UserView">
     <div rv-if='state.user'>
-      <div class='name'>{state.user.name}</div>
+      <div class='name'>Hi, {state.user.name}</div>
       <img rv-src='state.user.photo_url'/>
-      <div class='logout' rv-on-click='this.logout'>Logout</div>
+      <div class='logout' rv-on-click='this.logout'>Hi, {state.user.name} | Logout</div>
     </div>
     <div rv-unless='state.user'>
-      <div class='login' rv-on-click='this.login'>Login</div>
+      <div class='login' rv-on-click='this.login'>LOG IN</div>
     </div>
   </div>
 
@@ -53,11 +53,11 @@ UserView.prototype.CSS = `
     width: 1.5em;
     vertical-align: middle;
     border: 1px solid black;
+    display: none;
   }
 
   #UserView .name {
-
-    line-height: 100%;
+    line-height: 1.6em;
     display: inline-block;
     padding: 0 1em;
     border-radius: .25em 0 0 .25em;
@@ -81,6 +81,23 @@ UserView.prototype.CSS = `
   #UserView .login:hover,
   #UserView .logout:hover {
     color: #B00;
+  }
+
+  #UserView .login {
+    border: 2px solid #E20009;
+    padding: .5em 1em !important;
+    font-size: 2em;
+    border-radius: 1.5em;
+    color: grey;
+    font-weight: bold;
+    line-height: 1em !important;
+  }
+
+  #UserView .logout {
+    font-size: 2em;
+    border-radius: 1.5em;
+    color: grey;
+    border: 2px solid grey;
   }
 
 `.untab(2);

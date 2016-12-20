@@ -2,7 +2,45 @@
 	text-align: center;
 }
 
+#addvid_container {
+   margin: 1em;
+   padding: 1em;
+   background: rgba(0,0,0,0.3);
+   font-size: .8em;
+}
+
 ul#menu li:nth-child(4) {
     color: #B00;
     border-bottom: 3px solid #B00;
+}
+
+
+#content {
+	width: 60%;
+	background: rgba(0,0,0,0);
+	box-shadow: none;
+	padding: none;
+}
+
+.section {
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 0 1.5em black, inset 0 0 .2em black;
+    padding: 1em;
+    margin-top: 1em;
+}
+
+.section:first-child {
+	margin-top: 0;
+}
+
+.heading {
+  margin-bottom: 1em;
+}
+
+#songlist {
+  width: 80%;
+  margin: auto;
+  left: 0; right: 0;
+  max-height: 30em;
+  margin-bottom: 2em;
 }

@@ -134,14 +134,12 @@ Songlist.prototype.CSS = `
 
   .searchbar {
     padding: 1em;
-    box-shadow: 0 0 0.4em rgba(0,0,0,0.4);
     border-bottom: 1px solid black;
   }
 
   .searchlist {
   	padding: 0.7em;
   	overflow-y: scroll;
-    box-shadow: 0 0 0.4em black inset;
     height: 100%;
   }
 
@@ -150,7 +148,6 @@ Songlist.prototype.CSS = `
   	border: 1px solid black;
   	padding: 0.5em;
   	margin: 0.7em 0;
-    box-shadow: 0 0 0.2em black;
     text-align: left;
     white-space: nowrap;
     background-color: white;
@@ -186,8 +183,8 @@ Songlist.prototype.CSS = `
     width: 100%;
     border-radius: 0.4em;
     border: 0;
-    box-shadow: 0 0 0.2em black;
     padding: 0 0.5em;
+    border: 1px solid black;
   }
 
 `.untab(2);

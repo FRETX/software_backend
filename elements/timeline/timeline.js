@@ -1,7 +1,7 @@
 function Timeline(parent,palette) {
   this.state = {
-  	punches: [ ],
-  	duration: 10,
+    punches: [ ],
+    duration: 10,
     scale_factor: 15,
     elapsed_time: 0
   };
@@ -217,11 +217,9 @@ Timeline.prototype.CSS = `
   overflow: hidden;
   position: absolute;
   background-color: rgb(0,0,0,0.1);
-  box-shadow: 0 0 0.1em black;
   padding: 0.5em;
   height: 5em;
   scroll-behavior: smooth;
-
 }
 
 #timeline {

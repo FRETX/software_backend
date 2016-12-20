@@ -1,6 +1,6 @@
 ######################################## PAGE ROUTES ###########################################
 
-get('/')                          { fetch_page :landing   }
+get('/')                          { fetch_page :newplayer }
 get('/player')                    { fetch_page :newplayer }
 get('/login')                     { fetch_page :login     }
 get('/faq')                       { fetch_page :faq       }

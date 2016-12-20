@@ -34,7 +34,7 @@ get '/songs/list' do
     if session[:user].has_role? 'admin' then
       query = "SELECT DISTINCT ON(youtube_id) id,uploaded_on,youtube_id,title,punches FROM songs ORDER BY youtube_id,uploaded_on DESC"
     else
-      query = "SELECT DISTINCT ON(youtube_id) id,uploaded_on,youtube_id,title,punches FROM songs WHERE uploaded_by=#{session[:user].id} ORDER BY youtube_id,uploaded_on DESC")
+      query = "SELECT DISTINCT ON(youtube_id) id,uploaded_on,youtube_id,title,punches FROM songs WHERE uploaded_by=#{session[:user].id} ORDER BY youtube_id,uploaded_on DESC"
     end
     resp = conn.exec jsonarray(query)
     get_val(resp,[])

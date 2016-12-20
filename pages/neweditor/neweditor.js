@@ -122,7 +122,7 @@ function save_work() {
   }
   modal.show_loading();
   $.post('/songs/add', JSON.stringify(songdata) )
-    .done( function()     { modal.show_toast('Upload Successful!', 'green', 1000); } )
+    .done( function()     { modal.show_toast('Upload Successful!', 'green', 1000); songlist.fetch(); } )
     .fail( function(resp) { modal.show_toast("Upload Failed! \n" + resp.responseText, 'red'); } );
 }
 

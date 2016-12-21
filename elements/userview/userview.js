@@ -93,7 +93,6 @@ UserView.prototype.CSS = `
   }
 
   #UserView .logout {
-    font-size: 2em;
     border-radius: 1.5em;
     color: grey;
     border: 2px solid grey;

@@ -55,7 +55,6 @@ LoginForm.prototype.CSS = `
     background: rgba(255,255,255,0.2);
     padding: 20px;
     border: 1px solid black;
-    box-shadow: 0 0 .5em black, 0 0 4px rgba(0,0,0,0.5) inset;
     padding: 1em;
     background: rgba(255,255,255,0.9);
 }

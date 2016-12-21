@@ -17,11 +17,6 @@ body {
   box-shadow: 0 0 0.1em black inset;
 }
 
-#userview_container {
-  padding: 1em;
-  display: inline-block;
-}
-
 #fretboard_container {
   -webkit-transition: box-shadow: 1s;
   transition: box-shadow: 1s;
@@ -40,12 +35,12 @@ body {
 
 .row {
   white-space: nowrap;
+  position: relative;
 }
 
 .row * {
   vertical-align: middle;
 }
-
 
 #fretboard_container {
   text-align: center;
@@ -82,7 +77,6 @@ body {
   border: 1px solid black;
   height: 30vw;
   width: 33vw;
-  box-shadow: 0 0 0.3em black;
   background-color: rgba(0,0,0,0.1);
   font-size: 1.4vw;
 }
@@ -103,15 +97,12 @@ body {
   width: 40vw;
   height: 30vw;
   border: 1px solid black;
-  box-shadow: 0 0 0.3em black;
 }
-
 
 #viewer { 
   position: relative; 
   box-sizing: border-box;
 }
-
 
 #timeline_container {
   max-width: 100%;
@@ -123,13 +114,8 @@ body {
 
 #timeline {
   border: 1px solid black;
-  box-shadow: 0 0 0.3em black;
   height: 7vw;
   font-size: 1.5vw;
-}
-
-#songlist {
-  box-shadow: 0 0 0.3em black;
 }
 
 #songlist_container {
@@ -142,32 +128,65 @@ body {
   width: 40vw;
 }
 
-#header #menu .menuitem:first-child {
+#appmenu {
+  margin-top: 1em;
+  display: inline-block;
+}
+
+#appmenu .menuitem {
+  height: 100%;
+  padding: 0 1em;
+  box-shadow: 0 0 0.3em black inset;
+  display: inline-block;
+  cursor: pointer;
+  height: 3em;
+}
+
+#appmenu .menuitem span {
+  width: 100%;
+  text-align: center;
+}
+
+#appmenu .menuitem::before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+} 
+
+#appmenu .menuitem:hover {
+  background-color: rgba(0,0,0,0.1);
+}
+
+#appmenu .menuitem:active {
+  box-shadow: 0 0 1em black inset;
+  background-color: rgba(200,200,255,0.5);
+}
+
+#more_songs {
   display: none;
 }
 
 @media (max-width: 1000px) {
 
+  #more_songs {
+    display: block;
+    margin-top: 1em;
+    border: 1px solid black;
+    cursor: pointer;
+    padding: .5em;
+    background: #E20009;
+    color: white;
+    font-weight: bold;
+    font-size: 1.5em;
+  }
+
+  #more_songs:hover {
+    color: ;
+  }
+
   .content_wrapper {
     padding-top: 1vw;
-  }
-
-  #header #menu .menuitem:first-child {
-    display: inline-block;
-  }
-
-  #header #menu .menuitem {
-    width: 6vw;
-    vertical-align: top;
-    padding: 0 2vw;
-  }
-
-  #header #menu .menuitem span {
-    display: inline-block;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 2vw;
-    font-size: 1.4vw;
   }
 
   
@@ -215,6 +234,14 @@ body {
 
 @media (max-width: 750px) {
 
+  #more_songs {
+    margin-top: 0.5em;
+  }
+
+  #content, #viewer {
+    width: 100%;
+  }
+
   .content_wrapper {
     padding-top: 0;
   }
@@ -230,7 +257,6 @@ body {
     padding: 0 5vw;
   }
 
-
   #header #logo::before {
     content: '';
     vertical-align: middle;
@@ -243,13 +269,13 @@ body {
     height: 45%;
   }
 
-  #header #menu .menuitem {
+  #appmenu .menuitem {
     width: 7vw;
     vertical-align: top;
     padding: 0 2vw;
   }
 
-  #header #menu .menuitem span {
+  #appmenu .menuitem span {
     display: inline-block;
     text-align: center;
     vertical-align: middle;
@@ -263,7 +289,7 @@ body {
 
   #ytplayer_container {
     display: block;
-    width: 100vw;
+    width: 100%;
     height: 35vh;
     margin: 0;
   }
@@ -276,17 +302,13 @@ body {
     box-shadow: none;
   }
 
-  #UserView {
-    font-size: 1.6vw;
-  }
 
   #userview_container {
-    padding: 1.8em 0;
     vertical-align: middle;
   }
 
   #fretboard {
-    font-size: 5.3vh !important;
+    font-size: 4.5vh !important;
   }
 
 
@@ -296,12 +318,12 @@ body {
 
 
   #timeline_container {
-    height: 20vh;
-    width: 100vw;
+    height: 10vh;
+    width: 100%;
   }
 
   #timeline {
-    font-size: 2.5vh;
+    font-size: 1.8vh;
   }
 
   body {
@@ -323,21 +345,5 @@ body {
     max-width: 80vw !important;
   }
 
-  body {
-    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0.2+0,0+30,0+70,0+100,0.01+100,0.2+100 */
-    background: -moz-linear-gradient(left,  rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 70%, rgba(0,0,0,0.2) 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(left,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,0) 70%,rgba(0,0,0,0.2) 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to right,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,0) 70%,rgba(0,0,0,0.2) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33000000', endColorstr='#33000000',GradientType=1 ); /* IE6-9 */
-  }
-
 }
-
-  #header {
-    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0.2+0,0+30,0+70,0+100,0.01+100,0.2+100 */
-    background: -moz-linear-gradient(top,  rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 70%, rgba(0,0,0,0.2) 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(top,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,0) 70%,rgba(0,0,0,0.2) 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to bottom,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,0) 70%,rgba(0,0,0,0.2) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33000000', endColorstr='#33000000',GradientType=0 ); /* IE6-9 */
-  }
 

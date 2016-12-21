@@ -25,3 +25,6 @@ Dir["ruby/*.rb"].each { |file| require File.expand_path(file); }
 # Mon 12/12 10pm - 1am  3hrs  ( Authentication & Authorization )
 # Tue 12/13 10pm - 12am 2hrs  ( API updates, Work With Onur )
 # Wed 12/14 10pm - 2am  4hrs  ( Landing Page, Styling, New Page Flow )
+
+# Tue 12/20 8pm - 12am  4hrs  ( GUI Redesign, remove styles ) 
+# Wed 12/21 11pm - 

@@ -86,7 +86,6 @@ UserView.prototype.CSS = `
   #UserView .login {
     border: 2px solid #E20009;
     padding: .5em 1em !important;
-    font-size: 2em;
     border-radius: 1.5em;
     color: grey;
     font-weight: bold;

@@ -31,7 +31,6 @@ function YTPlayer(parent, video_id) {
   this.on_deck = false; 
   this.videodata = {};
   this.timechange_callbacks = [];
-  this._autoplay = true;
   this.bind_handlers();
   wait_for_youtube_api( function(video_id) {
     this.player = this.build_player(parent, video_id);
@@ -50,8 +49,6 @@ YTPlayer.prototype = {
     this.player.seekTo(time_s,true);
     this.update_time(time_s);
   },
-
-  set autoplay(val) { this._autoplay = val; },
 
   get current_time() { 
     var t = this.player.getCurrentTime();

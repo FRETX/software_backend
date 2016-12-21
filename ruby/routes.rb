@@ -1,11 +1,10 @@
 ######################################## PAGE ROUTES ###########################################
 
-get('/')                          { fetch_page :newplayer }
-get('/player')                    { fetch_page :newplayer }
-get('/login')                     { fetch_page :login     }
-get('/faq')                       { fetch_page :faq       }
-get('/editor', :auth => 'user' )  { fetch_page :neweditor }
-get('/list',   :auth => 'user' )  { fetch_page :list      } 
+get('/')                          { fetch_page :player }
+get('/player')                    { fetch_page :player }
+get('/login')                     { fetch_page :login  }
+get('/editor', :auth => 'user' )  { fetch_page :editor }
+get('/list',   :auth => 'user' )  { fetch_page :list   } 
 
 
 ######################################## PAGE ROUTES ###########################################

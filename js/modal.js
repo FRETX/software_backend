@@ -98,7 +98,7 @@ Modal.prototype.CSS = `
     vertical-align: middle;
     display: inline-block;
     background: white;
-    box-shadow: 0 0 1em black inset, 0 0 1em black;
+    box-shadow: 0 0 1em black;
     padding: 1em;
   }
 

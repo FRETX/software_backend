@@ -10,7 +10,7 @@ $(document).ready(function() {
 
   punchlist = new Punchlist();
   chordlib  = new Chordlib();
-  songlist  = new Songlist();
+  
   modal     = new Modal();
   addvid    = new AddVid();
 
@@ -22,9 +22,11 @@ $(document).ready(function() {
   palette     = new Palette(    id('palette_container')   );
   picker      = new chordpicker();
 
+  songlist  = new Songlist(null, 'mysongs');
+
   //PunchEditorr = new PunchEditor( id('puncheditor_container') );
 
-  songlist.ev_sub('list_loaded', function()     { load_song( songlist.random ); } );
+  //songlist.ev_sub('list_loaded', function()     { load_song( songlist.random ); } );
   songlist.ev_sub('selected',    function(song) { load_song( song ); modal.hide(); } );
 
   timeline.on_scrub  = function(time_s)      { ytplayer.current_time = time_s; } 
@@ -93,11 +95,10 @@ function add_chord_now(chord) {
 //////////////////////////////////////// CLICK LISTENERS ///////////////////////////////////////////////////////
 
 function add_click_listeners() {
-  var menuitems = id('menu').children;
-  menuitems[0].addEventListener('click', to_player );
-  menuitems[1].addEventListener('click', edit_menu );
-  menuitems[2].addEventListener('click', open_new  );
-  menuitems[3].addEventListener('click', save_work );
+  var menuitems = id('appmenu').children;
+  menuitems[0].addEventListener('click', edit_menu );
+  menuitems[1].addEventListener('click', open_new  );
+  menuitems[2].addEventListener('click', save_work );
 }
 
 function to_player() {
@@ -121,7 +122,7 @@ function save_work() {
   }
   modal.show_loading();
   $.post('/songs/add', JSON.stringify(songdata) )
-    .done( function()     { modal.show_toast('Upload Successful!', 'green', 1000); } )
+    .done( function()     { modal.show_toast('Upload Successful!', 'green', 1000); songlist.fetch(); } )
     .fail( function(resp) { modal.show_toast("Upload Failed! \n" + resp.responseText, 'red'); } );
 }
 

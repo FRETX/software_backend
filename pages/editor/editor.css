@@ -8,7 +8,7 @@
   font-family: 'Roboto', sans-serif;
 }
 
-ul#menu li:nth-child(5) {
+ul#menu li:nth-child(3) {
     color: #B00;
     border-bottom: 3px solid #B00;
 }
@@ -16,11 +16,6 @@ ul#menu li:nth-child(5) {
 .content_wrapper {
   text-align: center;
   padding-top: 2em;
-}
-
-#userview_container {
-  display: inline-block;
-  padding: 1em;
 }
 
 #content {
@@ -35,10 +30,6 @@ ul#menu li:nth-child(5) {
 
 .row * {
   vertical-align: middle;
-}
-
-#usericon {
-  display: inline-block;
 }
 
 #fretboard_container {
@@ -59,6 +50,7 @@ ul#menu li:nth-child(5) {
 
 #content {
   text-align: center;
+  width: 57vw;
 }
 
 #content * {
@@ -75,7 +67,6 @@ ul#menu li:nth-child(5) {
 #fretboard_container {
   border: 1px solid black;
   width: 29vw;
-  box-shadow: 0 0 0.1em black;
   background-color: rgba(0,0,0,0.1);
 }
 
@@ -94,7 +85,6 @@ ul#menu li:nth-child(5) {
   width: 28vw;
   height: 20vw;
   border: 1px solid black;
-  box-shadow: 0 0 0.1em black;
 }
 
 
@@ -115,12 +105,7 @@ ul#menu li:nth-child(5) {
 
 #timeline {
   border: 1px solid black;
-  box-shadow: 0 0 0.1em black;
   font-size: 1vw;
-}
-
-#songlist {
- box-shadow: 0 0 0.1em black;
 }
 
 
@@ -138,14 +123,12 @@ ul#menu li:nth-child(5) {
 
 #palette_container {
   border: 1px solid black;
-  box-shadow: 0 0 0.1em black;
   margin-top: 1vw;
   font-size: 0.8em;
 }
 
 #ctrlbar_container {
   border: 1px solid black;
-  box-shadow: 0 0 0.1em black;
   margin-top: 1vw;
   font-size: 1.3vw;
   padding-bottom: 1vw;
@@ -153,4 +136,38 @@ ul#menu li:nth-child(5) {
 
 #songlist {
   max-height: 60vh;
+}
+
+#appmenu {
+  display: inline-block;
+  height: 100%;
+}
+
+#appmenu .menuitem {
+  height: 100%;
+  padding: 0 1em;
+  border-left: 1px solid black;
+  display: inline-block;
+  cursor: pointer;
+}
+
+#appmenu .menuitem span {
+  width: 100%;
+  text-align: center;
+}
+
+#appmenu .menuitem::before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+} 
+
+#appmenu .menuitem:hover {
+  background-color: rgba(0,0,0,0.1);
+}
+
+#appmenu .menuitem:active {
+  box-shadow: 0 0 1em black inset;
+  background-color: rgba(200,200,255,0.5);
 }

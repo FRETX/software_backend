@@ -5,9 +5,14 @@ html
     title FretX Player
 
     == no_scaling 
-    == fb_image 'logo.png'
 
-    == css [ 'fonts', 'header', 'player']
+    == fb_type  'website'
+    == fb_title 'The Fretx Player'
+    == fb_url   'http://player.fretx.rocks'
+    == fb_image 'http://player.fretx.rocks/facebookimg.png'
+    == fb_appid '465114530355883'    
+
+    == css [ 'fonts', 'site', 'layout', 'menu', 'player']
 
     == js  [ 'jquery', 'rivets', 'lib']
     == js  [ 'chord', 'chordlib', 'event_channel', 'punch', 'punchlist', 'element', 'modal']
@@ -17,37 +22,26 @@ html
 
   body
 
-    #header
-      #logo
-        img src='newlogo.svg'
-      #userview_container
-      #menu
-        .menuitem
-          span Open Another Song
-        .menuitem
-          span Editor
-        .menuitem
-          span Support us on Indiegogo!
-        .menuitem
-          span Send Us Feedback!
+    == partial(:header)
 
-    .content_wrapper
-      #content
+    #content
 
-        #viewer
-          .row
-            #ytplayer_container
-            #fretboard_container
-          #timeline_container
-
-        #songlist_container
+      #viewer
+        .row
+          #ytplayer_container
+          #fretboard_container
+ 
+        #timeline_container
+      
+      #songlist_container
+    
+      #more_songs More Songs
 
     javascript:
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
 
       ga('create', 'UA-77306050-3', 'auto');
       ga('send', 'pageview');

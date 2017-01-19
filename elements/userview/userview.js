@@ -1,4 +1,4 @@
-function UserView(parent) {
++function UserView(parent) {
 	
   this.state = {
 	  "user": null

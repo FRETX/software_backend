@@ -1,345 +1,398 @@
-* {
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none;   /* Chrome/Safari/Opera */
-  -khtml-user-select: none;    /* Konqueror */
-  -moz-user-select: none;      /* Firefox */
-  -ms-user-select: none;       /* Internet Explorer/Edge */
-  user-select: none; 
-  font-family: 'Roboto', sans-serif;
+/* ===== Primary Styles =======
+Can Goktas / @cangokt
+=============================== */
+
+
+/* 
+* Tools
+*******************/
+
+html {-webkit-font-smoothing: antialiased;}
+img{display: block;max-width: 100%;height: auto;}
+
+/* Bootstrap Modal Scrollbar Push Fix */
+.modal {overflow-y: auto;}
+.modal-open {overflow: auto;}
+
+
+/* 
+* Fonts
+*******************/
+@font-face {
+  font-family: 'CamptonSB';
+  src: url('../fonts/Campton-SemiBold.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/Campton-SemiBold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/Campton-SemiBold.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/Campton-SemiBold.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/Campton-SemiBold.svg#abb04cbcd8d7a98412d7a14b251b87a6') format('svg'); /* Legacy iOS */
+       
+  font-style:   normal;
+  font-weight:  700;
 }
 
-ul#menu li:nth-child(2) {
-    color: #B00;
-    border-bottom: 3px solid #B00;
+@font-face {
+  font-family: 'GothamRBd';
+  src: url('../fonts/GothamRounded-Bold.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/GothamRounded-Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/GothamRounded-Bold.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/GothamRounded-Bold.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/GothamRounded-Bold.svg#cf294c6136807d0e69a971e863b3cd88') format('svg'); /* Legacy iOS */
+       
+  font-style:   normal;
+  font-weight:  700;
 }
 
-body {
-  box-shadow: 0 0 0.1em black inset;
+@font-face {
+  font-family: 'GothamRBk';
+  src: url('../fonts/GothamRounded-Book.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/GothamRounded-Book.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/GothamRounded-Book.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/GothamRounded-Book.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/GothamRounded-Book.svg#21661efc977bfcfec5c6c16307c05ceb') format('svg'); /* Legacy iOS */
+       
+  font-style:   normal;
+  font-weight:  400;
 }
 
-#fretboard_container {
-  -webkit-transition: box-shadow: 1s;
-  transition: box-shadow: 1s;
-}
-
-.content_wrapper {
-  padding-top: 2em;
-  text-align: center;
-  position: relative;
-}
-
-#content {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.row {
-  white-space: nowrap;
-  position: relative;
-}
-
-.row * {
-  vertical-align: middle;
-}
-
-
-#fretboard_container {
-  text-align: center;
-}
-
-#timeline_container {
-  position: relative;
-}
-
-#timeline {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-}
-
-#content {
-  text-align: center;
-}
-
-#content * {
-  vertical-align: middle;
-}
-
-#viewer, 
-#ytplayer_container,
-#fretboard_container,
-#songlist_container {
-  display: inline-block;
-}
-
-#fretboard_container {
-  border: 1px solid black;
-  height: 30vw;
-  width: 33vw;
-  background-color: rgba(0,0,0,0.1);
-  font-size: 1.4vw;
-}
-
-#fretboard * {
-  vertical-align: middle;
-}
-
-#fretboard_container::before {
-  content: '';
-  display: inline-block;
-  vertical-align: middle;
-  height: 100%;
-
-}
-
-#ytplayer_container {
-  width: 40vw;
-  height: 30vw;
-  border: 1px solid black;
+@font-face {
+  font-family: 'GothamRM';
+  src: url('../fonts/GothamRounded-Medium.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/GothamRounded-Medium.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/GothamRounded-Medium.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/GothamRounded-Medium.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/GothamRounded-Medium.svg#13af3003001cba3805884d1b06b023c9') format('svg'); /* Legacy iOS */
+       
+  font-style:   normal;
+  font-weight:  400;
 }
 
 
-#viewer { 
-  position: relative; 
-  box-sizing: border-box;
+/* 
+* Layout
+*******************/
+
+.btn{background: #FFFFFF;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);font-family: 'GothamRBd';padding: 0;border-radius: 11px;}
+header{
+    height: 90px;background: #FFFFFF;box-shadow: 0 1px 4px 0 rgba(0,0,0,0.13);
 }
-
-
-#timeline_container {
-  max-width: 100%;
-  height: 10vw;
-  position: relative;
-  vertical-align: bottom;
-  box-sizing: border-box;
-}
-
-#timeline {
-  border: 1px solid black;
-  height: 7vw;
-  font-size: 1.5vw;
-}
-
-#songlist_container {
-  padding-left: 1vw;
-  width: 20vw;
-  height: 40vw;
-}
-
-#FeedbackForm {
-  width: 40vw;
-}
-
-#appmenu {
-  margin-top: 1em;
-  display: inline-block;
-}
-
-#appmenu .menuitem {
-  height: 100%;
-  padding: 0 1em;
-  box-shadow: 0 0 0.3em black inset;
-  display: inline-block;
-  cursor: pointer;
-  height: 3em;
-}
-
-#appmenu .menuitem span {
-  width: 100%;
-  text-align: center;
-}
-
-#appmenu .menuitem::before {
-  content: '';
-  display: inline-block;
-  height: 100%;
-  vertical-align: middle;
-} 
-
-#appmenu .menuitem:hover {
-  background-color: rgba(0,0,0,0.1);
-}
-
-#appmenu .menuitem:active {
-  box-shadow: 0 0 1em black inset;
-  background-color: rgba(200,200,255,0.5);
-}
-
-#sharebutton {
-  position: absolute;
-  width: 3em;
-  bottom: 1em;
-  right: 21%;
-  cursor: pointer;
-}
-
-@media (max-width: 1000px) {
-
-  .content_wrapper {
-    padding-top: 1vw;
-  }
-
-  
-  #songlist_container {
-    display: none;
-  }
-
-  #songlist {
-    height: 70vh !important;
-  }
-  
-  #timeline {
-    font-size: 2vw;
-  }
-
-  #timeline_container {
-    margin-top: 4vw;
-    width: 95vw;
-  }
-
-  #ytplayer_container {
-    width: 50vw;
-    height: 40vw;
-    box-sizing: border-box;
-  }
-
-  #fretboard_container {
-    width: 45vw;
-    height: 40vw;
-    padding: 1vw;
-    box-sizing: border-box;
-    font-size: 2vw;
-  }
-
-  #songlist {
-    font-size: 1em;
-  }
-
-  #content_wrapper {
-    padding-top: 1vw;
-  }
-  
-}
-
-
-@media (max-width: 750px) {
-
-  .content_wrapper {
-    padding-top: 0;
-  }
-
-  #header {
-    position: relative;
-    height: 10vh;
-    margin: 0;
-  }
-
-  #header #logo {
-    height: 100%;
-    padding: 0 5vw;
-  }
-
-
-  #header #logo::before {
-    content: '';
-    vertical-align: middle;
+header .logo{
     display: inline-block;
-    height: 100%;
-  }
-
-  #header #logo img {
-    vertical-align: middle;
-    height: 45%;
-  }
-
-  #appmenu .menuitem {
-    width: 7vw;
-    vertical-align: top;
-    padding: 0 2vw;
-  }
-
-  #appmenu .menuitem span {
+    margin: 18px 0;
+}
+header .logo img{
+    width: 95px;
+    height: 55px;
+}
+header .get-fretx{
+    width: 270px;
+    position: absolute;
+    left: 50%;
+    margin: 15px 0;
+    margin-left: -135px;
+    height: 60px;
+    font-size: 26px;
+    color: #FB4330 !important;
+}
+header .get-fretx img{
+    width: 38px;
+    height: 53px;
     display: inline-block;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 2vw;
-    font-size: 1.6vw;
-  }
+    margin: 3px 10px 1px -7px;
+}
+header .header-links{
+    display: inline-block;
+    float: right;
+}
+header .header-links a{
+    font-family: 'GothamRBd';
+    font-size: 20px;
+    color: #353535;
+    margin: 31px 0;
+    display: inline-block;
+    text-decoration: none !important;
+}
 
-  #content_wrapper {
-    padding-top: 1vh;
-  }
-
-  #ytplayer_container {
+.player-top-btns{
+    margin: 30px 0 15px;
+}
+.player-top-btns a{
+    height: 50px;
+    margin: 0 auto;
     display: block;
-    width: 100vw;
-    height: 35vh;
+    font-family: 'GothamRBk';
+    font-size: 20px;
+    color: #252525;
+}
+.player-top-btns .share-song{
+    width: 250px;
+}
+.player-top-btns .view-songs{
+    width: 272px;
+}
+.player-top-btns .share-song img{
+    display: inline-block;
+    width: 24px;
+    height: 26px;
+    margin: 12px 10px 12px -15px;
+}
+.player-top-btns .view-songs img{
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin: 16px 9px 16px -17px;
+}
+
+.fret-with-video{
+    height: 425px;
+    background: #000;
+}
+.fret-with-video .container{position: relative;}
+.fret-with-video .video-area{
+    position: relative;
+    height: 376px;
+}
+.fret-with-video .video-area h2{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - 30px);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background: #000;
+    color: #fff;
     margin: 0;
-  }
+    font-family: 'GothamRM';
+    font-size: 22px;
+    overflow: hidden;
+    text-align: center;
+    height: 50px;
+    padding: 13px 0;
+}
+.fret-with-video .video-area iframe{
+    height: 100%;
+    width: calc(100% - 30px);
+}
+.fret-area{background: url('../images/fret.png') no-repeat center center;background-position: top center;background-size: 570px;position:relative;height: 425px;}
+.fret-area .line{
+    width: 100%;
+    height: 55px;
+    display: block;
+    
+    font-size: 0;
+}
+.fret-area .line:nth-child(1){
+    margin: 27px 0 0 0;
+    
+}
+.fret-area .line:nth-child(2){
+    
+}
+.fret-area .line:nth-child(3){
+    
+}
+.fret-area .line:nth-child(4){
+    
+}
+.fret-area .line:nth-child(5){
+    
+}
+.fret-area .line:nth-child(6){
+    
+    height: 61px;
+}
+.fret-area .line .dot:nth-child(1){margin: 4px 80px 0 70px;}
+.fret-area .line .dot:nth-child(2){
+    margin: 3px 90px 0 0px;
+}
+.fret-area .line .dot:nth-child(3){
+    margin: 3px 90px 0 0px;
+}
+.fret-area .line .dot:nth-child(4){}
+.fret-area .line .dot.blue{
+    background-image: linear-gradient(-180deg, #2898E2 0%, #06609A 100%);
+    border: 3px solid #FFFFFF;
+    box-shadow: 0 0 4px 2px rgba(0,0,0,0.50);
+}
+.fret-area .line .dot.red{
+    background-image: linear-gradient(-180deg, #F33A27 0%, #C12110 100%);
+    border: 3px solid #FFFFFF;
+    box-shadow: 0 0 4px 2px rgba(0,0,0,0.50);
+}
+.fret-area .line .dot{
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.fret-area .line:nth-child(1) .dot{}
+.fret-area .line:nth-child(2) .dot{}
+.fret-area .line:nth-child(3) .dot{
+    margin-top: 5px;
+}
+.fret-area .line:nth-child(4) .dot{
+    margin-top: 5px;
+}
+.fret-area .line:nth-child(5) .dot{
+    margin-top: 7px;
+}
+.fret-area .line:nth-child(6) .dot{
+    margin-top: 8px;
+}
 
-  #fretboard_container {
-    width: 95vw;
-    height: 33vh;
-    border: 0;
-    background: none;
-    box-shadow: none;
-  }
+.dominant-hand-select{
+    position: absolute;
+    left: 50%;
+    bottom: 9px;
+    margin-left: -121px;
+}
+.dominant-hand-select a{
+    color: #fff;
+    font-family: 'GothamRBd';
+    width: 110px;
+    height: 32px;
+    border-radius: 6px;
+    border: 1px solid #FFFFFF;
+    display: inline-block;
+    margin-right: 20px;
+    text-decoration: none !important;
+}
+.dominant-hand-select a img{
+    width: 22px;
+    height: 26px;
+    display: inline-block;
+    margin: 2px 5px 2px 8px;
+}
+.dominant-hand-select a:last-child{
+    margin-right: 0;
+}
+.dominant-hand-select a.selected{
+    border-color: #55AE00;
+    background-image: linear-gradient(-180deg, #55AE00 3%, #2F8B01 100%);
+}
 
-  #UserView {
-    font-size: 1.6vw;
-  }
+.chord-bar{
+    margin: 15px 0 0 0;
+    position: relative;
+}
+.chord-bar .chord-holder{
+    background: #3E3E3E;
+    border: 5px solid #3F3F3F;
+    border-radius: 100px;
+    width: 970px;
+    margin: 0 auto;
+    height: 60px;
+    box-sizing: content-box;
+    white-space: nowrap;
+    overflow: hidden;
+    user-select: none;
+    position: relative;
+}
+.chord-bar .chord-holder .chords{
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    overflow: auto;
+    user-select: none;
+    }
+.chord-bar .chord{
+    background-image: linear-gradient(-180deg, #43DDBF 0%, #13A285 100%);
+    border: 2px solid #FFFFFF;
+    border-radius: 100px;
+    height: 100%;
+    display: inline-block;
+    width: 200px;
+    height: 60px;
+    user-select: none;
+}
+.chord-bar .chord span{
+    font-family: 'CamptonSB';
+    font-size: 21px;
+    color: #FFFFFF;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.28);
+    margin: 13px 0 13px 16px;
+    display: inline-block;
+    user-select: none;
+}
+.chord-bar:before{position: absolute;width:7px;height:100%;content:'';background: #FFFFFF;box-shadow: 0 0 4px 1px rgba(0,0,0,0.50);border-radius: 100px;left: 50%;margin-left: -3px;top: 0;z-index: 1;}
+.song-recommendations{
+    margin: 30px 0 40px 0;
+    font-size: 0;
+}
+.song-recommendations h3{
+    font-family: 'GothamRBd';
+    font-size: 20px;
+    color: #353535;
+    margin: 0 0 20px 0;
+    }
+.song-recommendations .recommendation-box{
+    display: inline-block;
+    vertical-align: top;
+    width: 31.58%;
+    margin-right: 30px;
+/* Rectangle 8: */
+    background-image: linear-gradient(-179deg, rgba(0,0,0,0.00) 0%, rgba(0,0,0,0.79) 100%);
+    border: 3px solid #FFFFFF;
+    box-shadow: 0 1px 8px 0 rgba(0,0,0,0.32);
+    border-radius: 15px;
+    height: 205px;
+    background-size: cover;
+    background-position: center center;
+    position: relative;
+}
+.song-recommendations .recommendation-box h4{
+    margin: 0 0 3px 0;
+    font-family: 'GothamRM';
+    font-size: 20px;
+}
+.song-recommendations .recommendation-box h5{
+    margin: 0;
+    font-family: 'GothamRBd';
+    font-size: 20px;
+}
+.song-recommendations .recommendation-box:before{position: absolute;top:0;left: 0;height: 100%;width: 100%;content:'';background-image: linear-gradient(-179deg, rgba(0,0,0,0.00) 0%, rgba(0,0,0,0.79) 100%);border-radius: 15px;}
+.song-recommendations .recommendation-box:last-child{margin-right:0;}
+.song-recommendations .recommendation-box .song-info{
+    position: absolute;
+    bottom: 11px;
+    left: 15px;
+    font-size: 20px;
+    color: #FFFFFF;
+    line-height: 24px;
+}
 
-  #userview_container {
-    padding: 1.8em 0;
-    vertical-align: middle;
-  }
 
-  #fretboard {
-    font-size: 5.3vh !important;
-  }
+/* 
+* Media Queries
+*******************/
 
-
-  #songlist_container {
-    display: none;
-  }
-
-
-  #timeline_container {
-    height: 20vh;
-    width: 100vw;
-  }
-
-  #timeline {
-    font-size: 2.5vh;
-  }
-
-  body {
-    height: 105vh;
-  }
-
-  #FeedbackForm {
-    font-size: 2.5vw;
-    width: 80vw;
-  }
-
-  #songlist {
-    height: 70vh !important;
-    font-size: 4vw;
-    width: 80vw;
-  }
-
-  #modal .modal_content { 
-    max-width: 80vw !important;
-  }
-
-  body {
-    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0.2+0,0+30,0+70,0+100,0.01+100,0.2+100 */
-    background: -moz-linear-gradient(left,  rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 70%, rgba(0,0,0,0.2) 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(left,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,0) 70%,rgba(0,0,0,0.2) 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to right,  rgba(0,0,0,0.2) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,0) 70%,rgba(0,0,0,0.2) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33000000', endColorstr='#33000000',GradientType=1 ); /* IE6-9 */
-  }
+@media only screen and (min-width : 1200px) {
 
 }
+
+@media only screen and (max-width : 1200px) {
+
+}
+
+@media only screen and (max-width : 992px) {
+
+}
+
+@media only screen and (max-width : 768px) {
+
+}
+
+@media only screen and (max-width : 480px) {
+
+}
+
+@media only screen and (max-width : 320px) {
+    
+}
+
+
+
+
+
+
 

@@ -418,6 +418,7 @@ body {
   #top_btns {
     margin-top: 1em;
     font-size: 3vw;
+    padding-bottom: 1em;
   }
 
   #share,

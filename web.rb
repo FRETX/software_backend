@@ -28,3 +28,8 @@ Dir["ruby/*.rb"].each { |file| require File.expand_path(file); }
 
 # Tue 12/20 8pm - 12am  4hrs  ( GUI Redesign, remove styles ) 
 # Wed 12/21 11pm - 
+
+
+
+
+# Mon 1/23 9pm - 1am 4hrs { implementing designer styles }

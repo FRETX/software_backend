@@ -69,9 +69,10 @@ function on_video_data() {
 ////////////////////////////////////////// CLICK LISTENERS ///////////////////////////////////////////////////
 
 function add_click_listeners() {
-  id('ordernow').addEventListener('click', goto_indiegogo );
-  id('sharebutton').addEventListener('click', share_on_fb );
-  id('more_songs').addEventListener('click', open_new_song );
+  //id('get_fretx').addEventListener('click', goto_indiegogo );
+  id('share').addEventListener('click', share_on_fb );
+  id('view_songs').addEventListener('click', open_new_song );
+
   //var menuitems = id('appmenu').children;
   //menuitems[0].addEventListener('click', open_new_song  );
   //menuitems[1].addEventListener('click', goto_indiegogo );
@@ -93,7 +94,7 @@ function goto_indiegogo(e) {
 }
 
 function share_on_fb(e) {
-  window.location.href = "http://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fplayer.fretx.rocks"
+  window.location.href = "http://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fplayer.fretx.rocks?id=" + ytplayer.video_id;
   cancelEvent(e);
 }
 

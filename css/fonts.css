@@ -26,3 +26,26 @@
     font-style: normal;
 
 }
+
+@font-face {
+  font-family: 'GothamRBd';
+  src: url('GothamRounded-Bold.eot');                                                /* IE9 Compat Modes */
+  src: url('GothamRounded-Bold.eot?#iefix') format('embedded-opentype'),             /* IE6-IE8 */
+       url('GothamRounded-Bold.woff') format('woff'),                                /* Modern Browsers */
+       url('GothamRounded-Bold.ttf')  format('truetype'),                            /* Safari, Android, iOS */
+       url('GothamRounded-Bold.svg#cf294c6136807d0e69a971e863b3cd88') format('svg'); /* Legacy iOS */
+  font-weight:  700;
+  font-style:   normal;
+
+}
+
+@font-face {
+  font-family: 'GothamRBk';
+  src: url('GothamRounded-Book.eot');                                                /* IE9 Compat Modes */
+  src: url('GothamRounded-Book.eot?#iefix') format('embedded-opentype'),             /* IE6-IE8 */
+       url('GothamRounded-Book.woff') format('woff'),                                /* Modern Browsers */
+       url('GothamRounded-Book.ttf')  format('truetype'),                            /* Safari, Android, iOS */
+       url('GothamRounded-Book.svg#21661efc977bfcfec5c6c16307c05ceb') format('svg'); /* Legacy iOS */
+  font-weight:  400;
+  font-style:   normal;
+}

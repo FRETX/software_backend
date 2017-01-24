@@ -16,7 +16,7 @@ html
 
     == js  [ 'jquery', 'rivets', 'lib']
     == js  [ 'chord', 'chordlib', 'event_channel', 'punch', 'punchlist', 'element', 'modal']
-    == js  [ 'elements/userview', 'elements/ytplayer', 'elements/resize_fretboard', 'elements/timeline']
+    == js  [ 'elements/userview', 'elements/ytplayer', 'elements/fretboard', 'elements/timeline']
     == js  [ 'elements/palette', 'elements/songlist', 'elements/feedback_form', 'player']
     == js  [ 'https://cdn.optimizely.com/js/8023642948' ]
 
@@ -25,17 +25,24 @@ html
     == partial(:header)
 
     #content
+      
+      #top_btns
+        #share
+          img src='share-ico.png'
+          | Share This Song
 
-      #viewer
-        .row
-          #ytplayer_container
-          #fretboard_container
+        #view_songs
+          img src='plus-ico.png'
+          | View & Add Songs 
+
+      .row
+        .black
+        #ytplayer_container
+        #fretboard_container
  
-        #timeline_container
+      #timeline_container
       
       #songlist_container
-    
-      #more_songs More Songs
 
     javascript:
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

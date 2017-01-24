@@ -218,7 +218,7 @@ Timeline.prototype.CSS = `
   position: absolute;
   background-color: rgb(0,0,0,0.1);
   padding: 0.5em;
-  height: 5em;
+  height: 3em;
   scroll-behavior: smooth;
 }
 
@@ -283,7 +283,7 @@ Timeline.prototype.CSS = `
 }
 
 #timeline .scale {
-  display: inline-block;
+  display: none;
   background-color: rgba(100,100,100,0.8);
   height: 1.2em;
   white-space: nowrap;
@@ -319,7 +319,7 @@ Timeline.prototype.CSS = `
 }
 
 #timeline .chord .gloss {
-  diplay: inline-block;
+  display: none;
   position: absolute;
   top: 0; bottom: 0;
   left: 0; right: 0;

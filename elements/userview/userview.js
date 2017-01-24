@@ -36,7 +36,7 @@ UserView.prototype.HTML = `
       <div class='logout' rv-on-click='this.logout'>Hi, {state.user.name} | Logout</div>
     </div>
     <div rv-unless='state.user'>
-      <div class='login' rv-on-click='this.login'>LOG IN</div>
+      <div class='login' rv-on-click='this.login'>Login</div>
     </div>
   </div>
 
@@ -84,11 +84,10 @@ UserView.prototype.CSS = `
   }
 
   #UserView .login {
-    border: 2px solid #E20009;
+    font-family: 'GothamRBd';
     padding: .5em 1em !important;
     border-radius: 1.5em;
-    color: grey;
-    font-weight: bold;
+    color: #353535;
     line-height: 1em !important;
   }
 

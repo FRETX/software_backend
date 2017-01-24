@@ -1,8 +1,8 @@
 
 function Fretboard(parent) {
   this.state = {
-    name: 'No Chord',
     lefty: false,
+    name: 'No Chord',
     fingering: [0],
   	strings: [
   	  { frets: [ {val:0}, {val:0}, {val:0}, {val:0}, {val:0} ] },
@@ -13,16 +13,18 @@ function Fretboard(parent) {
       { frets: [ {val:0}, {val:0}, {val:0}, {val:0}, {val:0} ] }
   	]
   }
+  parent.addEventListener('resize', this.on_resize.bind(this) );
   this.build_dom(parent);
   this.bind_dom();
   this.load_styles();
+  this.bind_handlers();
 }
 
 Fretboard.prototype = {
   constructor:   Fretboard,
 
   build_dom(parent) { this.dom = render(this.HTML);  if(!empty(parent)) parent.appendChild(this.dom); },
-  bind_dom()        { rivets.bind(this.dom, { data: this.state, obj: this }); },
+  bind_dom()        { rivets.bind(this.dom, { data: this.state, this: this }); },
   load_styles()     { load_css('fretboard_styles', this.CSS); },
 
   reset() {
@@ -40,6 +42,12 @@ Fretboard.prototype = {
     this.update_display();
   },
 
+  load_cmd(cmd) {
+    if(this.state.fingering == cmd) return;
+    this.state.fingering = cmd;
+    this.update_display();
+  },
+
   update_display() {
     this.clear_display();
     for(var i=0; i<this.state.fingering.length; i++) {
@@ -50,12 +58,26 @@ Fretboard.prototype = {
     
   },
 
+  bind_handlers() {
+    this.tog_lefty = this.tog_lefty.bind(this);
+    this.set_left  = this.set_left.bind(this);
+    this.set_right = this.set_right.bind(this);
+  },
+
   tog_lefty()    { this.lefty = !this.lefty; },
   get lefty()    { return this.state.lefty;  },
   set lefty(val) { 
     this.state.lefty = val; 
     if(this.state.lefty) { this.dom.className = 'lefty'; }
     else                 { this.dom.className = ''; } 
+    this.update_display();
+  },
+
+  set_left()  { this.lefty = true;  },
+  set_right() { this.lefty = false; },
+
+  on_resize(e) {
+    console.log(e);
   },
 
   clear_display() {
@@ -91,16 +113,19 @@ Fretboard.prototype.HTML = `
     </div>
 
     <div class='frets'>
-      <div class='fret'><div class='wire'></div></div>
-      <div class='fret'><div class='wire'></div></div>
-      <div class='fret'><div class='wire'></div></div>
-      <div class='fret'><div class='wire'></div></div>
-      <div class='fret'><div class='wire'></div></div>
+      <div class='fret'><div class='wire'></div></div><!--
+   --><div class='fret'><div class='wire'></div></div><!--
+   --><div class='fret'><div class='wire'></div></div><!--
+   --><div class='fret'><div class='wire'></div></div><!--
+   --><div class='fret'><div class='wire'></div></div>
     </div>
 
   </div>
 
   <div class='chordname' rv-text='data.name'></div>
+
+  <div class='lefty'  rv-data-sel='data.lefty'       rv-on-click='this.set_left'><img src='lefty-ico.png'/>Lefty</div>
+  <div class='righty' rv-data-sel='data.lefty | not' rv-on-click='this.set_right'>Righty<img src='righty-ico.png'/></div>
 
 </div>
 
@@ -112,9 +137,33 @@ Fretboard.prototype.HTML = `
 
 Fretboard.prototype.CSS = `
 
+#fretboard .fret_display                  { width: 8em; }
+#fretboard .row                           { width: 8em;}
+#fretboard .fret                          { width: 2em; }
+
+#fretboard .frets .wire                   { width: 0.1em; }
+#fretboard .frets .fret:first-child .wire { width: 0.2em;  }
+#fretboard .lights .light                 { width: 0.4em; }
+#fretboard .fret:nth-child(1),
+#fretboard .fret:nth-child(2)             { width: 1em; }
+
+
+#fretboard .fret_display                  { height: 5.5em;   }
+#fretboard .row                           { height: 16.66%; }
+#fretboard .fret                          { height: 100%;   }
+#fretboard .strings .string               { height: 4px;   }
+#fretboard .lights .light                 { height: 0.4em;  }
+
+#fretboard .fret_display                  { margin: 0 .5em 0 .5em; }
+#fretboard .frets .wire                   { margin: 1px 0; }
+
+
+
 #fretboard {
   display: inline-block;
+  vertical-align: middle;
   position: relative;
+  font-size: 2em;
 }
 
 #fretboard.lefty .fret_display {
@@ -126,17 +175,15 @@ Fretboard.prototype.CSS = `
 }
 
 #fretboard .fret_display {
-  box-shadow: 0 0 5px black;
-  background-color: rgba(70,70,70,1);
   position: relative;
-  width: 300px;
-  height: 200px;
+  box-shadow: 0 0 5px black;
+  background-color: rgba(70,70,70,1);  
   border-radius: 2px;
 }
 
+#fretboard .frets,
 #fretboard .strings,
-#fretboard .lights,
-#fretboard .frets {
+#fretboard .lights {
   position: absolute;
   left: 0; right: 0;
   top: 0; bottom: 0;
@@ -148,16 +195,11 @@ Fretboard.prototype.CSS = `
 
 #fretboard .row {
   position: relative;
-  height: 16.66%;
-  width: 100%;
 }
 
 #fretboard .fret {
   position: relative;
   display: inline-block;
-  width: 24%; 
-  height: 100%;
-  margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
@@ -168,30 +210,23 @@ Fretboard.prototype.CSS = `
   top: 0; bottom: 0;
   left: 0; right: 0;
   display: inline-block;
-  height: 4px;
   box-shadow: 0 0 5px black;
 }
 
-#fretboard .frets {
-  width: 100%;
-  font-size: 0;
-}
+
 
 #fretboard .frets .wire {
   position: absolute;
   right: 0;
   top: 0;
   bottom: 0;
-  width: 5px;
   background-color: rgba(255,255,0,0.5);
   border-radius: 2.5px;
   box-shadow: 0 0 4px black;
-  margin: 1px 0;
 }
 
 #fretboard .frets .fret:first-child .wire {
   background-color: rgba(255,255,255,0.5);
-  width: 12px;
   left: 0;
   right: auto;
   box-shadow: 5px 0 4px -4px black;
@@ -204,21 +239,68 @@ Fretboard.prototype.CSS = `
   top: 0; bottom: 0;
   right: 15%;
   margin: auto;
-  height: 20px;
-  width: 20px;
   background-color: rgba(255,0,0,1);
   border-radius: 10px;
 }
 
 #fretboard .chordname {
-  font-size: 18pt;
+  font-family: 'GothamRBd';
+  color: white;
+  height: 2.4em;
+  line-height: 2.8em;
+  font-size: 0.5em;
   font-weight: bold;
-  margin: 10px;
   text-align: center;
 }
 
-#fretboard .fret:nth-child(1),
-#fretboard .fret:nth-child(2) { width: 14%; }
+#fretboard .lefty,
+#fretboard .righty {
+  position: absolute;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.1);
+  box-shadow: 0 0 0.2em black;
+  color: grey;
+  padding: .5em .5em;
+  font-size: 0.25em;
+  cursor: pointer;
+  border-radius: 0.2em;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  font-weight: bold;
+  text-shadow: 0 0 0.2em white,  0 0 0.2em white;
+  width: 5.7em;
+}
+
+#fretboard .lefty {
+  left: 6%;
+  text-align: right;
+  background-position: left center;
+  border: 1px solid white;
+}
+
+#fretboard .righty {
+  right: 6%;
+  text-align: left;
+  background-position: right center;
+  border: 1px solid white;
+}
+
+#fretboard .lefty img,
+#fretboard .righty img {
+  height: 2.5em;
+}
+
+#fretboard .lefty img  { margin: 0 .5em 0 0; }
+#fretboard .righty img { margin: 0 0 0 .5em; }
+
+#fretboard .lefty[data-sel='true'],
+#fretboard .righty[data-sel='false'] {
+  border-color: #55AE00;
+  background-image: linear-gradient(-180deg, #55AE00 3%, #2F8B01 100%);
+}
+
+
+
 
 #fretboard .strings .string {
   background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAK0lEQVQIW2N8fdrzPwMUiJpuZ2CECYA4IAAWgHFen/ZkYGRgYABrAXFAAABygxD/zAO+2gAAAABJRU5ErkJggg==) repeat;

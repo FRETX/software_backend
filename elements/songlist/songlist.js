@@ -29,8 +29,8 @@ Songlist.prototype = {
   fetch()        { $.get(this.state.path, this.on_song_list ).fail(this.on_load_failed); },
   get_dom_refs() { this.input = this.dom.getElementsByTagName('input')[0]; },
 
-  get length() { return this.state.songs.length; },
-  get random() { return this.state.songs[ Math.floor( Math.random() * this.length ) ]; },
+  get length()  { return this.state.songs.length; },
+  get random()  { return this.state.songs[ Math.floor( Math.random() * this.length ) ]; },
 
   reset_filter() {
     this.state.filtered_songs = this.state.songs;

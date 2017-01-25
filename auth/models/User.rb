@@ -4,7 +4,9 @@ class User < Sequel::Model
 	many_to_many :roles
 
 	def has_role?(role)
-      roles.include? Role[:name => role]
+	  role = Role[:name => role]
+	  p role
+      roles.include? role
 	end
 
 	def photo_url

@@ -24,8 +24,15 @@ $(document).ready(function() {
   feedback.ev_sub('done', modal.hide );
   modal.ev_sub('exit', function() { songlist.mount(id('songlist_container')); });
 
-  //songlist.ev_sub('list_loaded', function()     { load_song( songlist.random ); } );
   songlist.ev_sub('selected',    function(song) { load_song( song ); modal.hide(); songlist.mount(id('songlist_container')); } );
+  
+  songlist.ev_sub('list_loaded', function() {
+    if(location.pathname== '/') return;
+    var results = songlist.find(location.pathname.slice(1));
+    if( results.length == 0 ) return;
+    console.log(results[0]);
+    load_song( results[0] ); 
+  });
 
   timeline.on_scrub  = function(time_s) { ytplayer.current_time = time_s; } 
   timeline.get_color = function(chord_label) { return palette.get_color(chord_label); } 
@@ -94,7 +101,7 @@ function goto_indiegogo(e) {
 }
 
 function share_on_fb(e) {
-  window.location.href = "http://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fplayer.fretx.rocks?id=" + ytplayer.video_id;
+  window.location.href = "http://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fplayer.fretx.rocks%2F" + ytplayer.video_id;
   cancelEvent(e);
 }
 

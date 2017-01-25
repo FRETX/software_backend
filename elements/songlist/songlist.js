@@ -36,6 +36,11 @@ Songlist.prototype = {
     this.state.filtered_songs = this.state.songs;
     this.input.value = "Search";
     this.input.style.color = 'grey';
+  },
+
+  find(youtube_id) {
+    var YoutubeIdFilter = function(song) { return song.youtube_id == youtube_id; }
+    return this.state.songs.filter( YoutubeIdFilter );
   }
 
 }

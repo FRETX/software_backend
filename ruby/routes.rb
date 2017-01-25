@@ -4,7 +4,9 @@ get('/')                          { fetch_page :player }
 get('/player')                    { fetch_page :player }
 get('/login')                     { fetch_page :login  }
 get('/editor', :auth => 'user' )  { fetch_page :editor }
-get('/list',   :auth => 'user' )  { fetch_page :list   } 
+get('/list',   :auth => 'user' )  { fetch_page :list   }
+
+
 
 
 ######################################## PAGE ROUTES ###########################################
@@ -69,6 +71,9 @@ get /.*\.(ttf|woff|eot|svg|woff2)/ do
   send_file "fonts#{path}"
 end
 
+
 def fetch_page(page_name)    slim :"../pages/#{page_name}/#{page_name}"    end
 def fetch_element(elem_name) slim :"../elements/#{elem_name}/#{elem_name}" end
 def fetch_elem_js(js_name)   slim :"../elements/#{js_name}/#{js_name}"     end
+
+get('/:youtube_id')               { fetch_page :player }

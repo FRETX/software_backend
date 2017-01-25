@@ -80,7 +80,7 @@ YTPlayer.prototype = {
     if(this.on_deck) { 
       this.on_deck = false;
       console.log( `loading on deck video ${this.video_id}` );
-      //this.load(this.video_id); return; 
+      this.load(this.video_id); return; 
     }
     //event.target.playVideo();
     this.get_video_data();

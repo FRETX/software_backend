@@ -76,4 +76,7 @@ def fetch_page(page_name)    slim :"../pages/#{page_name}/#{page_name}"    end
 def fetch_element(elem_name) slim :"../elements/#{elem_name}/#{elem_name}" end
 def fetch_elem_js(js_name)   slim :"../elements/#{js_name}/#{js_name}"     end
 
-get('/:youtube_id')               { fetch_page :player }
+get('/:youtube_id') do
+  pass unless params[:youtube_id].length == 11
+  fetch_page :player
+end

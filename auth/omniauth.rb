@@ -28,7 +28,7 @@ get '/auth/:provider/callback' do
   end
 
   user.add_omniaccount(omni)
-  user.add_role Role[1] unless user.has_role? Role[1]
+  user.add_role Role[1] unless user.has_role? 'user'
 
   session[:user] = user
 

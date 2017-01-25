@@ -24,15 +24,14 @@ $(document).ready(function() {
   feedback.ev_sub('done', modal.hide );
   modal.ev_sub('exit', function() { songlist.mount(id('songlist_container')); });
 
-  songlist.ev_sub('selected',    function(song) { load_song( song ); modal.hide(); songlist.mount(id('songlist_container')); } );
-  
-  songlist.ev_sub('list_loaded', function() {
-    if(location.pathname== '/') return;
-    var results = songlist.find(location.pathname.slice(1));
-    if( results.length == 0 ) return;
-    console.log(results[0]);
-    load_song( results[0] ); 
+  songlist.ev_sub('selected', function(song) { 
+    load_song( song );
+    modal.hide(); 
+    songlist.mount(id('songlist_container')); 
+    history.pushState({ 'youtube_id': song.youtube_id }, "", song.youtube_id);
   });
+  
+  songlist.ev_sub('list_loaded', function() { load_song( songlist.find(location.pathname.slice(1)) ); });
 
   timeline.on_scrub  = function(time_s) { ytplayer.current_time = time_s; } 
   timeline.get_color = function(chord_label) { return palette.get_color(chord_label); } 
@@ -47,7 +46,6 @@ $(document).ready(function() {
 
   punchlist.ev_sub( 'current_punch_changed', function(punch) {
     fretboard.load_chord(chordlib.get_chord(punch.chord));
-    set_ambient_color(palette.get_color(punch.chord));
   });
 
   add_click_listeners();
@@ -57,6 +55,7 @@ $(document).ready(function() {
 /////////////////////////////////////////////// SETUP /////////////////////////////////////////////////////////
 
 function load_song(song) {
+  if(song==null) return;
   fretboard.reset();
   var punches = [];
   for(var i=0; i<song.punches.length; i++) {
@@ -104,11 +103,8 @@ function share_on_fb(e) {
   FB.ui({
     method: 'share',
     href: 'http://player.fretx.rocks/' + ytplayer.video_id,
-    quote: ytplayer.videodata.title
+    quote: `Learn how to play "${ytplayer.videodata.title}"`
   }, function(response){});
-
-
-  //window.location.href = "http://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fplayer.fretx.rocks%2F" + ytplayer.video_id;
   cancelEvent(e);
 }
 
@@ -119,20 +115,7 @@ function get_feedback(e) {
 
 ////////////////////////////////////////// CLICK LISTENERS ///////////////////////////////////////////////////
 
-
-////////////////////////////////////////// COLOR EFFECTS /////////////////////////////////////////////////////
-
-function set_ambient_color(color) {
-  //id('fretboard_container').style.boxShadow = `0 0 0.2em ${color} inset, 0 0 0.5em black`;
- // document.body.style.boxShadow = `0 0 1vw ${color} inset`;
-  // = build_header_gradient(color);
-}
-
-function build_header_gradient(color) {
-  return `
-    background: white; /* Old browsers */
-    background: -moz-linear-gradient(    top,       white 0%, rgba(221,241,249,1) 35%, ${color} 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient( top,       white 0%, rgba(221,241,249,1) 35%, ${color} 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(         to bottom, white 0%, rgba(221,241,249,1) 35%, ${color} 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  `.untab(2);
-}
+window.addEventListener('popstate', function(e) {
+  if(e.state == null) return;
+  load_song( songlist.find(e.state.youtube_id) );
+});

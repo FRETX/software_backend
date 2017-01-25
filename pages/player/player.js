@@ -101,7 +101,14 @@ function goto_indiegogo(e) {
 }
 
 function share_on_fb(e) {
-  window.location.href = "http://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fplayer.fretx.rocks%2F" + ytplayer.video_id;
+  FB.ui({
+    method: 'share',
+    href: 'http://player.fretx.rocks/' + ytplayer.video_id,
+    quote: ytplayer.videodata.title
+  }, function(response){});
+
+
+  //window.location.href = "http://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fplayer.fretx.rocks%2F" + ytplayer.video_id;
   cancelEvent(e);
 }
 

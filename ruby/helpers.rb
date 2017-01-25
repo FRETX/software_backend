@@ -27,3 +27,26 @@ def fb_title(title) "\n<meta property='og:title'  content='#{title}' />" end
 def fb_type(type)   "\n<meta property='og:type'   content='#{type}'  />" end
 def fb_url(url)     "\n<meta property='og:url'    content='#{url}'   />" end
 def fb_appid(id)    "\n<meta property='fb:app_id' content='#{id}'    />" end
+
+def fb_sdk(app_id)
+ <<-eos
+   <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '#{app_id}',
+        xfbml      : true,
+        version    : 'v2.8'
+      });
+      FB.AppEvents.logPageView();
+    };
+
+    (function(d, s, id){
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    </script>
+  eos
+end

@@ -112,7 +112,7 @@ function edit_menu() {
 
 function open_new() {
   addvid.reset();
-  modal.show(addvid.dom)
+  modal.show(addvid.dom);
 }
 
 function save_work() {
@@ -128,9 +128,11 @@ function save_work() {
 }
 
 function del_song() {
-  var ack = alert(`Really Delete "${ytplayer.videodata.title}" ?` )
+  var ack = confirm(`Really Delete "${ytplayer.videodata.title}" ?` )
+  console.log(ack);
   if(!ack) return;
   $.del('/songs/' + ytplayer.video_id );
+  window.location.reload();
 }
 
 //////////////////////////////////////// CLICK LISTENERS ///////////////////////////////////////////////////////

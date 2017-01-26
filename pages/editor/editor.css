@@ -171,3 +171,12 @@ ul#menu li:nth-child(3) {
   box-shadow: 0 0 1em black inset;
   background-color: rgba(200,200,255,0.5);
 }
+
+#delete {
+  margin-top: 1em;
+  padding: .5em;
+  font-size: 1.5em;
+  background-color: red;
+  border-radius: .25em;
+  cursor: pointer;
+}

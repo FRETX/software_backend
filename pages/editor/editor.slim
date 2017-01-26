@@ -45,5 +45,5 @@ html
         #timeline_container
         #palette_container
 
-    - if session[:user].has_role? 'admin'
-      button#delete Delete Song
+      - if session[:user].has_role? 'admin'
+        button#delete Delete Song

@@ -99,6 +99,7 @@ function add_click_listeners() {
   menuitems[0].addEventListener('click', edit_menu );
   menuitems[1].addEventListener('click', open_new  );
   menuitems[2].addEventListener('click', save_work );
+  id('delete').addEventListener('click', del_song  );
 }
 
 function to_player() {
@@ -124,6 +125,12 @@ function save_work() {
   $.post('/songs/add', JSON.stringify(songdata) )
     .done( function()     { modal.show_toast('Upload Successful!', 'green', 1000); songlist.fetch(); } )
     .fail( function(resp) { modal.show_toast("Upload Failed! \n" + resp.responseText, 'red'); } );
+}
+
+function del_song() {
+  var ack = alert(`Really Delete "${ytplayer.videodata.title}" ?` )
+  if(!ack) return;
+  $.del('/songs/' + ytplayer.video_id );
 }
 
 //////////////////////////////////////// CLICK LISTENERS ///////////////////////////////////////////////////////

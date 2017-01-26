@@ -33,3 +33,4 @@ Dir["ruby/*.rb"].each { |file| require File.expand_path(file); }
 
 
 # Mon 1/23 9pm - 1am 4hrs { implementing designer styles }
+# Tue 1/24 12am - 2am 2hrs { share button, admin roles }

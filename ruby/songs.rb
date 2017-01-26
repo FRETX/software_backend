@@ -64,6 +64,14 @@ post '/songs/add' do
   end 
 end
 
+delete '/songs/:youtube_id' do
+  with_db do |conn|
+    resp = conn.exec_params "DELETE FROM songs WHERE youtube_id = $1", [ params[:youtube_id] ]
+    halt 404 if resp.cmd_tuples = 0
+    return 204
+  end
+end
+
 def song_to_fretx(data) 
   with_db do |conn|
   	payload = ""

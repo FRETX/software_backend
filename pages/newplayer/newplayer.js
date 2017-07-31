@@ -86,7 +86,7 @@ function to_editor(e) {
 }
 
 function goto_indiegogo(e) { 
-  window.location.href = "http://fretx.rocks";
+  window.location.href = "https://store.fretx.rocks/collections/frontpage";
   cancelEvent(e);
 }
 
